@@ -1,14 +1,43 @@
+NOMPROJET = Yahtzee
+
 CC = gcc
-OBJ = main.o affichage.o fonctions_joueur.o ordinateur.o
 
-Yahtzee : $(OBJ)
-	$(CC) $(OBJ) -o Yahtzee
+SRCDIR   = src
+OBJDIR   = obj
+BINDIR   = bin
 
-%.o : %.c %.h
-	$(CC) -c $< -o $@
+DIRS	 = $(OBJDIR) $(BINDIR) 
 
-clean :
-	rm -rf *.o
-	rm Yahtzee
+.PHONY: DIRS
+all: $(DIRS) $(BINDIR)/$(NOMPROJET)
 
-mrproper: clean
+$(OBJDIR):
+	mkdir -p $(OBJDIR)
+$(BINDIR):
+	mkdir -p $(BINDIR)
+
+SOURCES  := $(wildcard $(SRCDIR)/*.c)
+INCLUDES := $(wildcard $(SRCDIR)/*.h)
+OBJECTS  := $(SOURCES:$(SRCDIR)/%.c=$(OBJDIR)/%.o)
+rm       = rm -f
+
+
+$(BINDIR)/$(NOMPROJET): $(OBJECTS)
+	@$(LINKER) $(OBJECTS) $(LFLAGS) -o $@
+	@echo "Edition des liens effectuee"
+
+$(OBJECTS): $(OBJDIR)/%.o : $(SRCDIR)/%.c
+	@$(CC) $(CFLAGS) -c $< -o $@
+	@echo "Compilation "$<" reussie"
+
+.PHONY: clean
+clean:
+	@$(rm) $(OBJECTS)
+	@echo "Nettoyage effectue"
+
+.PHONY: remove
+	
+remove: clean
+	@$(rm) $(BINDIR)/$(NOMPROJET)
+	@echo "Suppression de l'executable"
+
