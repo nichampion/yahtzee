@@ -3,3 +3,5 @@
 
 void lancer(t_joueur * j, int i);
 int relancer(t_joueur * j);
+
+#endif
