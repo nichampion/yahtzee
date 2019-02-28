@@ -2,10 +2,11 @@
 #define commun_h
 
 #define N 5 /* Nombre de des */
+#define T 3 /* Taille nom joueur */
 
 /**
   *\file commun.h
-  *\brief 
+  *\brief
 	*\version 1.0
 */
 
@@ -21,7 +22,7 @@ typedef struct {
 	int trois;			/**< Total des 3 */
 	int quatres;		/**< Total des 4 */
 	int cinq;			/**< Total des 5 */
-	int six;			/**< Total des 6 */		
+	int six;			/**< Total des 6 */
 	int prime_35pts;	/**< +35pts si total_Sup >= 63 */
 
 	/* Section inférieure */
@@ -49,6 +50,7 @@ typedef struct {
 typedef struct {
 	t_tableau tab;
 	int des[N];
+	char nom[T];
 } t_joueur;
 
 #endif

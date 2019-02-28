@@ -14,5 +14,7 @@
 */
 
 int main(int argc, char **argv) {
-
+  t_joueur *j1, *j2;
+  affichage(j1,j2,j1);
+  return 0;
 }
