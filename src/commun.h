@@ -1,6 +1,8 @@
 #ifndef commun_h
 #define commun_h
 
+#define N 5 /* Nombre de des */
+
 /**
   *\file commun.h
   *\brief 
@@ -39,5 +41,14 @@ typedef struct {
 
 } t_tableau;
 
+
+/**
+	*\struct t_joueur
+	*\brief Type joueur avec sa feuille de marque et des
+*/
+typedef struct {
+	t_tableau tab;
+	int des[N];
+} t_joueur;
 
 #endif
