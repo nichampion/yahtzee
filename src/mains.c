@@ -13,7 +13,7 @@ int brelan(t_joueur *joueur){
   for(i = 0; i<=4; i++){
     for(j = 0; j<=4; j++){
       for(k = 0; k<=4; k++){
-        if((t_joueur->des[i] == t_joueur->des[j] == t_joueur->des[k]) && (i != j) && (i!= k) && (j!= k))
+        if((joueur->des[i] == joueur->des[j] && joueur->des[j]  == joueur->des[k]) && ((i != j) && (i!= k) && (j!= k)))
           return VRAI;
       }
     }
@@ -27,7 +27,7 @@ int carre(t_joueur *joueur){
     for(j = 0; j<=4; j++){
       for(k = 0; k<=4; k++){
         for(l = 0; l<=4; l++){
-          if((t_joueur->des[i] == t_joueur->des[j] == t_joueur->des[k] == t_joueur->des[l]) && (i!=j) && (i!=k) && (i!=l) (j!=k) && (j!=l) && (k!=l))
+          if((joueur->des[i] == joueur->des[j] && joueur->des[j] == joueur->des[k] && joueur->des[k] == joueur->des[l]) && ((i!=j) && (i!=k) && (i!=l) && (j!=k) && (j!=l) && (k!=l)))
             return VRAI;
         }
       }
@@ -43,7 +43,7 @@ int full(t_joueur *joueur){
       for(k = 0; k<=4; k++){
         for(l = 0; l<=4; l++){
           for(m = 0; m<=4; m++){
-            if((t_joueur->des[i] == t_joueur->des[j] == t_joueur->des[k] != t_joueur->des[l] == t_joueur->des[m]) && (i!=j) && (i!=k) && (i!=l) && (i!=m) && (j!=k) && (j!=l) && (j!=m) && (k!=l) && (k!=m) && (l!=m))
+            if((joueur->des[i] == joueur->des[j] && joueur->des[j] == joueur->des[k] && joueur->des[k] != joueur->des[l] && joueur->des[l] == joueur->des[m]) && ((i!=j) && (i!=k) && (i!=l) && (i!=m) && (j!=k) && (j!=l) && (j!=m) && (k!=l) && (k!=m) && (l!=m)))
               return VRAI;
           }
         }
@@ -54,19 +54,19 @@ int full(t_joueur *joueur){
 }
 
 int petite_suite(t_joueur *joueur){
-  if((t_joueur->des[1] == t_joueur->des[0]+1 && t_joueur->des[2] == t_joueur->des[1]+1 && t_joueur->des[3] == t_joueur->des[2]+1) && ((t_joueur->des[2] == t_joueur->des[1]+1 && t_joueur->des[3] == t_joueur->des[4]+1 && t_joueur->des[3] == t_joueur->des[2]+1))
+  if(((joueur->des[1] == joueur->des[0]+1) && (joueur->des[2] == joueur->des[1]+1) && (joueur->des[3] == joueur->des[2]+1)) && ((joueur->des[2] == joueur->des[1]+1) && (joueur->des[3] == joueur->des[4]+1) && (joueur->des[3] == joueur->des[2]+1)))
     return VRAI;
   return FAUX;
 }
 
 int grande_suite(t_joueur *joueur){
-  if(t_joueur->des[1] == t_joueur->des[0]+1 && t_joueur->des[2] == t_joueur->des[1]+1 && t_joueur->des[3] == t_joueur->des[2]+1 && t_joueur->des[4] == t_joueur->des[3]+1)
+  if((joueur->des[1] == joueur->des[0]+1) && (joueur->des[2] == joueur->des[1]+1) && (joueur->des[3] == joueur->des[2]+1) && (joueur->des[4] == joueur->des[3]+1))
     return VRAI;
   return FAUX;
 }
 
-int yathzee(t_joueur *joueur){
-  if(t_joueur->des[0] == t_joueur->des[1] == t_joueur->des[2] == t_joueur->des[3] == t_joueur->des[4])
+int yahtzee(t_joueur *joueur){
+  if(joueur->des[0] == joueur->des[1] && joueur->des[1] == joueur->des[2] && joueur->des[2] == joueur->des[3] && joueur->des[3] == joueur->des[4])
     return VRAI;
   else
     return FAUX;
