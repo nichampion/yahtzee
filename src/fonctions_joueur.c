@@ -29,9 +29,9 @@ void detruire_joueur(t_joueur **j) {
 }
 
 void calcul_totaux(t_joueur *j){
-  tot_ssup_avprime = 0;
-  tot_ssup_apprime = 0;
-  tot_sinf = 0;
+  int tot_ssup_avprime = 0;
+  int tot_ssup_apprime = 0;
+  int tot_sinf = 0;
 
   tot_ssup_avprime = (j->tab.as)+(j->tab.deux)+(j->tab.trois)+(j->tab.quatres)+
                      (j->tab.cinq)+(j->tab.six);
