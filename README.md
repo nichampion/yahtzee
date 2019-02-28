@@ -1,5 +1,5 @@
 # yahtzee
-
+Etudiants L2 INFO 2018-2019
 LEMARCHAND Thibault
 BIARD Sunny
 BROUARD Antoine
