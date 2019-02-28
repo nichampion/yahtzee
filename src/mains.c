@@ -6,6 +6,17 @@
 #include "commun.h"
 #include "mains.h"
 
+/**
+	*\fn int somme_des(t_joueur *j)
+	*\param Un pointeur vers un joueur
+	*\return La somme des des
+	*\brief Somm les 5 des du joueurs
+*/
+int somme_des(t_joueur *j) {
+
+
+}
+
 /* chaque fonction parcours le tableau dé et renvoie vrai si le joueur a un de ces cas */
 
 int brelan(t_joueur *joueur){
@@ -19,6 +30,46 @@ int brelan(t_joueur *joueur){
     }
   }
   return FAUX;
+}
+
+/**
+	*\fn full_V2(t_joueur *j)
+	*\param Un pointeur vers un joueur
+	*\return Le nombre de points ou -1 si ce n'est pas un full
+	*\brief Total des 5 des : 3 chiffres X + 2 y
+*/
+int full_V2(t_joueur *j) {
+	int n1 = -1, n2 = -1;
+	int nb_n1 = 0, nb_n2 = 0; /* Occurence de n1 et n2 */
+	int i;
+
+	n1 = j->des[0];
+	nb_n1++;
+
+	for(i = 1; i < N; i++) {
+
+		if(j->des[i] == n1)
+			nb_n1++;
+
+		/* Cas non initialisee */
+		else if(n2 == -1) {
+			n2 = j->des[i];
+			nb_n2++;
+		}
+
+		else if(j->des[i] == n2)
+			nb_n2++;
+
+		/* Cas ou il y a un 3 nombre */
+		else
+			return -1; 
+	}
+
+	if((nb_n1 == 2 && nb_n2 == 3) || (nb_n1 == 3 && nb_n2 == 2))
+		return 25; /* Retourne le nombre de point que rapporte un full */
+		
+	else
+		return -1; /* Retourne -1 si ce n'est pas un full */
 }
 
 int carre(t_joueur *joueur){

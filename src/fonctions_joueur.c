@@ -29,6 +29,7 @@ void init_bloc_note(t_joueur *j) {
 
   j->tab.brelan = VAL_INIT;
   j->tab.carre = VAL_INIT;
+  j->tab.full = VAL_INIT;
   j->tab.petite_Suite = VAL_INIT;
   j->tab.grande_Suite = VAL_INIT;
   j->tab.chance = VAL_INIT;
