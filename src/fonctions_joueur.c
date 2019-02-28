@@ -11,10 +11,22 @@
 */
 
 
-/*void calcul_manche(t_joueur *j){
+t_joueur* cree_joueur(char nom[T]) {
+  int i;
+  t_joueur *j = malloc(sizeof(t_joueur));
 
-}*/
+  for(i = 0; i < N; i++)
+    j->des[i] = 0;
 
+  strcpy(j->nom, nom);
+
+  return j;
+}
+
+void detruire_joueur(t_joueur **j) {
+  free(*j);
+  (*j) = NULL;
+}
 
 void calcul_totaux(t_joueur *j){
   tot_ssup_avprime = 0;
