@@ -6,6 +6,8 @@
 #include "commun.h"
 #include "mains.h"
 
+/* chaque fonction parcours le tableau dé et renvoie vrai si le joueur a un de ces cas */
+
 int brelan(t_joueur *joueur){
   int i,j,k;
   for(i = 0; i<=4; i++){
