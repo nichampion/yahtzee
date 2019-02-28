@@ -5,9 +5,15 @@
 
 /**
 	*\file affichage.c
-	*\brief
+	*\brief Permet l'affichage du jeu
 */
 
+/**
+  *\fn void affichage(t_joueur *j1, t_joueur *j2, t_joueur *jc)
+  *\param 2 pointeurs sur les joueurs et un pointeur sur le joueur courant
+  *\brief Affiche un tour entre 2 joueurs
+  *\author Nicolas CHAMPION
+*/
 void affichage(t_joueur *j1, t_joueur *j2, t_joueur *jc) {
 
   printf("* * * * * * * * * * *  YAHTZEE  * * * * * * * * * * *\n");
