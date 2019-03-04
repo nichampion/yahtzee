@@ -12,10 +12,10 @@
 	*\return La somme des des
 	*\brief Somm les 5 des du joueurs
 */
-int somme_des(t_joueur *j) {
+/*int somme_des(t_joueur *j) {
 
 
-}
+}*/
 
 /**
 	*\fn void tri_bulle(int tab[],int taille)
@@ -61,27 +61,58 @@ int brelan(t_joueur *joueur){
 	*\brief Total des 5 des : 3 chiffres X + 2 derniers resultats des dés obligatoirement différents
 */
 int brelan_V2(t_joueur *j) {
-	int n1 = -1;
-	int nb_n1 = 0; /* Occurence de n1 et n2 */
+	int n1 = -1, n2 = -1, n3 = -1; /*Test avec 3 des car 2 des différents et 1 brelan*/
+	int nb_n1 = 0,nb_n2 = 0,nb_n3 = 0; /* Occurence de n1 et n2 */
 	int i;
-  int res;
+	int tab[N];
+  int res = 0;
 
-	n1 = j->des[0];
+	for(i=0;i<N;i++)
+		tab[i] = j->des[i];
+
+	tri_bulle(tab,N);
+
+	n1 = tab[0];
 	nb_n1++;
 
 	for(i = 1; i < N; i++) {
 
-		if(j->des[i] == n1)
+		if(tab[i] == n1)
 			nb_n1++;
 
+		else if (n2 == -1 && nb_n1 < 3){ /*Si de different de dé n1 et pas de brelan avant*/
+			n2 = tab[i];
+			nb_n2++;
+			res += n1;
+		}
+
+		else if(tab[i] == n2)
+			nb_n2++;
+
+		else if (n3 == -1 && nb_n2 < 3){ /*Si de different de de n2 et pas de brelan avant*/
+			n3 = tab[i];
+			nb_n3++;
+			res += n2;
+		}
+
+		else if(tab[i] == n3)
+			nb_n3++;
+
 		else
-			res += j->des[i];
+			res += tab[i];
 
 	}
-  res = res + (n1 * 3);
 
-	if(nb_n1 == 3)
-		return res; /* Retourne le nombre de point que rapporte un brelan */
+/*Test si brelan */
+
+	if(nb_n1 == 3 )
+		return ((n1 * 3) + res ); /* Retourne le nombre de point que rapporte un brelan */
+
+	else if(nb_n2 == 3)
+		return ((n2 * 3) + res );
+
+	else if(nb_n3 == 3)
+		return((n3 * 3) + res );
 
 	else
 		return -1; /* Retourne -1 si ce n'est pas un brelan */
@@ -110,27 +141,44 @@ int carre(t_joueur *joueur){
 	*\brief Total des 5 des : 4 chiffres X + 1 resultats des dés obligatoirement différent des 4 autres
 */
 int carre_V2(t_joueur *j) {
-	int n1 = -1;
-	int nb_n1 = 0; /* Occurence de n1 et n2 */
+	int n1 = -1,n2 = -1;
+	int nb_n1 = 0,nb_n2 = 0;/* Occurence de n1 et n2 */
 	int i;
-  int res;
+	int tab[N];
+  int res = 0;
 
-	n1 = j->des[0];
+	for(i=0;i<N;i++)
+		tab[i] = j->des[i];
+
+	tri_bulle(tab,N);
+	n1 = tab[0];
 	nb_n1++;
 
 	for(i = 1; i < N; i++) {
 
-		if(j->des[i] == n1)
+		if(tab[i] == n1)
 			nb_n1++;
+
+		else if(n2 == -1 && nb_n1 < 4){
+			res+=n1;
+			n2 = tab[i];
+			nb_n2++;
+		}
+
+		else if(tab[i] == n2)
+			nb_n2++;
 
 		else
 			res += j->des[i];
 
 	}
-  res = res + (n1 * 4);
+
 
 	if(nb_n1 == 4)
-		return res; /* Retourne le nombre de point que rapporte un brelan */
+		return (res + (n1 * 4)); /* Retourne le nombre de point que rapporte un carre */
+
+	else if(nb_n2 == 4)
+		return (res + (n2 * 4));
 
 	else
 		return -1; /* Retourne -1 si ce n'est pas un brelan */
@@ -303,6 +351,8 @@ int yahtzee_V2(t_joueur *j) {
   int nb_n1 = 0;
 	int i;
 
+
+
   n1 = j->des[0]; /*n1 prend la valeur du premier de*/
   nb_n1++;
 
@@ -313,7 +363,9 @@ int yahtzee_V2(t_joueur *j) {
     else  /*Si pas de yahtzee*/
       return -1;
   }
+  if(nb_n1 == 5)
     return 50; /*Retourne le resultat*/
 
+  return 0;
 
 }
