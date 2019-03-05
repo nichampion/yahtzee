@@ -55,7 +55,7 @@ void tri_bulle(int tab[],int taille){
 	*\brief calcul le nombre de dé ayant le nombre voulu par le joueur
   *\author BROUARD Antoine
 */
-int section_superieur(t_joueur *joueur, int nb_test){
+int section_superieure(t_joueur *joueur, int nb_test){
   int i, res = 0;
   for(i = 0; i<N; i++){
     if(joueur->des[i] == nb_test)

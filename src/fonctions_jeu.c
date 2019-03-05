@@ -5,7 +5,7 @@
 
 #include "commun.h"
 #include "fonctions_jeu.h"
-#include "fonctions_joueurs.h"
+#include "fonctions_joueur.h"
 #include "mains.h"
 
 /**
@@ -61,51 +61,51 @@ int relancer(t_joueur * j){
  Test de toutes les combinaisons possibles avec les dés du joueur j
  Affichage de ces possibilités de jeu
 */
-int test_mains(t_joueur *j){
+void test_mains(t_joueur *j){
 
 	t_joueur * j_test;
 	init_bloc_note(j_test);
 
-	if((j->as) == VAL_INIT)
-		j_test.tab->as = section_superieure(j,1);
+	if((j->tab.as) == VAL_INIT)
+		j_test->tab.as = section_superieure(j,1);
 
-	if((j->deux) == VAL_INIT)
-		j_test.tab->deux = section_superieure(j,2);
+	if((j->tab.deux) == VAL_INIT)
+		j_test->tab.deux = section_superieure(j,2);
 
-	if((j->trois) == VAL_INIT)
-		j_test.tab->trois = section_superieure(j,3);
+	if((j->tab.trois) == VAL_INIT)
+		j_test->tab.trois = section_superieure(j,3);
 
-	if((j->quatre) == VAL_INIT)
-		j_test.tab->quatre = section_superieure(j,4);
+	if((j->tab.quatres) == VAL_INIT)
+		j_test->tab.quatres = section_superieure(j,4);
 
-	if((j->cinq) == VAL_INIT)
-		j_test.tab->cinq = section_superieure(j,5);
+	if((j->tab.cinq) == VAL_INIT)
+		j_test->tab.cinq = section_superieure(j,5);
 
-	if((j->six) == VAL_INIT)
-		j_test.tab->six = section_superieure(j,6);
+	if((j->tab.six) == VAL_INIT)
+		j_test->tab.six = section_superieure(j,6);
 
-	if((j->brelan) == VAL_INIT)
-		j_test.tab->brelan = brelan(j);
+	if((j->tab.brelan) == VAL_INIT)
+		j_test->tab.brelan = brelan(j);
 
-	if((j->carre) == VAL_INIT)
-		j_test.tab->carre = carre(j);
+	if((j->tab.carre) == VAL_INIT)
+		j_test->tab.carre = carre(j);
 
-	if((j->full) == VAL_INIT)
-		j_test.tab->full = full(j);
+	if((j->tab.full) == VAL_INIT)
+		j_test->tab.full = full(j);
 
-	if((j->petite_Suite) == VAL_INIT)
-		j_test.tab->petite_Suite = petite_suite(j);
+	if((j->tab.petite_Suite) == VAL_INIT)
+		j_test->tab.petite_Suite = petite_suite(j);
 
-	if((j->grande_Suite) == VAL_INIT)
-		j_test.tab->grande_Suite = grande_suite(j);
+	if((j->tab.grande_Suite) == VAL_INIT)
+		j_test->tab.grande_Suite = grande_suite(j);
 
-	if((j->chance) == VAL_INIT)
-		j_test.tab->chance = chance(j);
+	if((j->tab.chance) == VAL_INIT)
+		j_test->tab.chance = chance(j);
 
-	if((j->yahtzee) == VAL_INIT)
-		j_test.tab->yahtzee = yahtzee(j);
-	else if((j->yahtzee) == 50))
-		j_test.tab->prime_Yahtzee == 100;
+	if((j->tab.yahtzee) == VAL_INIT)
+		j_test->tab.yahtzee = yahtzee(j);
+	else if((j->tab.yahtzee) == 50)
+		j_test->tab.prime_Yahtzee = 100;
 
 	affichage_possibilites(j,j_test);
 
@@ -123,67 +123,67 @@ void affichage_possibilites(t_joueur * j, t_joueur * j_test){
   printf("*\t._______________________________.\t\t*\n");
   printf("*\t|\t\t%s\t\t*\n", j->nom);
   printf("*\t|-------------------------------|\t\t*\n");
-	if(j_test.tab->as)
-  	printf("*\t| As\t\t%d\t\t*\n", j_test.tab->as);
+	if(j_test->tab.as)
+  	printf("*\t| As\t\t%d\t\t*\n", j_test->tab.as);
 	else
   	printf("*\t| As\t\tX\t\t*\n");
-	if(j_test.tab->deux)
-	  printf("*\t| Deux\t\t%d\t\t*\n", j_test.tab->deux);
+	if(j_test->tab.deux)
+	  printf("*\t| Deux\t\t%d\t\t*\n", j_test->tab.deux);
 	else
-	  printf("*\t| Deux\t\tX\t\t*\n", j_test.tab->deux);
-	if(j_test.tab->trois)
-	  printf("*\t| Trois\t\t%d\t\t*\n", j_test.tab->trois);
+	  printf("*\t| Deux\t\tX\t\t*\n");
+	if(j_test->tab.trois)
+	  printf("*\t| Trois\t\t%d\t\t*\n", j_test->tab.trois);
 	else
-	  printf("*\t| Trois\t\tX\t\t*\n", j_test.tab->trois);
-	if(j_test.tab->quatre)
-	  printf("*\t| Quatre\t\t%d\t\t*\n", j_test.tab->quatre);
+	  printf("*\t| Trois\t\tX\t\t*\n");
+	if(j_test->tab.quatres)
+	  printf("*\t| quatres\t\t%d\t\t*\n", j_test->tab.quatres);
 	else
-	  printf("*\t| Quatre\t\tX\t\t*\n", j_test.tab->quatre);
-	if(j_test.tab->cinq)
-	  printf("*\t| Cinq\t\t%d\t\t*\n", j_test.tab->cinq);
+	  printf("*\t| quatres\t\tX\t\t*\n");
+	if(j_test->tab.cinq)
+	  printf("*\t| Cinq\t\t%d\t\t*\n", j_test->tab.cinq);
 	else
-	  printf("*\t| Cinq\t\tX\t\t*\n", j_test.tab->cinq);
-	if(j_test.tab->six)
-	  printf("*\t| Six\t\t%d\t\t*\n", j_test.tab->six);
+	  printf("*\t| Cinq\t\tX\t\t*\n");
+	if(j_test->tab.six)
+	  printf("*\t| Six\t\t%d\t\t*\n", j_test->tab.six);
 	else
-	  printf("*\t| Six\t\tX\t\t*\n", j_test.tab->six);
+	  printf("*\t| Six\t\tX\t\t*\n");
 
 	printf("*\t| Total\t\t%d\t\t*\n", j->tab.total_Sup);
 	printf("*\t| Prime\t\t%d\t\t*\n", j->tab.prime_35pts);
   printf("*\t|-------------------------------|\t\t*\n");
 
-	if(j_test.tab->brelan
-	  printf("*\t| Brelan\t\t%d\t\t*\n", j_test.tab->brelan);
+	if(j_test->tab.brelan)
+	  printf("*\t| Brelan\t\t%d\t\t*\n", j_test->tab.brelan);
 	else
-	  printf("*\t| Brelan\t\tX\t\t*\n", j_test.tab->brelan);
-	if(j_test.tab->carre
-	  printf("*\t| Carre\t\t%d\t\t*\n", j_test.tab->carre);
+	  printf("*\t| Brelan\t\tX\t\t*\n");
+	if(j_test->tab.carre)
+	  printf("*\t| Carre\t\t%d\t\t*\n", j_test->tab.carre);
 	else
-	  printf("*\t| Carre\t\tX\t\t*\n", j_test.tab->carre);
-	if(j_test.tab->full
-	  printf("*\t| Full\t\t%d\t\t*\n", j_test.tab->full);
+	  printf("*\t| Carre\t\tX\t\t*\n");
+	if(j_test->tab.full)
+	  printf("*\t| Full\t\t%d\t\t*\n", j_test->tab.full);
 	else
-	  printf("*\t| Full\t\tX\t\t*\n", j_test.tab->full);
-	if(j_test.tab->petite_Suite
-	  printf("*\t| Petite Suite\t\t%d\t\t*\n", j_test.tab->petite_Suite);
+	  printf("*\t| Full\t\tX\t\t*\n");
+	if(j_test->tab.petite_Suite)
+	  printf("*\t| Petite Suite\t\t%d\t\t*\n", j_test->tab.petite_Suite);
 	else
-	  printf("*\t| Petite Suite\t\tX\t\t*\n", j_test.tab->petite_Suite);
-	if(j_test.tab->grande_Suite
-	  printf("*\t| Grande Suite\t\t%d\t\t*\n", j_test.tab->grande_Suite);
+	  printf("*\t| Petite Suite\t\tX\t\t*\n");
+	if(j_test->tab.grande_Suite)
+	  printf("*\t| Grande Suite\t\t%d\t\t*\n", j_test->tab.grande_Suite);
 	else
-	  printf("*\t| Grande Suite\t\tX\t\t*\n", j_test.tab->grande_Suite);
-	if(j_test.tab->chance
-	  printf("*\t| Chance\t\t%d\t\t*\n", j_test.tab->chance);
+	  printf("*\t| Grande Suite\t\tX\t\t*\n");
+	if(j_test->tab.chance)
+	  printf("*\t| Chance\t\t%d\t\t*\n", j_test->tab.chance);
 	else
-	  printf("*\t| Chance\t\tX\t\t*\n", j_test.tab->chance);
-	if(j_test.tab->yahtzee
-	  printf("*\t| Yahtzee\t\t%d\t\t*\n", j_test.tab->yahtzee);
+	  printf("*\t| Chance\t\tX\t\t*\n");
+	if(j_test->tab.yahtzee)
+	  printf("*\t| Yahtzee\t\t%d\t\t*\n", j_test->tab.yahtzee);
 	else
-	  printf("*\t| Yahtzee\t\tX\t\t*\n", j_test.tab->yahtzee);
-	if(j_test.tab->prime_Yahtzee
+	  printf("*\t| Yahtzee\t\tX\t\t*\n");
+	if(j_test->tab.prime_Yahtzee)
 	  printf("*\t| Prime\t\t%d\t\t*\n", j->tab.prime_Yahtzee);
 	else
-	  printf("*\t| Prime\t\tX\t\t*\n", j->tab.prime_Yahtzee);
+	  printf("*\t| Prime\t\tX\t\t*\n");
 
 	printf("*\t| Total\t\t%d\t\t*\n", j->tab.total_Inf);
   printf("*\t|-------------------------------|\t\t*\n");
