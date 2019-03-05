@@ -22,7 +22,7 @@ void init_bloc_note(t_joueur *j) {
   j->tab.as = VAL_INIT;
   j->tab.deux = VAL_INIT;
   j->tab.trois = VAL_INIT;
-  j->tab.quatre = VAL_INIT;
+  j->tab.quatres = VAL_INIT;
   j->tab.cinq = VAL_INIT;
   j->tab.six = VAL_INIT;
   j->tab.prime_35pts = VAL_INIT;
@@ -78,7 +78,7 @@ void detruire_joueur(t_joueur **j) {
 void prime_tab(t_joueur *j){
   int tot_tab_sup = 0;
 
-  tot_tab_sup = (j->tab.as)+(j->tab.deux)+(j->tab.trois)+(j->tab.quatre)+
+  tot_tab_sup = (j->tab.as)+(j->tab.deux)+(j->tab.trois)+(j->tab.quatres)+
                      (j->tab.cinq)+(j->tab.six);
 
   if(tot_tab_sup >= 63)
@@ -91,7 +91,9 @@ void calcul_totaux(t_joueur *j){
   int tot_ssup_apprime = 0;
   int tot_sinf = 0;
 
-  tot_ssup_apprime = tot_ssup_avprime + j->tab.prime_35pts;
+  prime_tab(j);
+  tot_ssup_apprime = (j->tab.as)+(j->tab.deux)+(j->tab.trois)+(j->tab.quatres)+
+                     (j->tab.cinq)+(j->tab.six)+ j->tab.prime_35pts;
 
   tot_sinf = (j->tab.brelan)+(j->tab.carre)+(j->tab.full)+(j->tab.petite_Suite)+
              (j->tab.grande_Suite)+(j->tab.yahtzee)+(j->tab.chance)+(j->tab.prime_Yahtzee);
