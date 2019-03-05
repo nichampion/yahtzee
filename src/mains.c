@@ -12,10 +12,14 @@
 	*\return La somme des des
 	*\brief Somm les 5 des du joueurs
 */
-/*int somme_des(t_joueur *j) {
+int somme_des(t_joueur *j) {
+  int i, somme = 0;
 
+  for(i = 0; i < N; i++)
+    somme += j->tab[i];
 
-}*/
+  return somme;
+}
 
 /**
 	*\fn void tri_bulle(int tab[],int taille)
@@ -119,6 +123,54 @@ int brelan(t_joueur *j) {
 		return -1; /* Retourne -1 si ce n'est pas un brelan */
 }
 
+/**
+	*\fn brelan_V3(t_joueur *j)
+	*\param Un pointeur vers un joueur
+	*\return Le nombre de points ou -1 si ce n'est pas un brelan
+	*\brief Total des 5 des : 3 chiffres X + 2 derniers resultats des dés obligatoirement différents
+*/
+int brelan_V3(t_joueur *j) {
+	int n1 = -1, n2 = -1, n3 = -1;
+	int nb_n1 = 0, nb_n2 = 0, nb_n3 = 0; /* Occurence de n1, n2 et n3 */
+	int i;
+  int res = 0;
+
+	n1 = tab[0];
+	nb_n1++;
+
+	for(i = 1; i < N; i++) {
+
+		if(tab[i] == n1)
+			nb_n1++;
+
+    else if(n2 == -1) {
+      n2 = tab[i];
+      nb_n2++;
+    }
+		else if(tab[i] == n2)
+			nb_n2++;
+
+    else if(n3 == -1) {
+      n3 = tab[i];
+      nb_n3++;
+    }
+		else if(tab[i] == n3)
+			nb_n3++;
+
+		else
+			return -1;  /* Retourne -1 si ce n'est pas un brelan */
+
+	}
+
+  if((nb_n1 == 1) && (nb_n2 == 1) && (nb_n3 == 3))
+    return somme_des(j);
+  else if((nb_n1 == 1) && (nb_n2 == 3) && (nb_n3 == 1))
+    return somme_des(j);
+  else if((nb_n1 == 3) && (nb_n2 == 1) && (nb_n3 == 1))
+    return somme_des(j);
+	else
+		return -1; /* Retourne -1 si ce n'est pas un brelan */
+}
 
 /*int carre(t_joueur *joueur){
   int i,j,k,l;
