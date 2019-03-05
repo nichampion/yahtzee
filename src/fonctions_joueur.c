@@ -75,6 +75,18 @@ void detruire_joueur(t_joueur **j) {
   (*j) = NULL;
 }
 
+void prime_tab(t_joueur *j){
+  int tot_tab_sup = 0;
+
+  tot_tab_sup = (j->tab.as)+(j->tab.deux)+(j->tab.trois)+(j->tab.quatres)+
+                     (j->tab.cinq)+(j->tab.six);
+
+  if(tot_tab_sup >= 63)
+    j->tab.prime_35pts = 35;
+  else
+   j->tab.prime_35pts = 0;
+}
+
 void calcul_totaux(t_joueur *j){
   int tot_ssup_avprime = 0;
   int tot_ssup_apprime = 0;
