@@ -47,6 +47,7 @@ void tri_bulle(int tab[],int taille){
   }while(test);
 }
 
+
 /**
 	*\fn section_superieur(t_joueur *joueur, int nb_test)
 	*\param Un pointeur vers un joueur et un le nombre que l'on souhaite tester
@@ -63,6 +64,7 @@ int section_superieur(t_joueur *joueur, int nb_test){
   return nb_test;
 }
 
+
 /**
 	*\fn chance(t_joueur * joueur)
 	*\param Un pointeur vers un joueur
@@ -73,6 +75,7 @@ int section_superieur(t_joueur *joueur, int nb_test){
 int chance(t_joueur * joueur){
   return(somme_des(joueur));
 }
+
 
 /**
 	*\fn brelan(t_joueur *j)
@@ -135,7 +138,8 @@ int carre(t_joueur *j) {
 	int nb_n1 = 0, nb_n2 = 0; /* Occurence de n1, n2 */
 	int i;
 
-
+  int dep; /*Depart de la boucle for si exemple des -> 1 3 4 5 6 donc petite suite -> 3 4 5 6*/
+  int test = 1; /*Permet de savoir si on a testé*/
 	n1 = j->des[0];
 	nb_n1++;
 
@@ -165,23 +169,6 @@ int carre(t_joueur *j) {
 		return -1; /* Retourne -1 si ce n'est pas un brelan */
 }
 
-
-/*int full(t_joueur *joueur){
-  int i,j,k,l,m;
-  for(i = 0; i<=4; i++){
-    for(j = 0; j<=4; j++){
-      for(k = 0; k<=4; k++){
-        for(l = 0; l<=4; l++){
-          for(m = 0; m<=4; m++){
-            if((joueur->des[i] == joueur->des[j] && joueur->des[j] == joueur->des[k] && joueur->des[k] != joueur->des[l] && joueur->des[l] == joueur->des[m]) && ((i!=j) && (i!=k) && (i!=l) && (i!=m) && (j!=k) && (j!=l) && (j!=m) && (k!=l) && (k!=m) && (l!=m)))
-              return VRAI;
-          }
-        }
-      }
-    }
-  }
-  return FAUX;
-}*/
 
 /**
 	*\fn full(t_joueur *j)
@@ -231,7 +218,6 @@ int full(t_joueur *j) {
 	*\brief Total des 5 des : 4 dés se suivent + 1 dé ne suivant pas le reste
   *\Author : LEMARCHAND Thibault
 */
-
 int petitesuite(t_joueur *j) {
 	int n1 = -1; /*Prend la valeur du dé*/
 	int i;
@@ -269,6 +255,30 @@ int petitesuite(t_joueur *j) {
 
 }
 
+int petitesuiteV2(t_joueur *j) {
+	int i;
+  int tab[N]; /*Tableau de dé*/
+  int nb_cons = 0;
+
+  for(i = 0; i < N; i++) /* On met les des du joueur dans le tableau tab afin de pouvoir trier par ondre croissant les des */
+    tab[i] = j->des[i];
+
+  tri_bulle(tab, N);
+
+  for(i = 0; i < (N - 1); i++) {
+    if(tab[i + 1] - tab[i] == 1)
+      nb_cons++;
+  }
+
+  if(nb_cons == 4)
+    return 30; /*Retourne le resultat*/
+
+  else
+    return -1;
+
+}
+
+
 /**
 	*\fn int grandesuite(t_joueur *j)
 	*\param Un pointeur vers un joueur
@@ -276,7 +286,6 @@ int petitesuite(t_joueur *j) {
 	*\brief Total des 5 des : 5 dés se suivent
   *\Author : LEMARCHAND Thibault
 */
-
 int grandesuite(t_joueur *j) {
 	int n1 = -1; /*Prend la valeur du dé*/
 	int i;
@@ -302,6 +311,7 @@ int grandesuite(t_joueur *j) {
 
 }
 
+
 /**
 	*\fn int yahtzee(t_joueur *j)
 	*\param Un pointeur vers un joueur
@@ -309,7 +319,6 @@ int grandesuite(t_joueur *j) {
 	*\brief Total des 5 des : 5 dés egaux
   *\Author : BROUARD Antoine
 */
-
 int yahtzee(t_joueur *joueur){
   if(joueur->des[0] == joueur->des[1] && joueur->des[1] == joueur->des[2] && joueur->des[2] == joueur->des[3] && joueur->des[3] == joueur->des[4])
     return 50;
