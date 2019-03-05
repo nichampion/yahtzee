@@ -21,8 +21,7 @@
  Affectation d'un nombre tiré aléatoirement entre 1 et 6 au dé n°i
 */
 void lancer(t_joueur * j, int i){
-
-	srand(time(NULL));
+	
 	j->des[i] = rand()%(7-1) + 1;
 
 }
