@@ -266,11 +266,13 @@ int petitesuiteV2(t_joueur *j) {
   tri_bulle(tab, N);
 
   for(i = 0; i < (N - 1); i++) {
-    if(tab[i + 1] - tab[i] == 1)
+    if(tab[i] + 1 == tab[i + 1])
       nb_cons++;
+    else if(nb_cons < 3)
+      nb_cons = 0;
   }
 
-  if(nb_cons == 4)
+  if(nb_cons == 3)
     return 30; /*Retourne le resultat*/
 
   else
@@ -287,27 +289,27 @@ int petitesuiteV2(t_joueur *j) {
   *\Author : LEMARCHAND Thibault
 */
 int grandesuite(t_joueur *j) {
-	int n1 = -1; /*Prend la valeur du dé*/
-	int i;
-  int tab[5]; /*Tableau de dé*/
+  int i;
+  int tab[N]; /*Tableau de dé*/
+  int nb_cons = 0;
 
-  for(i=0;i<5;i++) /*On met les des du joueur dans le tableau tab afin de pouvoir trier par ondre croissant les des*/
+  for(i = 0; i < N; i++) /* On met les des du joueur dans le tableau tab afin de pouvoir trier par ondre croissant les des */
     tab[i] = j->des[i];
 
-  tri_bulle(tab,5);
+  tri_bulle(tab, N);
 
-  n1 = tab[0]; /*n1 prend la valeur du premier de*/
-
-
-  for(i = 1;i<5;i++){ /*Test des des a partir du pt de depart précedemment calculé*/
-    if(tab[i] == (n1+1)){ /*Si val du de precedent = val du de actuel*/
-      n1 = tab[i]; /*De precedent = de actuel*/
-    }
-    else  /*Si pas de grande suite*/
-      return -1;
+  for(i = 0; i < (N - 1); i++) {
+    if(tab[i] + 1 == tab[i + 1])
+      nb_cons++;
+    else if(nb_cons < 4)
+      nb_cons = 0;
   }
 
-  return 40; /*Retourne le resultat*/
+  if(nb_cons == 4)
+    return 40; /*Retourne le resultat*/
+
+  else
+    return -1;
 
 }
 
