@@ -12,7 +12,7 @@
 
 /**
 	*\file main.c
-	*\brief
+	*\Main du jeu
 	*\version 1.0
 	*\Author : Sunny BIARD
 */

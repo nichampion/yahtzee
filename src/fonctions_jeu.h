@@ -3,7 +3,7 @@
 
 /**
 	*\file lancer.h
-	*\brief
+	*\Prototypes des fonctions de fonctions_jeu.c
 	*\version 1.0
 	*\Author : Sunny BIARD
 */

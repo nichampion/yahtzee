@@ -10,11 +10,16 @@
 
 /**
 	*\file lancer.c
-	*\brief
+	*\Fonctions du jeu
 	*\version 1.0
 	*\Author : Sunny BIARD
 */
 
+/************************
+ Fonction de lancer de dé
+ ************************
+ Affectation d'un nombre tiré aléatoirement entre 1 et 6 au dé n°i
+*/
 void lancer(t_joueur * j, int i){
 
 	srand(time(NULL));
@@ -22,6 +27,12 @@ void lancer(t_joueur * j, int i){
 
 }
 
+/************************
+ Fonction de relancement de dé
+ ************************
+ Choix du/des dés à relancer
+ Relancement de ces dés par appel de "lancer"
+*/
 int relancer(t_joueur * j){
 
 	int i, relance, rep;
@@ -44,6 +55,12 @@ int relancer(t_joueur * j){
 	return 0;
 }
 
+/*******************************************
+ Fonction de test des combinaisons possibles
+ *******************************************
+ Test de toutes les combinaisons possibles avec les dés du joueur j
+ Affichage de ces possibilités de jeu
+*/
 int test_mains(t_joueur *j){
 
 	t_joueur * j_test;
@@ -94,6 +111,11 @@ int test_mains(t_joueur *j){
 
 }
 
+/***********************************************
+ Fonction d'affichage des combinaisons possibles
+ ***********************************************
+ Affichage des combinaisons possibles et croix pour les cases déjà remplies pour le joueur j
+*/
 void affichage_possibilites(t_joueur * j, t_joueur * j_test){
 
 	printf("* * * * * * * * * * CHOIX POSSIBLES * * * * * * * * * * * \n");
