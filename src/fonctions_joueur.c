@@ -98,6 +98,8 @@ void calcul_totaux(t_joueur *j){
   tot_sinf = (j->tab.brelan)+(j->tab.carre)+(j->tab.full)+(j->tab.petite_Suite)+
              (j->tab.grande_Suite)+(j->tab.yahtzee)+(j->tab.chance)+(j->tab.prime_Yahtzee);
 
+  j->tab.total_Sup = tot_ssup_apprime;
+  j->tab.total_Inf = tot_sinf;          
   j->tab.total_Gen = tot_ssup_apprime+tot_sinf;
 
   printf("%d",j->tab.total_Gen);
