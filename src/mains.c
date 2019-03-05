@@ -59,102 +59,40 @@ void tri_bulle(int tab[],int taille){
   return FAUX;
 }*/
 
+
 /**
 	*\fn brelan(t_joueur *j)
 	*\param Un pointeur vers un joueur
 	*\return Le nombre de points ou -1 si ce n'est pas un brelan
 	*\brief Total des 5 des : 3 chiffres X + 2 derniers resultats des dés obligatoirement différents
+  *\author CHAMPION Nicolas
 */
 int brelan(t_joueur *j) {
-	int n1 = -1, n2 = -1, n3 = -1; /*Test avec 3 des car 2 des différents et 1 brelan*/
-	int nb_n1 = 0,nb_n2 = 0,nb_n3 = 0; /* Occurence de n1 et n2 */
-	int i;
-	int tab[N];
-  int res = 0;
-
-	for(i=0;i<N;i++)
-		tab[i] = j->des[i];
-
-	tri_bulle(tab,N);
-
-	n1 = tab[0];
-	nb_n1++;
-
-	for(i = 1; i < N; i++) {
-
-		if(tab[i] == n1)
-			nb_n1++;
-
-		else if (n2 == -1 && nb_n1 < 3){ /*Si de different de dé n1 et pas de brelan avant*/
-			n2 = tab[i];
-			nb_n2++;
-			res += n1;
-		}
-
-		else if(tab[i] == n2)
-			nb_n2++;
-
-		else if (n3 == -1 && nb_n2 < 3){ /*Si de different de de n2 et pas de brelan avant*/
-			n3 = tab[i];
-			nb_n3++;
-			res += n2;
-		}
-
-		else if(tab[i] == n3)
-			nb_n3++;
-
-		else
-			res += tab[i];
-
-	}
-
-/*Test si brelan */
-
-	if(nb_n1 == 3 )
-		return ((n1 * 3) + res ); /* Retourne le nombre de point que rapporte un brelan */
-
-	else if(nb_n2 == 3)
-		return ((n2 * 3) + res );
-
-	else if(nb_n3 == 3)
-		return((n3 * 3) + res );
-
-	else
-		return -1; /* Retourne -1 si ce n'est pas un brelan */
-}
-
-/**
-	*\fn brelan_V3(t_joueur *j)
-	*\param Un pointeur vers un joueur
-	*\return Le nombre de points ou -1 si ce n'est pas un brelan
-	*\brief Total des 5 des : 3 chiffres X + 2 derniers resultats des dés obligatoirement différents
-*/
-int brelan_V3(t_joueur *j) {
 	int n1 = -1, n2 = -1, n3 = -1;
 	int nb_n1 = 0, nb_n2 = 0, nb_n3 = 0; /* Occurence de n1, n2 et n3 */
 	int i;
   int res = 0;
 
-	n1 = tab[0];
+	n1 = j->des[0];
 	nb_n1++;
 
 	for(i = 1; i < N; i++) {
 
-		if(tab[i] == n1)
+		if(j->des[i] == n1)
 			nb_n1++;
 
     else if(n2 == -1) {
-      n2 = tab[i];
+      n2 = j->des[i];
       nb_n2++;
     }
-		else if(tab[i] == n2)
+		else if(j->des[i] == n2)
 			nb_n2++;
 
     else if(n3 == -1) {
-      n3 = tab[i];
+      n3 = j->des[i];
       nb_n3++;
     }
-		else if(tab[i] == n3)
+		else if(j->des[i] == n3)
 			nb_n3++;
 
 		else
@@ -171,6 +109,7 @@ int brelan_V3(t_joueur *j) {
 	else
 		return -1; /* Retourne -1 si ce n'est pas un brelan */
 }
+
 
 /*int carre(t_joueur *joueur){
   int i,j,k,l;
