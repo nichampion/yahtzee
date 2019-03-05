@@ -42,7 +42,7 @@ void tri_bulle(int tab[],int taille){
 
 /* chaque fonction parcours le tableau dé et renvoie vrai si le joueur a un de ces cas */
 
-int brelan(t_joueur *joueur){
+/*int brelan(t_joueur *joueur){
   int i,j,k;
   for(i = 0; i<=4; i++){
     for(j = 0; j<=4; j++){
@@ -53,14 +53,15 @@ int brelan(t_joueur *joueur){
     }
   }
   return FAUX;
-}
+}*/
+
 /**
-	*\fn brelan_V2(t_joueur *j)
+	*\fn brelan(t_joueur *j)
 	*\param Un pointeur vers un joueur
 	*\return Le nombre de points ou -1 si ce n'est pas un brelan
 	*\brief Total des 5 des : 3 chiffres X + 2 derniers resultats des dés obligatoirement différents
 */
-int brelan_V2(t_joueur *j) {
+int brelan(t_joueur *j) {
 	int n1 = -1, n2 = -1, n3 = -1; /*Test avec 3 des car 2 des différents et 1 brelan*/
 	int nb_n1 = 0,nb_n2 = 0,nb_n3 = 0; /* Occurence de n1 et n2 */
 	int i;
@@ -119,7 +120,7 @@ int brelan_V2(t_joueur *j) {
 }
 
 
-int carre(t_joueur *joueur){
+/*int carre(t_joueur *joueur){
   int i,j,k,l;
   for(i = 0; i<=4; i++){
     for(j = 0; j<=4; j++){
@@ -133,14 +134,15 @@ int carre(t_joueur *joueur){
   }
   return FAUX;
 }
+*/
 
 /**
-	*\fn carre_V2(t_joueur *j)
+	*\fn carre(t_joueur *j)
 	*\param Un pointeur vers un joueur
 	*\return Le nombre de points ou -1 si ce n'est pas un carre
 	*\brief Total des 5 des : 4 chiffres X + 1 resultats des dés obligatoirement différent des 4 autres
 */
-int carre_V2(t_joueur *j) {
+int carre(t_joueur *j) {
 	int n1 = -1,n2 = -1;
 	int nb_n1 = 0,nb_n2 = 0;/* Occurence de n1 et n2 */
 	int i;
@@ -185,7 +187,7 @@ int carre_V2(t_joueur *j) {
 }
 
 
-int full(t_joueur *joueur){
+/*int full(t_joueur *joueur){
   int i,j,k,l,m;
   for(i = 0; i<=4; i++){
     for(j = 0; j<=4; j++){
@@ -200,15 +202,15 @@ int full(t_joueur *joueur){
     }
   }
   return FAUX;
-}
+}*/
 
 /**
-	*\fn full_V2(t_joueur *j)
+	*\fn full(t_joueur *j)
 	*\param Un pointeur vers un joueur
 	*\return Le nombre de points ou -1 si ce n'est pas un full
 	*\brief Total des 5 des : 3 chiffres X + 2 y
 */
-int full_V2(t_joueur *j) {
+int full(t_joueur *j) {
 	int n1 = -1, n2 = -1;
 	int nb_n1 = 0, nb_n2 = 0; /* Occurence de n1 et n2 */
 	int i;
@@ -243,21 +245,15 @@ int full_V2(t_joueur *j) {
 }
 
 
-int petite_suite(t_joueur *joueur){
-  if(((joueur->des[1] == joueur->des[0]+1) && (joueur->des[2] == joueur->des[1]+1) && (joueur->des[3] == joueur->des[2]+1)) && ((joueur->des[2] == joueur->des[1]+1) && (joueur->des[3] == joueur->des[4]+1) && (joueur->des[3] == joueur->des[2]+1)))
-    return VRAI;
-  return FAUX;
-}
-
 /**
-	*\fn int petitesuite_V2(t_joueur *j)
+	*\fn int petitesuite(t_joueur *j)
 	*\param Un pointeur vers un joueur
   *\return Le nombre de points ou -1 si pas de petite suite
 	*\brief Total des 5 des : 4 dés se suivent + 1 dé ne suivant pas le reste
   *\Author : LEMARCHAND Thibault
 */
 
-int petitesuite_V2(t_joueur *j) {
+int petitesuite(t_joueur *j) {
 	int n1 = -1; /*Prend la valeur du dé*/
 	int i;
   int tab[5]; /*Tableau de dé*/
@@ -294,21 +290,15 @@ int petitesuite_V2(t_joueur *j) {
 
 }
 
-int grande_suite(t_joueur *joueur){
-  if((joueur->des[1] == joueur->des[0]+1) && (joueur->des[2] == joueur->des[1]+1) && (joueur->des[3] == joueur->des[2]+1) && (joueur->des[4] == joueur->des[3]+1))
-    return VRAI;
-  return FAUX;
-}
-
 /**
-	*\fn int grandesuite_V2(t_joueur *j)
+	*\fn int grandesuite(t_joueur *j)
 	*\param Un pointeur vers un joueur
   *\return Le nombre de points ou -1 si pas de grandesuite
 	*\brief Total des 5 des : 5 dés se suivent
   *\Author : LEMARCHAND Thibault
 */
 
-int grandesuite_V2(t_joueur *j) {
+int grandesuite(t_joueur *j) {
 	int n1 = -1; /*Prend la valeur du dé*/
 	int i;
   int tab[5]; /*Tableau de dé*/
@@ -333,39 +323,17 @@ int grandesuite_V2(t_joueur *j) {
 
 }
 
-int yahtzee(t_joueur *joueur){
-  if(joueur->des[0] == joueur->des[1] && joueur->des[1] == joueur->des[2] && joueur->des[2] == joueur->des[3] && joueur->des[3] == joueur->des[4])
-    return VRAI;
-  else
-    return FAUX;
-}
-
 /**
-	*\fn int yahtzee_V2(t_joueur *j)
+	*\fn int yahtzee(t_joueur *j)
 	*\param Un pointeur vers un joueur
   *\return Le nombre de points ou -1 si pas de yahtzee
 	*\brief Total des 5 des : 5 dés egaux
+  *\Author : BROUARD Antoine
 */
-int yahtzee_V2(t_joueur *j) {
-	int n1 = -1; /*Prend la valeur du dé*/
-  int nb_n1 = 0;
-	int i;
 
-
-
-  n1 = j->des[0]; /*n1 prend la valeur du premier de*/
-  nb_n1++;
-
-  for(i = 1;i<5;i++){ /*Test des des*/
-    if(j->des[i] == n1){ /*Si val du de precedent = val du de actuel*/
-        nb_n1++;
-    }
-    else  /*Si pas de yahtzee*/
-      return -1;
-  }
-  if(nb_n1 == 5)
-    return 50; /*Retourne le resultat*/
-
-  return 0;
-
+int yahtzee(t_joueur *joueur){
+  if(joueur->des[0] == joueur->des[1] && joueur->des[1] == joueur->des[2] && joueur->des[2] == joueur->des[3] && joueur->des[3] == joueur->des[4])
+    return 50;
+  else
+    return -1;
 }

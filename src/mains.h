@@ -1,12 +1,12 @@
 #ifndef mains_h
 #define mains_h
 
-
-int brelan(t_joueur *joueur);
-int carre(t_joueur *joueur);
-int full(t_joueur *joueur);
-int petite_suite(t_joueur *joueur);
-int grande_suite(t_joueur *joueur);
+void tri_bulle(int tab[],int taille);
+int brelan(t_joueur *j);
+int carre(t_joueur *j);
+int full(t_joueur *j);
+int petitesuite(t_joueur *j);
+int grandesuite(t_joueur *j);
 int yathzee(t_joueur *joueur);
 
 #endif
