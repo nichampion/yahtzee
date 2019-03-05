@@ -47,6 +47,32 @@ void tri_bulle(int tab[],int taille){
   }while(test);
 }
 
+/**
+	*\fn section_superieur(t_joueur *joueur, int nb_test)
+	*\param Un pointeur vers un joueur et un le nombre que l'on souhaite tester
+	*\return Le nombre de points
+	*\brief calcul le nombre de dé ayant le nombre voulu par le joueur
+  *\author BROUARD Antoine
+*/
+int section_superieur(t_joueur *joueur, int nb_test){
+  int i, res = 0;
+  for(i = 0; i<N; i++){
+    if(joueur->des[i] == nb_test)
+      res += nb_test;
+  }
+  return nb_test;
+}
+
+/**
+	*\fn chance(t_joueur * joueur)
+	*\param Un pointeur vers un joueur
+	*\return Le nombre de points total des 5 dés
+	*\brief calcul le nombre de points total des 5 dés
+  *\author BROUARD Antoine
+*/
+int chance(t_joueur * joueur){
+  return(somme_des(joueur));
+}
 
 /**
 	*\fn brelan(t_joueur *j)
