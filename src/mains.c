@@ -18,7 +18,7 @@ int somme_des(t_joueur *j) {
   int i, somme = 0;
 
   for(i = 0; i < N; i++)
-    somme += j->tab[i];
+    somme += j->des[i];
 
   return somme;
 }
