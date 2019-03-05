@@ -24,7 +24,7 @@ void affichage(t_joueur *j1, t_joueur *j2, t_joueur *jc) {
   printf("*\t| As\t\t%d\t%d\t|\t\t*\n", j1->tab.as, j2->tab.as);
   printf("*\t| Deux\t\t%d\t%d\t|\t\t*\n", j1->tab.deux, j2->tab.deux);
   printf("*\t| Trois\t\t%d\t%d\t|\t\t*\n", j1->tab.trois, j2->tab.trois);
-  printf("*\t| Quatres\t%d\t%d\t|\t\t*\n", j1->tab.quatres, j2->tab.quatres);
+  printf("*\t| Quatre\t%d\t%d\t|\t\t*\n", j1->tab.quatre, j2->tab.quatre);
   printf("*\t| Cinq\t\t%d\t%d\t|\t\t*\n", j1->tab.cinq, j2->tab.cinq);
   printf("*\t| Six\t\t%d\t%d\t|\t\t*\n", j1->tab.six, j2->tab.six);
   printf("*\t| Total\t\t%d\t%d\t|\t\t*\n", j1->tab.total_Sup, j2->tab.total_Sup);
