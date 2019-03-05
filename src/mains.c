@@ -6,11 +6,13 @@
 #include "commun.h"
 #include "mains.h"
 
+
 /**
 	*\fn int somme_des(t_joueur *j)
 	*\param Un pointeur vers un joueur
 	*\return La somme des des
 	*\brief Somm les 5 des du joueurs
+  *\author CHAMPION Nicolas
 */
 int somme_des(t_joueur *j) {
   int i, somme = 0;
@@ -20,6 +22,7 @@ int somme_des(t_joueur *j) {
 
   return somme;
 }
+
 
 /**
 	*\fn void tri_bulle(int tab[],int taille)
@@ -46,49 +49,6 @@ void tri_bulle(int tab[],int taille){
 
 
 /**
-	*\fn int section_superieur(t_joueur *joueur, int nb_test)
-	*\param Un tableau d entier et le numéro sur le dé choisi
-	*\brief additionne chaque dés du même nombre et renvoie le resultat
-  *\Author : BROUARD Antoine
-*/
-
-int section_superieur(t_joueur *joueur, int nb_test){
-  int i, res = 0;
-  for(i = 0; i <= N; i++){
-    if(joueur->des[i] == nb_test)
-      res += nb_test;
-  }
-  return res;
-}
-
-/**
-	*\fn int chance(t_joueur * joueur)
-	*\param Un tableau d entier
-	*\brief renvoie le résultat de la somme des dés
-  *\Author : BROUARD Antoine
-*/
-
-int chance(t_joueur * joueur){
-  return (somme_des(joueur));
-}
-
-/* chaque fonction parcours le tableau dé et renvoie vrai si le joueur a un de ces cas */
-
-/*int brelan(t_joueur *joueur){
-  int i,j,k;
-  for(i = 0; i<=4; i++){
-    for(j = 0; j<=4; j++){
-      for(k = 0; k<=4; k++){
-        if((joueur->des[i] == joueur->des[j] && joueur->des[j]  == joueur->des[k]) && ((i != j) && (i!= k) && (j!= k)))
-          return VRAI;
-      }
-    }
-  }
-  return FAUX;
-}*/
-
-
-/**
 	*\fn brelan(t_joueur *j)
 	*\param Un pointeur vers un joueur
 	*\return Le nombre de points ou -1 si ce n'est pas un brelan
@@ -99,7 +59,6 @@ int brelan(t_joueur *j) {
 	int n1 = -1, n2 = -1, n3 = -1;
 	int nb_n1 = 0, nb_n2 = 0, nb_n3 = 0; /* Occurence de n1, n2 et n3 */
 	int i;
-  int res = 0;
 
 	n1 = j->des[0];
 	nb_n1++;
@@ -139,22 +98,6 @@ int brelan(t_joueur *j) {
 }
 
 
-/*int carre(t_joueur *joueur){
-  int i,j,k,l;
-  for(i = 0; i<=4; i++){
-    for(j = 0; j<=4; j++){
-      for(k = 0; k<=4; k++){
-        for(l = 0; l<=4; l++){
-          if((joueur->des[i] == joueur->des[j] && joueur->des[j] == joueur->des[k] && joueur->des[k] == joueur->des[l]) && ((i!=j) && (i!=k) && (i!=l) && (j!=k) && (j!=l) && (k!=l)))
-            return VRAI;
-        }
-      }
-    }
-  }
-  return FAUX;
-}
-*/
-
 /**
 	*\fn carre(t_joueur *j)
 	*\param Un pointeur vers un joueur
@@ -162,44 +105,35 @@ int brelan(t_joueur *j) {
 	*\brief Total des 5 des : 4 chiffres X + 1 resultats des dés obligatoirement différent des 4 autres
 */
 int carre(t_joueur *j) {
-	int n1 = -1,n2 = -1;
-	int nb_n1 = 0,nb_n2 = 0;/* Occurence de n1 et n2 */
+  int n1 = -1, n2 = -1;
+	int nb_n1 = 0, nb_n2 = 0; /* Occurence de n1, n2 */
 	int i;
-	int tab[N];
-  int res = 0;
 
-	for(i=0;i<N;i++)
-		tab[i] = j->des[i];
 
-	tri_bulle(tab,N);
-	n1 = tab[0];
+	n1 = j->des[0];
 	nb_n1++;
 
 	for(i = 1; i < N; i++) {
 
-		if(tab[i] == n1)
+		if(j->des[i] == n1)
 			nb_n1++;
 
-		else if(n2 == -1 && nb_n1 < 4){
-			res+=n1;
-			n2 = tab[i];
-			nb_n2++;
-		}
-
-		else if(tab[i] == n2)
+    else if(n2 == -1) {
+      n2 = j->des[i];
+      nb_n2++;
+    }
+		else if(j->des[i] == n2)
 			nb_n2++;
 
 		else
-			res += j->des[i];
+			return -1;  /* Retourne -1 si ce n'est pas un carre */
 
 	}
 
-
-	if(nb_n1 == 4)
-		return (res + (n1 * 4)); /* Retourne le nombre de point que rapporte un carre */
-
-	else if(nb_n2 == 4)
-		return (res + (n2 * 4));
+  if((nb_n1 == 4) && (nb_n2 == 1))
+    return somme_des(j);
+  else if((nb_n1 == 1) && (nb_n2 == 4))
+    return somme_des(j);
 
 	else
 		return -1; /* Retourne -1 si ce n'est pas un brelan */
