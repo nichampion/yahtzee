@@ -44,6 +44,34 @@ void tri_bulle(int tab[],int taille){
   }while(test);
 }
 
+
+/**
+	*\fn int section_superieur(t_joueur *joueur, int nb_test)
+	*\param Un tableau d entier et le numéro sur le dé choisi
+	*\brief additionne chaque dés du même nombre et renvoie le resultat
+  *\Author : BROUARD Antoine
+*/
+
+int section_superieur(t_joueur *joueur, int nb_test){
+  int i, res = 0;
+  for(i = 0; i <= N; i++){
+    if(joueur->des[i] == nb_test)
+      res += nb_test;
+  }
+  return res;
+}
+
+/**
+	*\fn int chance(t_joueur * joueur)
+	*\param Un tableau d entier
+	*\brief renvoie le résultat de la somme des dés
+  *\Author : BROUARD Antoine
+*/
+
+int chance(t_joueur * joueur){
+  return (somme_des(joueur));
+}
+
 /* chaque fonction parcours le tableau dé et renvoie vrai si le joueur a un de ces cas */
 
 /*int brelan(t_joueur *joueur){
