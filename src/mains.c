@@ -212,50 +212,14 @@ int full(t_joueur *j) {
 
 
 /**
-	*\fn int petitesuite(t_joueur *j)
+	*\fn int petite_suite(t_joueur *j)
 	*\param Un pointeur vers un joueur
   *\return Le nombre de points ou -1 si pas de petite suite
 	*\brief Total des 5 des : 4 dés se suivent + 1 dé ne suivant pas le reste
   *\Author : LEMARCHAND Thibault
+  *\Author : CHAMPION Nicolas
 */
-int petitesuite(t_joueur *j) {
-	int n1 = -1; /*Prend la valeur du dé*/
-	int i;
-  int tab[5]; /*Tableau de dé*/
-  int dep; /*Depart de la boucle for si exemple des -> 1 3 4 5 6 donc petite suite -> 3 4 5 6*/
-  int test = 1; /*Permet de savoir si on a testé*/
-
-  for(i=0;i<5;i++) /*On met les des du joueur dans le tableau tab afin de pouvoir trier par ondre croissant les des*/
-    tab[i] = j->des[i];
-
-  tri_bulle(tab,5);
-
-  n1 = tab[0]; /*n1 prend la valeur du premier de*/
-
-  if(tab[1] == n1 + 1){ /*Si petite suite au debut du tableau*/
-    dep = 1; /*On commence donc les tests a partir du 2e de*/
-  }
-
-  else{ /*Si premiere valeur du tableau tab n est pas comprise dans la petite suite*/
-    n1 = tab[1]; /*n1 prend la valeur du 2e de pour tester la suite*/
-    dep = 2; /*On commence donc les tests a partir du 2e des*/
-  }
-
-  for(i = dep;i<5 && test < 4;i++){ /*Test des des a partir du pt de depart précedemment calculé*/
-    if(tab[i] == (n1+1)){ /*Si val du de precedent = val du de actuel*/
-      n1 = tab[i]; /*De precedent = de actuel*/
-      test++;/*Incrementation du nombre de test nécessaire afin de valider la petite suite si celle ci au debut du tab ->
-      ex : 1 2 3 4 6 si pas de test alors le programme ne valide pas la petite suite car 4 et 6 ne se suivent pas*/
-    }
-    else  /*Si pas de petite suite*/
-      return -1;
-  }
-
-  return 30; /*Retourne le resultat*/
-
-}
-
-int petitesuiteV2(t_joueur *j) {
+int petite_suite(t_joueur *j) {
 	int i;
   int tab[N]; /*Tableau de dé*/
   int nb_cons = 0;
@@ -282,16 +246,16 @@ int petitesuiteV2(t_joueur *j) {
 
 
 /**
-	*\fn int grandesuite(t_joueur *j)
+	*\fn int grande_suite(t_joueur *j)
 	*\param Un pointeur vers un joueur
   *\return Le nombre de points ou -1 si pas de grandesuite
 	*\brief Total des 5 des : 5 dés se suivent
   *\Author : LEMARCHAND Thibault
+  *\Author : CHAMPION Nicolas*\Author : CHAMPION Nicolas
 */
-int grandesuite(t_joueur *j) {
+int grande_suite(t_joueur *j) {
   int i;
   int tab[N]; /*Tableau de dé*/
-  int nb_cons = 0;
 
   for(i = 0; i < N; i++) /* On met les des du joueur dans le tableau tab afin de pouvoir trier par ondre croissant les des */
     tab[i] = j->des[i];
@@ -299,18 +263,11 @@ int grandesuite(t_joueur *j) {
   tri_bulle(tab, N);
 
   for(i = 0; i < (N - 1); i++) {
-    if(tab[i] + 1 == tab[i + 1])
-      nb_cons++;
-    else if(nb_cons < 4)
-      nb_cons = 0;
+    if(tab[i] + 1 != tab[i + 1])
+      return -1;
   }
 
-  if(nb_cons == 4)
     return 40; /*Retourne le resultat*/
-
-  else
-    return -1;
-
 }
 
 

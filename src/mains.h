@@ -7,8 +7,8 @@ int chance(t_joueur * joueur);
 int brelan(t_joueur *j);
 int carre(t_joueur *j);
 int full(t_joueur *j);
-int petitesuite(t_joueur *j);
-int grandesuite(t_joueur *j);
+int petite_suite(t_joueur *j);
+int grande_suite(t_joueur *j);
 int yathzee(t_joueur *joueur);
 
 #endif
