@@ -11,6 +11,7 @@
 	*\version 1.0
 */
 
+
 /**
   *\fn void init_bloc_note(t_joueur *j)
   *\param Un pointeur vers un joueur
@@ -43,6 +44,7 @@ void init_bloc_note(t_joueur *j) {
 
 }
 
+
 /**
   *\fn t_joueur* creer_joueur(char nom[T])
   *\param Le nom du joueur
@@ -64,6 +66,7 @@ t_joueur* creer_joueur(char nom[T]) {
   return j;
 }
 
+
 /**
   *\fn void detruire_joueur(t_joueur **j)
   *\param Un pointeur vers un pointeur de joueur
@@ -75,6 +78,12 @@ void detruire_joueur(t_joueur **j) {
   (*j) = NULL;
 }
 
+/**
+  *\fn void prime_tab(t_joueur *j)
+  *\param Un pointeur vers un joueur
+  *\brief Correspond a la prime des 35 pts
+  *\author Thibault LEMARCHAND
+*/
 void prime_tab(t_joueur *j){
   int tot_tab_sup = 0;
 
@@ -87,6 +96,27 @@ void prime_tab(t_joueur *j){
    j->tab.prime_35pts = 0;
 }
 
+
+/**
+  *\fn void prime_tab(t_joueur *j)
+  *\param Un pointeur vers un joueur
+  *\brief Correspond a la prime yahtzee
+  *\author Thibault LEMARCHAND
+*/
+void prime_yahtzee(t_joueur *j){
+  if(j->tab.yahtzee == 50)
+    j->tab.prime_Yahtzee = 100;
+}
+
+
+/**
+  *\fn void calcul_totaux(t_joueur *j)
+  *\param Un pointeur vers un joueur
+  *\brief Permet de calculer les totaux.
+  *\brief Correspond aux rubriques total inferieur, superieur et general de la feulle de marque
+  *\return Un pointeur vers le joueur fraichement cree
+  *\author Thibault LEMARCHAND
+*/
 void calcul_totaux(t_joueur *j){
   int tot_ssup_apprime = 0;
   int tot_sinf = 0;
@@ -99,7 +129,7 @@ void calcul_totaux(t_joueur *j){
              (j->tab.grande_Suite)+(j->tab.yahtzee)+(j->tab.chance)+(j->tab.prime_Yahtzee);
 
   j->tab.total_Sup = tot_ssup_apprime;
-  j->tab.total_Inf = tot_sinf;          
+  j->tab.total_Inf = tot_sinf;
   j->tab.total_Gen = tot_ssup_apprime+tot_sinf;
 
   printf("%d",j->tab.total_Gen);
