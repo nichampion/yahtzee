@@ -56,12 +56,15 @@ void tri_bulle(int tab[],int taille){
   *\author BROUARD Antoine
 */
 int section_superieure(t_joueur *joueur, int nb_test){
-  int i, res = 0;
-  for(i = 0; i<N; i++){
-    if(joueur->des[i] == nb_test)
-      res += nb_test;
+	int i, res = 0;
+	for(i = 0; i<N; i++){
+		if(joueur->des[i] == nb_test)
+		res += nb_test;
   }
-  return res;
+	if(res > 0)
+		return res;
+	else
+		return -1;
 }
 
 

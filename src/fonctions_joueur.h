@@ -10,7 +10,7 @@
 
   /* Fonctions gérant les feuilles de marque pour un t_joueurs */
   void prime_tab(t_joueur *j);
-  void prime_yahtzee(t_joueur *j)
+  void prime_yahtzee(t_joueur *j);
   void calcul_totaux(t_joueur *j);
 
 #endif
