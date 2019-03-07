@@ -24,8 +24,6 @@ int main(int argc, char **argv) {
 	j2 = creer_joueur("J2");
 	int game_over = 0, i, rep;
 
-	affichage(j1,j2,j1);
-
 	//while(game_over == 0){
 		for(i = 0; i < 5; i++){
 			lancer(j1,i);
@@ -33,10 +31,11 @@ int main(int argc, char **argv) {
 
 		affichage(j1,j2,j1);
 
-		if((rep = relancer(j1)) == 1)
+		if((rep = relancer(j1)) == 1){
 			affichage(j1,j2,j1);
 			if((rep = relancer(j1)) == 1)
 				affichage(j1,j2,j1);
+		}
 
 	//}
 

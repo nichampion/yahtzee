@@ -62,7 +62,7 @@ int relancer(t_joueur * j){
 */
 void test_mains(t_joueur *j){
 
-	t_joueur * j_test;
+	t_joueur * j_test = creer_joueur("J1");
 	init_bloc_note(j_test);
 
 	if((j->tab.as) == VAL_INIT)
