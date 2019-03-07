@@ -1,8 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-#define VRAI 1
-#define FAUX 0
 #include "commun.h"
 #include "mains.h"
 
@@ -14,6 +12,7 @@
 	*\brief Somm les 5 des du joueurs
   *\author CHAMPION Nicolas
 */
+static
 int somme_des(t_joueur *j) {
   int i, somme = 0;
 
@@ -30,6 +29,7 @@ int somme_des(t_joueur *j) {
 	*\brief Trie dans l ordre croissant le Tableau
   *\Author : LEMARCHAND Thibault
 */
+static
 void tri_bulle(int tab[],int taille){
   int i, test,temp;
 
@@ -61,7 +61,7 @@ int section_superieure(t_joueur *joueur, int nb_test){
     if(joueur->des[i] == nb_test)
       res += nb_test;
   }
-  return nb_test;
+  return res;
 }
 
 
