@@ -43,10 +43,5 @@ void affichage(t_joueur *j1, t_joueur *j2, t_joueur *jc) {
   printf("*\t|TOTAL\t\t%d\t%d\t|\t\t*\n", j1->tab.total_Gen, j2->tab.total_Gen);
   printf("*\t|_______________________________|\t\t*\n");
   printf("*\t\t\t\t\t\t\t*\n");
-  printf("*\t.________________________________.\t\t*\n");
-  printf("*\t|1\t2\t3\t4\t5|\t\t*\n");
-  printf("*\t|%d\t%d\t%d\t%d\t%d|\t\t*\n", jc->des[0], jc->des[1], jc->des[2], jc->des[3], jc->des[4]);
-  printf("*\t.________________________________.\t\t*\n");
-  printf("*\t\t\t\t\t\t\t*\n");
   printf("* * * * * * * * * * * * * * * * * * * * * * * * * * * * * \n");
 }

@@ -21,7 +21,7 @@
  Affectation d'un nombre tiré aléatoirement entre 1 et 6 au dé n°i
 */
 void lancer(t_joueur * j, int i){
-	
+
 	j->des[i] = rand()%(7-1) + 1;
 
 }
@@ -108,7 +108,7 @@ t_joueur * test_mains(t_joueur *j){
 		j_test->tab.prime_Yahtzee = 100;
 
 	affichage_possibilites(j,j_test);
-	
+
 	return j_test;
 
 }
@@ -126,7 +126,12 @@ int choix_placement(t_joueur *j, t_joueur * j_test){
 	{
 		case 1 :
 			if(j->tab.as == VAL_INIT){
-				j->tab.as = j_test->tab.as;
+				if(j_test->tab.as != VAL_INIT){
+					j->tab.as = j_test->tab.as;
+				}
+				else{
+					j->tab.as = 0;
+				}
 				placement = 1;
 				break;
 			}
@@ -136,7 +141,12 @@ int choix_placement(t_joueur *j, t_joueur * j_test){
 			}
 		case 2 :
 			if(j->tab.deux == VAL_INIT){
-				j->tab.deux = j_test->tab.deux;
+				if(j_test->tab.deux != VAL_INIT){
+					j->tab.deux = j_test->tab.deux;
+				}
+				else{
+					j->tab.deux = 0;
+				}
 				placement = 1;
 				break;
 			}
@@ -146,7 +156,12 @@ int choix_placement(t_joueur *j, t_joueur * j_test){
 			}
 		case 3 :
 			if(j->tab.trois == VAL_INIT){
-				j->tab.trois = j_test->tab.trois;
+				if(j_test->tab.trois != VAL_INIT){
+					j->tab.trois = j_test->tab.trois;
+				}
+				else{
+					j->tab.trois = 0;
+				}
 				placement = 1;
 				break;
 			}
@@ -156,7 +171,12 @@ int choix_placement(t_joueur *j, t_joueur * j_test){
 			}
 		case 4 :
 			if(j->tab.quatres == VAL_INIT){
-				j->tab.quatres = j_test->tab.quatres;
+				if(j_test->tab.quatres != VAL_INIT){
+					j->tab.quatres = j_test->tab.quatres;
+				}
+				else{
+					j->tab.quatres = 0;
+				}
 				placement = 1;
 				break;
 			}
@@ -166,7 +186,12 @@ int choix_placement(t_joueur *j, t_joueur * j_test){
 			}
 		case 5 :
 			if(j->tab.cinq == VAL_INIT){
-				j->tab.cinq = j_test->tab.cinq;
+				if(j_test->tab.cinq != VAL_INIT){
+					j->tab.cinq = j_test->tab.cinq;
+				}
+				else{
+					j->tab.cinq = 0;
+				}
 				placement = 1;
 				break;
 			}
@@ -176,7 +201,12 @@ int choix_placement(t_joueur *j, t_joueur * j_test){
 			}
 		case 6 :
 			if(j->tab.six == VAL_INIT){
-				j->tab.six = j_test->tab.six;
+				if(j_test->tab.six != VAL_INIT){
+					j->tab.six = j_test->tab.six;
+				}
+				else{
+					j->tab.six = 0;
+				}
 				placement = 1;
 				break;
 			}
@@ -186,7 +216,12 @@ int choix_placement(t_joueur *j, t_joueur * j_test){
 			}
 		case 7 :
 			if(j->tab.brelan == VAL_INIT){
-				j->tab.brelan = j_test->tab.brelan;
+				if(j_test->tab.brelan != VAL_INIT){
+					j->tab.brelan = j_test->tab.brelan;
+				}
+				else{
+					j->tab.brelan = 0;
+				}
 				placement = 1;
 				break;
 			}
@@ -196,7 +231,12 @@ int choix_placement(t_joueur *j, t_joueur * j_test){
 			}
 		case 8 :
 			if(j->tab.carre == VAL_INIT){
-				j->tab.carre = j_test->tab.carre;
+				if(j_test->tab.carre != VAL_INIT){
+					j->tab.carre = j_test->tab.carre;
+				}
+				else{
+					j->tab.carre = 0;
+				}
 				placement = 1;
 				break;
 			}
@@ -206,7 +246,12 @@ int choix_placement(t_joueur *j, t_joueur * j_test){
 			}
 		case 9 :
 			if(j->tab.full == VAL_INIT){
-				j->tab.full = j_test->tab.full;
+				if(j_test->tab.full != VAL_INIT){
+					j->tab.full = j_test->tab.full;
+				}
+				else{
+					j->tab.full = 0;
+				}
 				placement = 1;
 				break;
 			}
@@ -216,7 +261,12 @@ int choix_placement(t_joueur *j, t_joueur * j_test){
 			}
 		case 10 :
 			if(j->tab.petite_Suite == VAL_INIT){
-				j->tab.petite_Suite = j_test->tab.petite_Suite;
+				if(j_test->tab.petite_Suite != VAL_INIT){
+					j->tab.petite_Suite = j_test->tab.petite_Suite;
+				}
+				else{
+					j->tab.petite_Suite = 0;
+				}
 				placement = 1;
 				break;
 			}
@@ -226,7 +276,12 @@ int choix_placement(t_joueur *j, t_joueur * j_test){
 			}
 		case 11 :
 			if(j->tab.grande_Suite == VAL_INIT){
-				j->tab.grande_Suite = j_test->tab.grande_Suite;
+				if(j_test->tab.grande_Suite != VAL_INIT){
+					j->tab.grande_Suite = j_test->tab.grande_Suite;
+				}
+				else{
+					j->tab.grande_Suite = 0;
+				}
 				placement = 1;
 				break;
 			}
@@ -236,7 +291,12 @@ int choix_placement(t_joueur *j, t_joueur * j_test){
 			}
 		case 12 :
 			if(j->tab.chance == VAL_INIT){
-				j->tab.chance = j_test->tab.chance;
+				if(j_test->tab.chance != VAL_INIT){
+					j->tab.chance = j_test->tab.chance;
+				}
+				else{
+					j->tab.chance = 0;
+				}
 				placement = 1;
 				break;
 			}
@@ -246,7 +306,12 @@ int choix_placement(t_joueur *j, t_joueur * j_test){
 			}
 		case 13 :
 			if(j->tab.yahtzee == VAL_INIT){
-				j->tab.yahtzee = j_test->tab.yahtzee;
+				if(j_test->tab.yahtzee != VAL_INIT){
+					j->tab.yahtzee = j_test->tab.yahtzee;
+				}
+				else{
+					j->tab.yahtzee = 0;
+				}
 				placement = 1;
 				break;
 			}
@@ -256,7 +321,12 @@ int choix_placement(t_joueur *j, t_joueur * j_test){
 			}
 		case 14 :
 			if(j->tab.prime_Yahtzee == VAL_INIT){
-				j->tab.prime_Yahtzee = j_test->tab.prime_Yahtzee;
+				if(j_test->tab.prime_Yahtzee != VAL_INIT){
+					j->tab.prime_Yahtzee = j_test->tab.prime_Yahtzee;
+				}
+				else{
+					j->tab.prime_Yahtzee = 0;
+				}
 				placement = 1;
 				break;
 			}
@@ -359,7 +429,7 @@ void affichage_possibilites(t_joueur * j, t_joueur * j_test){
 }
 
 int fin_de_partie(t_joueur * j){
-	if(j->tab.as != VAL_INIT && j->tab.deux != VAL_INIT && j->tab.trois != VAL_INIT && j->tab.quatres != VAL_INIT && j->tab.cinq != VAL_INIT && j->tab.six != VAL_INIT && j->tab.brelan != VAL_INIT && j->tab.carre != VAL_INIT && j->tab.full != VAL_INIT && j->tab.petite_Suite != VAL_INIT && j->tab.petite_Suite != VAL_INIT && j->tab.grande_Suite != VAL_INIT && j->tab.chance != VAL_INIT && j->tab.yahtzee != VAL_INIT){
+	if(j->tab.as != VAL_INIT && j->tab.deux != VAL_INIT && j->tab.trois != VAL_INIT && j->tab.quatres != VAL_INIT && j->tab.cinq != VAL_INIT && j->tab.six != VAL_INIT && j->tab.brelan != VAL_INIT && j->tab.carre != VAL_INIT && j->tab.full != VAL_INIT && j->tab.petite_Suite != VAL_INIT && j->tab.petite_Suite != VAL_INIT && j->tab.grande_Suite != VAL_INIT && j->tab.chance != VAL_INIT && j->tab.yahtzee != VAL_INIT && j->tab.prime_Yahtzee != VAL_INIT){
 		calcul_totaux(j);
 		prime_tab(j);
 		return 1;

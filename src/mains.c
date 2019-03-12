@@ -235,11 +235,11 @@ int petite_suite(t_joueur *j) {
   for(i = 0; i < (N - 1); i++) {
     if(tab[i] + 1 == tab[i + 1])
       nb_cons++;
-    else if(nb_cons < 3)
+    else if((nb_cons < 3) && (tab[i] != tab[i + 1]))
       nb_cons = 0;
   }
 
-  if(nb_cons == 3)
+  if(nb_cons >= 3)
     return 30; /*Retourne le resultat*/
 
   else

@@ -131,6 +131,4 @@ void calcul_totaux(t_joueur *j){
   j->tab.total_Sup = tot_ssup_apprime;
   j->tab.total_Inf = tot_sinf;
   j->tab.total_Gen = tot_ssup_apprime+tot_sinf;
-
-  printf("%d",j->tab.total_Gen);
 }
