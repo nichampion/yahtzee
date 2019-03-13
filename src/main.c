@@ -6,7 +6,6 @@
 #include "commun.h"
 #include "affichage.h"
 #include "fonctions_joueur.h"
-#include "ordinateur.h"
 #include "fonctions_jeu.h"
 
 

@@ -104,8 +104,10 @@ void prime_tab(t_joueur *j){
   *\author Thibault LEMARCHAND
 */
 void prime_yahtzee(t_joueur *j){
-  if(j->tab.yahtzee == 50)
-    j->tab.prime_Yahtzee = 100;
+  if(yahtzee(j) !=  VAL_INIT){
+    if(j->tab.yahtzee == 50)
+      j->tab.prime_Yahtzee = 100;
+  }
 }
 
 
