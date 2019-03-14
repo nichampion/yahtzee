@@ -131,7 +131,7 @@ int main(int argc, char** argv)
 			 printf("IMG_LoadPNG_RW: %s\n", IMG_GetError());
 	}
 
-	SDL_RWops *rwopde5=SDL_RWFromFile("src/img/de5.png", "rb");
+	SDL_RWops *rwopde5=SDL_RWFromFile("img/de5.png", "rb");
 	de5=IMG_LoadPNG_RW(rwopde5);
 	if(!de5) {
 			 printf("IMG_LoadPNG_RW: %s\n", IMG_GetError());
@@ -193,20 +193,25 @@ int main(int argc, char** argv)
  								SDL_RenderCopy(renderer, image_texde1, NULL, &imgDestRect);
 
 								caseDestRect.x = 200;
-							 caseDestRect.y = 77;
-								for(i = 0; i <=5; i++){
+							 caseDestRect.y = 78;
+								for(i = 0; i <=7; i++){
 									SDL_QueryTexture(case1_tex, NULL, NULL, &(caseDestRect.w), &(caseDestRect.h));
 									SDL_RenderCopy(renderer, case1_tex, NULL, &(caseDestRect));
 									caseDestRect.y += 29;
 								}
+								caseDestRect.y += 19;
+								for(i = 0; i <=7; i++){
+									SDL_QueryTexture(case1_tex, NULL, NULL, &(caseDestRect.w), &(caseDestRect.h));
+									SDL_RenderCopy(renderer, case1_tex, NULL, &(caseDestRect));
+									caseDestRect.y += 29;
+								}
+								caseDestRect.y += 19;
+								SDL_QueryTexture(case1_tex, NULL, NULL, &(caseDestRect.w), &(caseDestRect.h));
+								SDL_RenderCopy(renderer, case1_tex, NULL, &(caseDestRect));
 
 								//SDL_Delay(1000);
 
 
-
-                                /* Ajout de la seconde image à une autre position */
-							/*	imgDestRect.x = 250;
-								SDL_RenderCopy(renderer, image_tex, NULL, &imgDestRect); */
 
                                 /* On fait le rendu ! */
 
@@ -215,12 +220,15 @@ int main(int argc, char** argv)
 
 							break;
 						}
-						case SDL_MOUSEBUTTONUP:
+						break;
+						case SDL_MOUSEBUTTONDOWN:
 						//	running = 0;
-							/*
-							fprintf(stdout, "Un appuie sur un bouton de la souris :\n");
+							if(e.motion.x > 300 && e.motion.x < 350 && e.motion.y > 300 && e.motion.y < 350){
 
-								image_texde1 = SDL_CreateTextureFromSurface(renderer, de2);
+								fprintf(stdout, "Un appui sur le dé :\n");
+
+
+								SDL_Texture *image_texde1 = SDL_CreateTextureFromSurface(renderer, de2);
 								if(!image_texde1){
 									fprintf(stderr, "Erreur à la création du rendu de l'image : %s\n", SDL_GetError());
 									exit(EXIT_FAILURE);
@@ -232,10 +240,11 @@ int main(int argc, char** argv)
 								SDL_QueryTexture(image_texde1, NULL, NULL, &(imgDestRect.w), &(imgDestRect.h));
 								SDL_RenderCopy(renderer, image_texde1, NULL, &imgDestRect);
 
-								  SDL_RenderPresent(renderer); */
+								SDL_RenderPresent(renderer);
+
+								}
 									break;
 						}
-					break;
 				}
 			}
 	} else {
