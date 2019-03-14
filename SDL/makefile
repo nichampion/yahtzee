@@ -9,12 +9,12 @@ SDLINC_DIR=${SDL_DIR}/include
 LIBS=-L${SDLLIB_DIR} -lSDL2 -lSDL2_ttf -lSDL2_image
 INCLUDES=-I${SDLINC_DIR} 
 
-PROG=src/sdl
+PROG=jeu_sdl
 
 all: sdl_text
 
-sdl_text: src/sdl.c
-	${CC} -o ${PROG} src/sdl.c ${LIBS} ${INCLUDES}
+sdl_text: jeu_sdl.c
+	${CC} -o ${PROG} jeu_sdl.c ${LIBS} ${INCLUDES}
 
 clean: 
 	rm -f ${PROG}

@@ -95,7 +95,7 @@ int main(int argc, char** argv)
 	SDL_QueryTexture(texte_tex, NULL, NULL, &(txtDestRect.w), &(txtDestRect.h));
 
 	// load sample.png into image
-	SDL_RWops *rwop=SDL_RWFromFile("src/img/score.png", "rb");
+	SDL_RWops *rwop=SDL_RWFromFile("img/score.png", "rb");
 	image=IMG_LoadPNG_RW(rwop);
 	if(!image) {
 	     printf("IMG_LoadPNG_RW: %s\n", IMG_GetError());
@@ -107,25 +107,25 @@ int main(int argc, char** argv)
 	}
 	SDL_FreeSurface(image); /* on a la texture, plus besoin de l'image */
 
-	SDL_RWops *rwopde1=SDL_RWFromFile("src/img/de1.png", "rb");
+	SDL_RWops *rwopde1=SDL_RWFromFile("img/de1.png", "rb");
 	de1=IMG_LoadPNG_RW(rwopde1);
 	if(!de1) {
 			 printf("IMG_LoadPNG_RW: %s\n", IMG_GetError());
 	}
 
-	SDL_RWops *rwopde2=SDL_RWFromFile("src/img/de2.png", "rb");
+	SDL_RWops *rwopde2=SDL_RWFromFile("img/de2.png", "rb");
 	de2=IMG_LoadPNG_RW(rwopde2);
 	if(!de2) {
 			 printf("IMG_LoadPNG_RW: %s\n", IMG_GetError());
 	}
 
-	SDL_RWops *rwopde3=SDL_RWFromFile("src/img/de3.png", "rb");
+	SDL_RWops *rwopde3=SDL_RWFromFile("img/de3.png", "rb");
 	de3=IMG_LoadPNG_RW(rwopde3);
 	if(!de3) {
 			 printf("IMG_LoadPNG_RW: %s\n", IMG_GetError());
 	}
 
-	SDL_RWops *rwopde4=SDL_RWFromFile("src/img/de4.png", "rb");
+	SDL_RWops *rwopde4=SDL_RWFromFile("img/de4.png", "rb");
 	de4=IMG_LoadPNG_RW(rwopde4);
 	if(!de4) {
 			 printf("IMG_LoadPNG_RW: %s\n", IMG_GetError());
@@ -137,7 +137,7 @@ int main(int argc, char** argv)
 			 printf("IMG_LoadPNG_RW: %s\n", IMG_GetError());
 	}
 
-	SDL_RWops *rwopde6=SDL_RWFromFile("src/img/de6.png", "rb");
+	SDL_RWops *rwopde6=SDL_RWFromFile("img/de6.png", "rb");
 	de6=IMG_LoadPNG_RW(rwopde6);
 	if(!de6) {
 			 printf("IMG_LoadPNG_RW: %s\n", IMG_GetError());
