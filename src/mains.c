@@ -141,8 +141,7 @@ int carre(t_joueur *j) {
 	int nb_n1 = 0, nb_n2 = 0; /* Occurence de n1, n2 */
 	int i;
 
-  int dep; /*Depart de la boucle for si exemple des -> 1 3 4 5 6 donc petite suite -> 3 4 5 6*/
-  int test = 1; /*Permet de savoir si on a testé*/
+/*Depart de la boucle for si exemple des -> 1 3 4 5 6 donc petite suite -> 3 4 5 6*/
 	n1 = j->des[0];
 	nb_n1++;
 

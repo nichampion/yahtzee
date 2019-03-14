@@ -4,6 +4,7 @@
 
 #include "commun.h"
 #include "fonctions_joueur.h"
+#include "mains.h"
 
 /**
 	*\file fonctions_joueur.c
