@@ -10,9 +10,16 @@
 
 
 /**
-	*\file main.c
-	*\Main du jeu
+	*\File : main.c
+	*\Brief : Main du jeu
 	*\version 1.0
+	*\Author : Sunny BIARD
+*/
+
+/**
+	*\Fn : void tour_joueur(t_joueur * j)
+	*\Param : Un pointeur sur un joueur
+	*\Brief : Tour de jeu du joueur courant
 	*\Author : Sunny BIARD
 */
 void tour_joueur(t_joueur * j){

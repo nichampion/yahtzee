@@ -9,16 +9,17 @@
 #include "mains.h"
 
 /**
-	*\file lancer.c
-	*\Fonctions du jeu
+	*\File : fonctions_jeu.c
+	*\Brief : Fonctions du jeu
 	*\version 1.0
 	*\Author : Sunny BIARD
 */
 
-/************************
- Fonction de lancer de dé
- ************************
- Affectation d'un nombre tiré aléatoirement entre 1 et 6 au dé n°i
+/**
+	*\Fn : void lancer(t_joueur * j, int i)
+	*\Param : Un pointeur sur un joueur, un int correspondant au dé à lancer
+	*\Brief : Affectation d'un nombre tiré aléatoirement entre 1 et 6 au dé n°i
+	*\Author : Sunny BIARD
 */
 void lancer(t_joueur * j, int i){
 
@@ -26,11 +27,11 @@ void lancer(t_joueur * j, int i){
 
 }
 
-/************************
- Fonction de relancement de dé
- ************************
- Choix du/des dés à relancer
- Relancement de ces dés par appel de "lancer"
+/**
+	*\Fn : int relancer(t_joueur * j)
+	*\Param : Un pointeur sur un joueur
+	*\Brief : Choix du/des dé(s) à relancer, Relancement de ce(s) dé(s) par appel de "lancer"
+	*\Author : Sunny BIARD
 */
 int relancer(t_joueur * j){
 
@@ -54,13 +55,11 @@ int relancer(t_joueur * j){
 	return 0;
 }
 
-
-
-/*******************************************
- Fonction de test des combinaisons possibles
- *******************************************
- Test de toutes les combinaisons possibles avec les dés du joueur j
- Affichage de ces possibilités de jeu
+/**
+	*\Fn : t_joueur * test_mains(t_joueur * j)
+	*\Param : Un pointeur sur un joueur
+	*\Brief : Test de toutes les combinaisons possibles avec les dés du joueur j
+	*\Author : Sunny BIARD
 */
 t_joueur * test_mains(t_joueur *j){
 
@@ -113,6 +112,12 @@ t_joueur * test_mains(t_joueur *j){
 
 }
 
+/**
+	*\Fn : int choix_placement(t_joueur * j, t_joueur * j_test)
+	*\Param : Un pointeur sur un joueur, un autre pointeur sur un joueur test
+	*\Brief : Choix de remplissage d'une case du joueur courant
+	*\Author : Sunny BIARD
+*/
 int choix_placement(t_joueur *j, t_joueur * j_test){
 	int choix, placement = 0;
 	printf("Choisir la case à remplir (1-14) : ");
@@ -340,17 +345,18 @@ int choix_placement(t_joueur *j, t_joueur * j_test){
 
 }
 
-/***********************************************
- Fonction d'affichage des combinaisons possibles
- ***********************************************
- Affichage des combinaisons possibles et croix pour les cases déjà remplies pour le joueur j
+/**
+	*\Fn : void affichage_possibilites(t_joueur * j, t_joueur * j_test)
+	*\Param : Un pointeur sur un joueur, un pointeur sur un joueur test
+	*\Brief : Affichage des combinaisons possibles et croix pour les cases déjà remplies pour le joueur j
+	*\Author : Sunny BIARD
 */
 void affichage_possibilites(t_joueur * j, t_joueur * j_test){
 
 	printf("* * * * * * * * * * * * TOUR %s * * * * * * * * * * * * *\n",j->nom);
   printf("*\t\t\t\t\t\t\t*\n");
   printf("*\t._______________________________.\t\t*\n");
-  printf("*\t|\t\t%s\t\t*\n", j->nom);
+  printf("*\t|\t\t%s\t\t|\t\t*\n", j->nom);
   printf("*\t|-------------------------------|\t\t*\n");
 	if(j_test->tab.as != VAL_INIT)
   	  printf("*\t| 1 As\t\t%d?\t\t|\t\t*\n", j_test->tab.as);
@@ -428,6 +434,12 @@ void affichage_possibilites(t_joueur * j, t_joueur * j_test){
 
 }
 
+/**
+	*\Fn : int fin_de_partie(t_joueur * j)
+	*\Param : Un pointeur sur un joueur
+	*\Brief : Test si toutes les cases du joueur sont remplies, renvoie vrai si rempli
+	*\Author : Sunny BIARD
+*/
 int fin_de_partie(t_joueur * j){
 	if(j->tab.as != VAL_INIT && j->tab.deux != VAL_INIT && j->tab.trois != VAL_INIT && j->tab.quatres != VAL_INIT && j->tab.cinq != VAL_INIT && j->tab.six != VAL_INIT && j->tab.brelan != VAL_INIT && j->tab.carre != VAL_INIT && j->tab.full != VAL_INIT && j->tab.petite_Suite != VAL_INIT && j->tab.petite_Suite != VAL_INIT && j->tab.grande_Suite != VAL_INIT && j->tab.chance != VAL_INIT && j->tab.yahtzee != VAL_INIT && j->tab.prime_Yahtzee != VAL_INIT){
 		calcul_totaux(j);
