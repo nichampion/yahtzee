@@ -120,16 +120,23 @@ int compter_des(t_joueur *joueur, int nb_test){
   return res;
 }
 
+/**
+  *\brief Strategie permettant d'obtenir le maximum de points dans la section superieur de la feuille de marque
+*/
 void strat_superieur(t_joueur *j) {
   int i;
   int nb_des[6];
 
   for(i = 0;i < 5;i++)
-    nb_des[i] = compter_des(j,i + 1);
+    nb_des[i] = compter_des(j, i + 1);
 
-/*
-  if(nb_des < 3)
-    relancer*/
+  /* Choisir des (plus eleve, en plus gd nombre et dispo (non joue)) */
+  int des_a_garder; // = ...
+
+  /* Relancer les des pour obtenir le plus de des de la sorte */
+    /* 3 fois et tant que tous les des ne sont = a des_a_garder */
+
+
 }
 
 
@@ -144,9 +151,9 @@ int tour_ordinateur(t_joueur *j) {
 
   tempo = test_mains(j);
 
-  //strat_superieur(j);
+  strat_superieur(j);
 
-  meilleur_score(j, tempo); // Choisi la
+  //meilleur_score(j, tempo);
 
   return 0; // A changer par la suite
 
