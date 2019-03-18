@@ -5,4 +5,6 @@
   #define M 2
   #define N 5
 
+	int tour_ordinateur(t_joueur *j);
+
 #endif
