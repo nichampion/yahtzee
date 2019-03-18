@@ -52,13 +52,20 @@ void tour_joueur(t_joueur * j){
 int main(int argc, char **argv) {
 	srand(time(NULL));
 
+/*
 	t_joueur * j1, * j2;
 
 	j1 = creer_joueur("J1");
 	j2 = creer_joueur("J2");
+*/
+	t_joueur * jh, * jo;
+
+	jh = creer_joueur("Humain");
+	jo = creer_joueur("Ordinateur");
 
 	int game_over = 0;
 
+/*
 	while(game_over == 0){
 
 		tour_joueur(j1);
@@ -73,6 +80,21 @@ int main(int argc, char **argv) {
 
 	}
 	affichage(j1,j2,j1);
+*/
+	while(game_over == 0){
+
+		tour_joueur(jh);
+		affichage(jh,jo,jh);
+		sleep(5);
+		tour_ordinateur(jo);
+		affichage(jh,jo,jh);
+		sleep(5);
+
+		if(fin_de_partie(jh) && fin_de_partie(jo))
+			game_over = 1;
+
+	}
+	affichage(jh,jo,jh);
 
 	return 0;
 }
