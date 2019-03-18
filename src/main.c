@@ -61,8 +61,8 @@ int main(int argc, char **argv) {
 */
 	t_joueur * jh, * jo;
 
-	jh = creer_joueur("Humain");
-	jo = creer_joueur("Ordinateur");
+	jh = creer_joueur("H");
+	jo = creer_joueur("PC");
 
 	int game_over = 0;
 

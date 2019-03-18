@@ -15,6 +15,14 @@
 
 /*Lien strat 1 -> http://www.ultraboardgames.com/yahtzee/tips.php*/
 
+
+/* ****************** Calcul de la meilleur main ****************** */
+
+
+/**
+  *\brief Sous fonction. Intervient dans la fonction meilleur_score
+*/
+static
 void test_max(int *val, int *max, char pos_max[20], char ligne_courante[20]) {
   if(*val > *max) {
     *max = *val;
@@ -22,6 +30,11 @@ void test_max(int *val, int *max, char pos_max[20], char ligne_courante[20]) {
   }
 }
 
+
+/**
+  *\brief Sous fonction. Intervient dans la fonction meilleur_score
+*/
+static
 void choisir_max(t_joueur *j, int max, char pos_max[20]) {
 
     if(strcmp(pos_max,"null") == 0) return;
@@ -41,10 +54,10 @@ void choisir_max(t_joueur *j, int max, char pos_max[20]) {
 
 }
 
-/**
-  *\brief Choisi le score qui rapporte le plus de points pour une combinaison de des donnée.
-*/
 
+/**
+  *\brief Choisi la main qui rapporte le plus de points pour une combinaison de des donnée.
+*/
 void meilleur_score(t_joueur *j, t_joueur *j_test) {
   int max = VAL_INIT;
   char pos_max[20] = "null";
@@ -94,8 +107,9 @@ void meilleur_score(t_joueur *j, t_joueur *j_test) {
 
 }
 
-int joueur(t_joueur *j);
-int adversaire(t_joueur *j);
+
+/* ****************** Obtention du bonus supérieurs ****************** */
+
 
 int compter_des(t_joueur *joueur, int nb_test){
   int i, res = 0;
@@ -119,7 +133,8 @@ void strat_superieur(t_joueur *j) {
 }
 
 
-/* Correspond a la fonction tour_du_joueur dans l'algorithme MIN-MAX */
+
+
 int tour_ordinateur(t_joueur *j) {
   int i;
   t_joueur *tempo = creer_joueur("tempo");
@@ -131,7 +146,7 @@ int tour_ordinateur(t_joueur *j) {
 
   //strat_superieur(j);
 
-  meilleur_score(j, tempo);
+  meilleur_score(j, tempo); // Choisi la
 
   return 0; // A changer par la suite
 
