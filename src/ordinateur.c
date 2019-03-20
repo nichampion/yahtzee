@@ -120,10 +120,10 @@ int compter_des(t_joueur *joueur, int nb_test){
   return res;
 }
 
+
 /**
   *\brief Strategie permettant d'obtenir le maximum de points dans la section superieur de la feuille de marque
 */
-
 void val_des_max(int val_c, int *val_max, int nb_des_c, int *nb_des_max) {
   if(nb_des_c >= *nb_des_max) {
     *val_max = val_c;
@@ -161,6 +161,9 @@ int choix_des_strat_sup(int tab[6], t_joueur *j) {
 }
 
 
+/**
+  *\brief Applique la stratégie consisitant a obtenir la prime dans la section superieure (de la feuille de marque Yahtzee)
+*/
 int strat_superieur(t_joueur *j, t_joueur *j_test) {
   int i;
   int nb_des[6];
@@ -211,6 +214,9 @@ int strat_superieur(t_joueur *j, t_joueur *j_test) {
 }
 
 
+/* ***************************************************************************** */
+
+
 int tour_ordinateur(t_joueur *j) {
   int i;
   t_joueur *tempo = creer_joueur("tempo");
@@ -221,6 +227,8 @@ int tour_ordinateur(t_joueur *j) {
   tempo = test_mains(j);
 
   strat_superieur(j, tempo);
+
+  //Remplir suites dans le tableau inferieur
 
   //choix_placement(j,tempo);
 
