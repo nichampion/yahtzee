@@ -57,7 +57,7 @@ int main(int argc, char** argv)
 	}
 
 
-	if( (police = TTF_OpenFont("ChowFun.ttf", 20)) == NULL){
+	if( (police = TTF_OpenFont("Bebas-Regular.ttf", 20)) == NULL){
 		fprintf(stderr, "erreur chargement font\n");
 		exit(EXIT_FAILURE);
 	}
@@ -267,9 +267,6 @@ int main(int argc, char** argv)
 						case SDL_MOUSEBUTTONDOWN:
 						//	running = 0;
 							if(e.motion.x > 400 && e.motion.x < 450 && e.motion.y > 300 && e.motion.y < 350){
-
-								fprintf(stdout, "Un appui sur le dé :\n");
-
 
 								SDL_Texture *image_texde1 = SDL_CreateTextureFromSurface(renderer, de2);
 								if(!image_texde1){
