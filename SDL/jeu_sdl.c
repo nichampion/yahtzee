@@ -7,7 +7,7 @@ int main(int argc, char** argv)
 {
 		int i = 0;
 		//score J1
-		char score_j1[17] = {0};
+		char * score_j1[17] = {"1","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0"};
 		char score_j2[17];
 		//grille des possibilités du joueur	après lancement
 	char possible_j1[17];
@@ -15,7 +15,7 @@ int main(int argc, char** argv)
     //Le pointeur vers la fenetre
 	SDL_Window* pWindow = NULL;
 	//Le pointeur vers la surface incluse dans la fenetre
-    SDL_Surface *texte=NULL, *image=NULL, *de1=NULL, *de2=NULL, *de3=NULL, *de4=NULL, *de5=NULL, *de6=NULL, *case1=NULL;
+  SDL_Surface *texte=NULL, *image=NULL, *de1=NULL, *de2=NULL, *de3=NULL, *de4=NULL, *de5=NULL, *de6=NULL, *case1=NULL;
 	SDL_Renderer *renderer=NULL;
 	SDL_Rect txtDestRect,imgDestRect, caseDestRect;
 
@@ -68,7 +68,7 @@ int main(int argc, char** argv)
 		exit(EXIT_FAILURE);
 	}
 
-	case1 = TTF_RenderUTF8_Blended(police, "0", couleurNoire);
+	case1 = TTF_RenderUTF8_Blended(police, score_j1[0], couleurNoire);
 	if(!case1){
 		fprintf(stderr, "Erreur à la création du texte : %s\n", SDL_GetError());
 		exit(EXIT_FAILURE);
@@ -150,6 +150,29 @@ int main(int argc, char** argv)
 		exit(EXIT_FAILURE);
 	}
 
+	SDL_Texture *image_texde2 = SDL_CreateTextureFromSurface(renderer, de1);
+	if(!image_texde2){
+		fprintf(stderr, "Erreur à la création du rendu de l'image : %s\n", SDL_GetError());
+		exit(EXIT_FAILURE);
+	}
+
+	SDL_Texture *image_texde3 = SDL_CreateTextureFromSurface(renderer, de1);
+	if(!image_texde3){
+		fprintf(stderr, "Erreur à la création du rendu de l'image : %s\n", SDL_GetError());
+		exit(EXIT_FAILURE);
+	}
+
+	SDL_Texture *image_texde4 = SDL_CreateTextureFromSurface(renderer, de1);
+	if(!image_texde4){
+		fprintf(stderr, "Erreur à la création du rendu de l'image : %s\n", SDL_GetError());
+		exit(EXIT_FAILURE);
+	}
+
+	SDL_Texture *image_texde5 = SDL_CreateTextureFromSurface(renderer, de1);
+	if(!image_texde5){
+		fprintf(stderr, "Erreur à la création du rendu de l'image : %s\n", SDL_GetError());
+		exit(EXIT_FAILURE);
+	}
 
 
 
@@ -187,10 +210,30 @@ int main(int argc, char** argv)
 								SDL_QueryTexture(image_tex, NULL, NULL, &(imgDestRect.w), &(imgDestRect.h));
 								SDL_RenderCopy(renderer, image_tex, NULL, &imgDestRect);
 
-								imgDestRect.x = 300;
+								imgDestRect.x = 400;
  								imgDestRect.y = 300;
  								SDL_QueryTexture(image_texde1, NULL, NULL, &(imgDestRect.w), &(imgDestRect.h));
  								SDL_RenderCopy(renderer, image_texde1, NULL, &imgDestRect);
+
+								imgDestRect.x = 500;
+ 								imgDestRect.y = 300;
+ 								SDL_QueryTexture(image_texde2, NULL, NULL, &(imgDestRect.w), &(imgDestRect.h));
+ 								SDL_RenderCopy(renderer, image_texde2, NULL, &imgDestRect);
+
+								imgDestRect.x = 600;
+ 								imgDestRect.y = 300;
+ 								SDL_QueryTexture(image_texde3, NULL, NULL, &(imgDestRect.w), &(imgDestRect.h));
+ 								SDL_RenderCopy(renderer, image_texde3, NULL, &imgDestRect);
+
+								imgDestRect.x = 700;
+ 								imgDestRect.y = 300;
+ 								SDL_QueryTexture(image_texde4, NULL, NULL, &(imgDestRect.w), &(imgDestRect.h));
+ 								SDL_RenderCopy(renderer, image_texde4, NULL, &imgDestRect);
+
+								imgDestRect.x = 800;
+ 								imgDestRect.y = 300;
+ 								SDL_QueryTexture(image_texde5, NULL, NULL, &(imgDestRect.w), &(imgDestRect.h));
+ 								SDL_RenderCopy(renderer, image_texde5, NULL, &imgDestRect);
 
 								caseDestRect.x = 200;
 							 caseDestRect.y = 78;
@@ -223,7 +266,7 @@ int main(int argc, char** argv)
 						break;
 						case SDL_MOUSEBUTTONDOWN:
 						//	running = 0;
-							if(e.motion.x > 300 && e.motion.x < 350 && e.motion.y > 300 && e.motion.y < 350){
+							if(e.motion.x > 400 && e.motion.x < 450 && e.motion.y > 300 && e.motion.y < 350){
 
 								fprintf(stdout, "Un appui sur le dé :\n");
 
@@ -234,7 +277,7 @@ int main(int argc, char** argv)
 									exit(EXIT_FAILURE);
 								}
 
-								imgDestRect.x = 300;
+								imgDestRect.x = 400;
  								imgDestRect.y = 300;
 
 								SDL_QueryTexture(image_texde1, NULL, NULL, &(imgDestRect.w), &(imgDestRect.h));
