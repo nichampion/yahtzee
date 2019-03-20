@@ -123,23 +123,92 @@ int compter_des(t_joueur *joueur, int nb_test){
 /**
   *\brief Strategie permettant d'obtenir le maximum de points dans la section superieur de la feuille de marque
 */
-void strat_superieur(t_joueur *j) {
-  int i;
-  int nb_des[6];
 
-  for(i = 0;i < 5;i++)
-    nb_des[i] = compter_des(j, i + 1);
-
-  /* Choisir des (plus eleve, en plus gd nombre et dispo (non joue)) */
-  int des_a_garder; // = ...
-
-  /* Relancer les des pour obtenir le plus de des de la sorte */
-    /* 3 fois et tant que tous les des ne sont = a des_a_garder */
-
-
+void val_des_max(int val_c, int *val_max, int nb_des_c, int *nb_des_max) {
+  if(nb_des_c >= *nb_des_max) {
+    *val_max = val_c;
+    *nb_des_max = nb_des_c;
+  }
 }
 
 
+/**
+  *\brief Retourne la val des des les plus elevee en plus grand nombre et disponible (Valeur non jouée dans la feuille de marque)
+*/
+int choix_des_strat_sup(int tab[6], t_joueur *j) {
+  int val_max = 0;
+  int nb_des_max = 0;
+
+  if(j->tab.as == VAL_INIT)
+    val_des_max(1, &val_max, tab[0], &nb_des_max);
+
+  if(j->tab.deux == VAL_INIT)
+    val_des_max(2, &val_max, tab[1], &nb_des_max);
+
+  if(j->tab.trois == VAL_INIT)
+    val_des_max(3, &val_max, tab[2], &nb_des_max);
+
+  if(j->tab.quatres == VAL_INIT)
+    val_des_max(4, &val_max, tab[3], &nb_des_max);
+
+  if(j->tab.cinq == VAL_INIT)
+    val_des_max(5, &val_max, tab[4], &nb_des_max);
+
+  if(j->tab.six == VAL_INIT)
+    val_des_max(6, &val_max, tab[5], &nb_des_max);
+
+  return val_max;
+}
+
+
+int strat_superieur(t_joueur *j, t_joueur *j_test) {
+  int i;
+  int nb_des[6];
+
+  for(i = 0; i < 6; i++)
+    nb_des[i] = compter_des(j, i + 1);
+
+  /* Verif si cette strat est applicable */
+  if((j->tab.as != VAL_INIT) && (j->tab.deux != VAL_INIT) && (j->tab.trois != VAL_INIT) && (j->tab.quatres != VAL_INIT) && (j->tab.cinq != VAL_INIT) && (j->tab.six!= VAL_INIT))
+    return 0;
+
+  /* Choisir des (plus eleve, en plus gd nombre et dispo (non joue)) */
+  int val_des_a_garder = choix_des_strat_sup(nb_des, j);
+
+  printf("Val a garder : %d\n", val_des_a_garder);
+
+  /* Relancer les des pour obtenir le plus de des de cette valeur */
+  int nb_lance;
+  /* 3 fois et tant que tous les des ne sont = a des_a_garder */
+  for(nb_lance = 3; nb_lance > 1; nb_lance--) {
+    for(i = 0; i < 5; i++) {
+      if(j->des[i] != val_des_a_garder)
+        lancer(j, i);
+    }
+    test_mains(j);
+  }
+
+  /* Cela est-il pertinent d'appliquer cette stratégie ? */
+  for(i = 0; i < 6; i++)
+    nb_des[i] = compter_des(j, i + 1);
+
+  if(nb_des[val_des_a_garder - 1] < 3)
+    return 0;
+
+  /* On applique cette stratégie */
+  j_test = test_mains(j);
+  switch(val_des_a_garder) {
+		case 1 :  j->tab.as = j_test->tab.as; break;
+    case 2 :  j->tab.deux = j_test->tab.deux; break;
+    case 3 :  j->tab.trois = j_test->tab.trois; break;
+    case 4 :  j->tab.quatres = j_test->tab.quatres; break;
+    case 5 :  j->tab.cinq = j_test->tab.cinq; break;
+    case 6 :  j->tab.six = j_test->tab.six; break;
+  }
+
+  return 1;
+
+}
 
 
 int tour_ordinateur(t_joueur *j) {
@@ -151,7 +220,9 @@ int tour_ordinateur(t_joueur *j) {
 
   tempo = test_mains(j);
 
-  strat_superieur(j);
+  strat_superieur(j, tempo);
+
+  //choix_placement(j,tempo);
 
   //meilleur_score(j, tempo);
 
