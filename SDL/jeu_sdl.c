@@ -7,11 +7,11 @@ int main(int argc, char** argv)
 {
 	int i = 0;
 		//score J1
-	char * score_j1[17] = {"1","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0"};
-	char * score_j2[17] = {"0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0"};
+	char * score_j1[17] = {"1","2","3","4","5","6","7","8","9","10","11","12","13","14","15","16","17"};
+	char * score_j2[17] = {"0","0","0","0","5","0","0","0","0","0","11","0","0","0","0","0","17"};
 		//grille des possibilités du joueur	après lancement
-	char * possible_j1[17] = {"x","x","x","x","x","x","x","x","x","x","x","x","x","x","x","x","x"} ;
-	char * possible_j2[17] = {"x","x","x","x","x","x","x","x","x","x","x","x","x","x","x","x","x"} ;
+	char * possible_j1[17] = {"","","","","","","","","","","","","","","","",""};
+	char * possible_j2[17] = {"","","","","","","","","","","","","","","","",""};
     //Le pointeur vers la fenetre
 	SDL_Window* pWindow = NULL;
 	//Le pointeur vers la surface incluse dans la fenetre
@@ -97,8 +97,6 @@ int main(int argc, char** argv)
 		exit(EXIT_FAILURE);
 	}
 
-	SDL_FreeSurface(case1);
-	SDL_FreeSurface(case2);
 	SDL_FreeSurface(texte); /* on a la texture, plus besoin du texte */
 	/* Position ou sera mis le texte dans la fenêtre */
   txtDestRect.x = txtDestRect.y = 10;
@@ -259,6 +257,17 @@ int main(int argc, char** argv)
 							caseDestRect.x = 200;
 						 	caseDestRect.y = 78;
 							for(i = 0; i <=7; i++){
+								case1 = TTF_RenderUTF8_Blended(police, score_j1[i], couleurNoire);
+								if(!case1){
+									fprintf(stderr, "Erreur à la création du texte : %s\n", SDL_GetError());
+									exit(EXIT_FAILURE);
+								}
+								case1_tex = SDL_CreateTextureFromSurface(renderer, case1);
+								if(!case1_tex){
+									fprintf(stderr, "Erreur à la création du rendu du texte : %s\n", SDL_GetError());
+									exit(EXIT_FAILURE);
+								}
+
 								SDL_QueryTexture(case1_tex, NULL, NULL, &(caseDestRect.w), &(caseDestRect.h));
 								SDL_RenderCopy(renderer, case1_tex, NULL, &(caseDestRect));
 								caseDestRect.y += 29;
@@ -266,9 +275,30 @@ int main(int argc, char** argv)
 
 								caseDestRect.y += 19;
 								for(i = 0; i <=7; i++){
+									case1 = TTF_RenderUTF8_Blended(police, score_j1[i+8], couleurNoire);
+									if(!case1){
+										fprintf(stderr, "Erreur à la création du texte : %s\n", SDL_GetError());
+										exit(EXIT_FAILURE);
+									}
+									case1_tex = SDL_CreateTextureFromSurface(renderer, case1);
+									if(!case1_tex){
+										fprintf(stderr, "Erreur à la création du rendu du texte : %s\n", SDL_GetError());
+										exit(EXIT_FAILURE);
+									}
 									SDL_QueryTexture(case1_tex, NULL, NULL, &(caseDestRect.w), &(caseDestRect.h));
 									SDL_RenderCopy(renderer, case1_tex, NULL, &(caseDestRect));
 									caseDestRect.y += 29;
+								}
+
+								case1 = TTF_RenderUTF8_Blended(police, score_j1[16], couleurNoire);
+								if(!case1){
+									fprintf(stderr, "Erreur à la création du texte : %s\n", SDL_GetError());
+									exit(EXIT_FAILURE);
+								}
+								case1_tex = SDL_CreateTextureFromSurface(renderer, case1);
+								if(!case1_tex){
+									fprintf(stderr, "Erreur à la création du rendu du texte : %s\n", SDL_GetError());
+									exit(EXIT_FAILURE);
 								}
 
 								caseDestRect.y += 19;
@@ -279,6 +309,16 @@ int main(int argc, char** argv)
 								caseDestRect.x = 250;
 							 	caseDestRect.y = 78;
 								for(i = 0; i <=7; i++){
+									case2 = TTF_RenderUTF8_Blended(police, score_j2[i], couleurNoire);
+									if(!case2){
+										fprintf(stderr, "Erreur à la création du texte : %s\n", SDL_GetError());
+										exit(EXIT_FAILURE);
+									}
+									case2_tex = SDL_CreateTextureFromSurface(renderer, case2);
+									if(!case2_tex){
+										fprintf(stderr, "Erreur à la création du rendu du texte : %s\n", SDL_GetError());
+										exit(EXIT_FAILURE);
+									}
 									SDL_QueryTexture(case2_tex, NULL, NULL, &(caseDestRect.w), &(caseDestRect.h));
 									SDL_RenderCopy(renderer, case2_tex, NULL, &(caseDestRect));
 									caseDestRect.y += 29;
@@ -286,9 +326,30 @@ int main(int argc, char** argv)
 
 								caseDestRect.y += 19;
 								for(i = 0; i <=7; i++){
+									case2 = TTF_RenderUTF8_Blended(police, score_j2[8+i], couleurNoire);
+									if(!case2){
+										fprintf(stderr, "Erreur à la création du texte : %s\n", SDL_GetError());
+										exit(EXIT_FAILURE);
+									}
+									case2_tex = SDL_CreateTextureFromSurface(renderer, case2);
+									if(!case2_tex){
+										fprintf(stderr, "Erreur à la création du rendu du texte : %s\n", SDL_GetError());
+										exit(EXIT_FAILURE);
+									}
 									SDL_QueryTexture(case2_tex, NULL, NULL, &(caseDestRect.w), &(caseDestRect.h));
 									SDL_RenderCopy(renderer, case2_tex, NULL, &(caseDestRect));
 									caseDestRect.y += 29;
+								}
+
+								case2 = TTF_RenderUTF8_Blended(police, score_j2[16], couleurNoire);
+								if(!case2){
+									fprintf(stderr, "Erreur à la création du texte : %s\n", SDL_GetError());
+									exit(EXIT_FAILURE);
+								}
+								case2_tex = SDL_CreateTextureFromSurface(renderer, case2);
+								if(!case2_tex){
+									fprintf(stderr, "Erreur à la création du rendu du texte : %s\n", SDL_GetError());
+									exit(EXIT_FAILURE);
 								}
 
 								caseDestRect.y += 19;
@@ -311,6 +372,10 @@ int main(int argc, char** argv)
 
 						case SDL_MOUSEBUTTONDOWN:
 						//	running = 0;
+							if(e.motion.x > 575 && e.motion.x < 675 && e.motion.y > 500 && e.motion.y < 550){
+								fprintf(stdout, "Un appui sur le bouton :\n");
+							}
+
 							if(e.motion.x > 400 && e.motion.x < 450 && e.motion.y > 300 && e.motion.y < 350){
 
 								SDL_Texture *image_texde1 = SDL_CreateTextureFromSurface(renderer, de2);
@@ -336,6 +401,8 @@ int main(int argc, char** argv)
 	else {
 		fprintf(stderr,"Erreur de création de la fenêtre: %s\n",SDL_GetError());
 	}
+	SDL_FreeSurface(case1);
+	SDL_FreeSurface(case2);
 
 	SDL_FreeSurface(de1); /* on a la texture, plus besoin de l'image */
 	SDL_FreeSurface(de2); /* on a la texture, plus besoin de l'image */
