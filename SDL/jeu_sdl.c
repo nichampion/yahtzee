@@ -1,7 +1,11 @@
 #include <stdio.h>
-#include <SDL2/SDL.h>
-#include <SDL2/SDL_ttf.h>
-#include <SDL2/SDL_image.h>
+#include "SDL2/include/SDL2/SDL.h"
+#include "SDL2/include/SDL2/SDL_ttf.h"
+#include "SDL2/include/SDL2/SDL_image.h"
+#include "commun.h"
+#include "fonctions_jeu.h"
+#include "fonctions_joueur.h"
+#include "mains.h"
 
 int main(int argc, char** argv)
 {
