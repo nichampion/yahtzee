@@ -15,7 +15,7 @@ int main(int argc, char** argv)
     //Le pointeur vers la fenetre
 	SDL_Window* pWindow = NULL;
 	//Le pointeur vers la surface incluse dans la fenetre
-  SDL_Surface *texte=NULL, *image=NULL, *de1=NULL, *de2=NULL, *de3=NULL, *de4=NULL, *de5=NULL, *de6=NULL, *case1=NULL, *case2=NULL;
+  SDL_Surface *texte=NULL, *image=NULL, *de1=NULL, *de2=NULL, *de3=NULL, *de4=NULL, *de5=NULL, *de6=NULL, *img_btn_lancer=NULL, *case1=NULL, *case2=NULL;
 	SDL_Renderer *renderer=NULL;
 	SDL_Rect txtDestRect,imgDestRect, caseDestRect;
 
@@ -186,7 +186,19 @@ int main(int argc, char** argv)
 		exit(EXIT_FAILURE);
 	}
 
+	SDL_RWops *rwop_btn=SDL_RWFromFile("img/btn_lancer.png", "rb");
+	img_btn_lancer=IMG_LoadPNG_RW(rwop_btn);
+	if(!img_btn_lancer) {
+		printf("IMG_LoadPNG_RW: %s\n", IMG_GetError());
+	}
 
+	SDL_Texture *btn_lancer_tex = SDL_CreateTextureFromSurface(renderer, img_btn_lancer);
+	if(!btn_lancer_tex){
+		fprintf(stderr, "Erreur à la création du rendu de l'image : %s\n", SDL_GetError());
+		exit(EXIT_FAILURE);
+	}
+
+	SDL_FreeSurface(img_btn_lancer); /* on a la texture, plus besoin de l'image */
 
 
 
@@ -283,6 +295,11 @@ int main(int argc, char** argv)
 								SDL_QueryTexture(case2_tex, NULL, NULL, &(caseDestRect.w), &(caseDestRect.h));
 								SDL_RenderCopy(renderer, case2_tex, NULL, &(caseDestRect));
 
+
+								imgDestRect.x = 575;
+								imgDestRect.y = 500;
+								SDL_QueryTexture(btn_lancer_tex, NULL, NULL, &(imgDestRect.w), &(imgDestRect.h));
+								SDL_RenderCopy(renderer, btn_lancer_tex, NULL, &imgDestRect);
 								//SDL_Delay(1000);
 
               /* On fait le rendu ! */
