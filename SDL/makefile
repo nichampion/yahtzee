@@ -3,16 +3,16 @@ CC=gcc
 FLAGS=-Wall -g3
 
 SDL_DIR=${HOME}/SDL2
-SDLLIB_DIR=${SDL_DIR}/lib
-SDLINC_DIR=${SDL_DIR}/include
+SDL_LIB_DIR=${SDL_DIR}/lib
+SDL_INC_DIR=${SDL_DIR}/include
 
-LIBS=-L${SDLLIB_DIR} -lSDL2 -lSDL2_ttf -lSDL2_image
-INCLUDES=-I${SDLINC_DIR}
+LIBS=-L${SDL_LIB_DIR} -lSDL2 -lSDL2_ttf -lSDL2_image
+INCS=-I${SDL_INC_DIR}
 
 PROG=jeu_sdl
 
 all: jeu_sdl.o fonctions_jeu.o fonctions_joueur.o mains.o
-	${CC} -o ${PROG} jeu_sdl.o fonctions_jeu.o fonctions_joueur.o mains.o ${LIBS} ${INCLUDES}
+	${CC} -o ${PROG} jeu_sdl.o fonctions_jeu.o fonctions_joueur.o mains.o ${LIBS} ${INCS} ${FLAGS}
 
 jeu_sdl.o : jeu_sdl.c
 	gcc -o jeu_sdl.o -c jeu_sdl.c
