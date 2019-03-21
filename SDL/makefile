@@ -1,6 +1,6 @@
 
 CC=gcc
-FLAGS=-Wall -g
+FLAGS=-Wall -g3
 
 SDL_DIR=${HOME}/SDL2
 SDLLIB_DIR=${SDL_DIR}/lib
@@ -11,8 +11,8 @@ INCLUDES=-I${SDLINC_DIR}
 
 PROG=jeu_sdl
 
-all: jeu_sdl.o fonctions_jeu.o fonctions_joueur.o mains.o ordinateur.o
-	${CC} -o ${PROG} jeu_sdl.o fonctions_jeu.o fonctions_joueur.o mains.o ordinateur.o ${LIBS} ${INCLUDES}
+all: jeu_sdl.o fonctions_jeu.o fonctions_joueur.o mains.o
+	${CC} -o ${PROG} jeu_sdl.o fonctions_jeu.o fonctions_joueur.o mains.o ${LIBS} ${INCLUDES}
 
 jeu_sdl.o : jeu_sdl.c
 	gcc -o jeu_sdl.o -c jeu_sdl.c
@@ -25,9 +25,6 @@ fonctions_joueur.o : fonctions_joueur.c fonctions_joueur.h
 
 mains.o : mains.c mains.h
 	gcc -o mains.o -c mains.c -W -Wall -ansi -pedantic
-
-ordinateur.o : ordinateur.c ordinateur.h
-	gcc -o ordinateur.o -c ordinateur.c -W -Wall -ansi -pedantic
 
 clean:
 	rm -f ${PROG}
