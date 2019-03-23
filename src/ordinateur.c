@@ -4,6 +4,7 @@
 
 #include "commun.h"
 #include "ordinateur.h"
+#include "mains.h"
 #include "fonctions_joueur.h"
 #include "fonctions_jeu.h"
 
@@ -14,7 +15,68 @@
 */
 
 /*Lien strat 1 -> http://www.ultraboardgames.com/yahtzee/tips.php*/
+/*Lien strat 2 -> https://fr.wikihow.com/jouer-au-yahtzee*/
 
+void test_mains_NC(t_joueur *j, t_joueur *j_test) {
+
+	if((j->tab.as) == VAL_INIT)
+		j_test->tab.as = section_superieure(j,1);
+
+	if((j->tab.deux) == VAL_INIT)
+		j_test->tab.deux = section_superieure(j,2);
+
+	if((j->tab.trois) == VAL_INIT)
+		j_test->tab.trois = section_superieure(j,3);
+
+	if((j->tab.quatres) == VAL_INIT)
+		j_test->tab.quatres = section_superieure(j,4);
+
+	if((j->tab.cinq) == VAL_INIT)
+		j_test->tab.cinq = section_superieure(j,5);
+
+	if((j->tab.six) == VAL_INIT)
+		j_test->tab.six = section_superieure(j,6);
+
+	if((j->tab.brelan) == VAL_INIT)
+		j_test->tab.brelan = brelan(j);
+
+	if((j->tab.carre) == VAL_INIT)
+		j_test->tab.carre = carre(j);
+
+	if((j->tab.full) == VAL_INIT)
+		j_test->tab.full = full(j);
+
+	if((j->tab.petite_Suite) == VAL_INIT)
+		j_test->tab.petite_Suite = petite_suite(j);
+
+	if((j->tab.grande_Suite) == VAL_INIT)
+		j_test->tab.grande_Suite = grande_suite(j);
+
+	if((j->tab.chance) == VAL_INIT)
+		j_test->tab.chance = chance(j);
+
+	if((j->tab.yahtzee) == VAL_INIT)
+		j_test->tab.yahtzee = yahtzee(j);
+	else if((j->tab.yahtzee) == 50)
+		j_test->tab.prime_Yahtzee = 100;
+
+	affichage_possibilites(j,j_test);
+
+}
+
+/**
+  *\brief Sous fonction. Intervient dans plusieurs fonctions.
+  *\return Le nombre de des nb_test qu'il y a dans la main du joueur.
+*/
+static
+int compter_des(t_joueur *joueur, int nb_test){
+  int i, res = 0;
+  for(i = 0; i<N; i++){
+    if(joueur->des[i] == nb_test)
+      res += 1;
+  }
+  return res;
+}
 
 /* ****************** Calcul de la meilleur main ****************** */
 
@@ -111,16 +173,6 @@ void meilleur_score(t_joueur *j, t_joueur *j_test) {
 /* ****************** Obtention du bonus supérieurs ****************** */
 
 
-int compter_des(t_joueur *joueur, int nb_test){
-  int i, res = 0;
-  for(i = 0; i<N; i++){
-    if(joueur->des[i] == nb_test)
-      res += 1;
-  }
-  return res;
-}
-
-
 /**
   *\brief Strategie permettant d'obtenir le maximum de points dans la section superieur de la feuille de marque
 */
@@ -168,17 +220,17 @@ int strat_superieur(t_joueur *j, t_joueur *j_test) {
   int i;
   int nb_des[6];
 
-  for(i = 0; i < 6; i++)
-    nb_des[i] = compter_des(j, i + 1);
-
   /* Verif si cette strat est applicable */
+    /* Si tab sup est entierement plein => impossible */
   if((j->tab.as != VAL_INIT) && (j->tab.deux != VAL_INIT) && (j->tab.trois != VAL_INIT) && (j->tab.quatres != VAL_INIT) && (j->tab.cinq != VAL_INIT) && (j->tab.six!= VAL_INIT))
     return 0;
 
+  /* Compter les des */
+  for(i = 0; i < 6; i++)
+    nb_des[i] = compter_des(j, i + 1);
+
   /* Choisir des (plus eleve, en plus gd nombre et dispo (non joue)) */
   int val_des_a_garder = choix_des_strat_sup(nb_des, j);
-
-  printf("Val a garder : %d\n", val_des_a_garder);
 
   /* Relancer les des pour obtenir le plus de des de cette valeur */
   int nb_lance;
@@ -188,7 +240,7 @@ int strat_superieur(t_joueur *j, t_joueur *j_test) {
       if(j->des[i] != val_des_a_garder)
         lancer(j, i);
     }
-    test_mains(j);
+    test_mains(j); // Permet l'affichage
   }
 
   /* Cela est-il pertinent d'appliquer cette stratégie ? */
@@ -209,10 +261,114 @@ int strat_superieur(t_joueur *j, t_joueur *j_test) {
     case 6 :  j->tab.six = j_test->tab.six; break;
   }
 
-  return 1;
+  return 1; // Fin de la strategie
 
 }
 
+
+/* ****************** Obtention des suites (Petite et grande) ****************** */
+
+/**
+  *\return Renvoie un booleen
+*/
+int val_dans_tab(int val, int tab[], int taille) {
+  int i;
+
+  for(i = 0; i < taille; i++) {
+    if(tab[i] == val)
+      return 1;
+  }
+
+  return 0;
+}
+
+int stra_p_g_suite(t_joueur *j, t_joueur *j_test) {
+  int i;
+  int nb_des[6];
+
+  /* Verif si cette strat est applicable */
+  if(j->tab.petite_Suite != VAL_INIT || j->tab.grande_Suite != VAL_INIT)
+    return 0;
+
+  /* Compter les des */
+  for(i = 0; i < 6; i++)
+    nb_des[i] = compter_des(j, i + 1);
+
+  /* Analyse de la main => On surveille les sequences 2-3-4 OU 4-5-6 */
+  int val_des_a_garder[3];
+
+    /* Seq 2-3-4 */
+  if((nb_des[1] != 0) && (nb_des[2] != 0) && (nb_des[3] != 0)) {
+    val_des_a_garder[0] = 2;
+    val_des_a_garder[1] = 3;
+    val_des_a_garder[2] = 4;
+  }
+
+    /* Seq 4-5-6 */
+  else if((nb_des[3] != 0) && (nb_des[4] != 0) && (nb_des[5] != 0)) {
+    val_des_a_garder[0] = 4;
+    val_des_a_garder[1] = 5;
+    val_des_a_garder[2] = 6;
+  }
+
+    /* Les autres cas seront geres par la fonction meilleur_score */
+  else
+    return 0; /* Si aucune sequence reperes => Sortir de cette fonction */
+
+  /* Relancement */
+  int nb_lance, exit_code = 0;
+  for(nb_lance = 3; (nb_lance > 1); nb_lance--) {
+    for(i = 0; i < 5; i++) {
+
+      /* Cas ou il ne faut pas relancer => des a garder ET 1 exemplaire */
+
+      if(! (val_dans_tab(j->des[i], val_des_a_garder, 3) && (nb_des[j->des[i] - 1] == 1))) {
+
+        if(nb_des[j->des[i] - 1] > 1)
+          nb_des[j->des[i] - 1]--; /* Permet de ne pas selectionner le dernier exemplaire du des a garder */
+
+        /* Relancement */
+        lancer(j, i);
+      }
+
+    }
+
+    /* Compter les des */
+    for(i = 0; i < 6; i++)
+      nb_des[i] = compter_des(j, i + 1);
+
+    test_mains_NC(j, j_test); // Permet l'affichage
+
+    /* Si on a Gde ou Pte suite => On utilise */
+    // ICI cas DU YAHTZEE => TODO
+    if((j_test->tab.grande_Suite != VAL_INIT) && (j->tab.grande_Suite == VAL_INIT)) {
+        exit_code = -1;
+        nb_lance = -1;
+    }
+    else if((j_test->tab.petite_Suite != VAL_INIT) && (j->tab.petite_Suite == VAL_INIT)) {
+        exit_code = -2;
+        nb_lance = -1;
+    }
+  }
+
+  /* Cas gde suite */
+  if(exit_code == -1) {
+    printf("Gde SUITE en rel\n");
+    j->tab.grande_Suite = j_test->tab.grande_Suite;
+    return 1; // fin de la stratégie
+  }
+
+  /* Cas pte suite */
+  else if(exit_code == -2) {
+    printf("Pte SUITE en rel\n");
+    j->tab.petite_Suite = j_test->tab.petite_Suite;
+    return 1; // fin de la stratégie
+  }
+
+  // Rien obtenu
+  else
+    return 0;
+}
 
 /* ***************************************************************************** */
 
@@ -221,19 +377,43 @@ int tour_ordinateur(t_joueur *j) {
   int i;
   t_joueur *tempo = creer_joueur("tempo");
 
-  for(i = 0; i < 5; i++)
+  /*for(i = 0; i < 5; i++)
     lancer(j, i);
+  */
 
-  tempo = test_mains(j);
+  /* Val de tests */
+  j->des[0] = 4;
+  j->des[1] = 5;
+  j->des[2] = 6;
+  j->des[3] = 5;
+  j->des[4] = 5;
 
-  strat_superieur(j, tempo);
+  test_mains_NC(j, tempo); // Celle de Zack => Fuite memoire !!!!!!!!!
 
-  //Remplir suites dans le tableau inferieur
+// Verifier a chaque relancement qu'on a pas un yahtzee !!!!!
 
-  //choix_placement(j,tempo);
+  /* ***** Analyse des mains (avec les des initiaux) ***** */
 
-  //meilleur_score(j, tempo);
+  if((tempo->tab.yahtzee != VAL_INIT) && (j->tab.yahtzee == VAL_INIT))
+    j->tab.yahtzee = tempo->tab.yahtzee;
 
-  return 0; // A changer par la suite
+  else if((tempo->tab.grande_Suite != VAL_INIT) && (j->tab.grande_Suite == VAL_INIT))
+    j->tab.grande_Suite = tempo->tab.grande_Suite;
 
+  else if((tempo->tab.petite_Suite != VAL_INIT) && (j->tab.petite_Suite == VAL_INIT))
+    j->tab.petite_Suite = tempo->tab.petite_Suite;
+
+  /* ***** Application d'une strategie ***** */
+
+  /*
+  else if(strat_superieur(j, tempo))
+    return 0; // Strategie a pu etre applique, l'ordi a jouer
+  */
+
+  else if(stra_p_g_suite(j, tempo))
+    return 0; // Strategie a pu etre applique, l'ordi a jouer
+
+  meilleur_score(j, tempo);
+
+  return 0; // Ordi a jouer
 }

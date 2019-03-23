@@ -86,10 +86,10 @@ int main(int argc, char **argv) {
 
 		tour_joueur(jh);
 		affichage(jh,jo,jh);
-		sleep(5);
+		sleep(1);
 		tour_ordinateur(jo);
 		affichage(jh,jo,jh);
-		sleep(5);
+		sleep(1);
 
 		if(fin_de_partie(jh) && fin_de_partie(jo))
 			game_over = 1;
