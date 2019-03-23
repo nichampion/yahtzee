@@ -1,4 +1,3 @@
-
 CC=gcc
 FLAGS=-Wall -g3
 
@@ -15,16 +14,16 @@ all: jeu_sdl.o fonctions_jeu.o fonctions_joueur.o mains.o
 	${CC} -o ${PROG} jeu_sdl.o fonctions_jeu.o fonctions_joueur.o mains.o ${LIBS} ${INCS} ${FLAGS}
 
 jeu_sdl.o : jeu_sdl.c
-	gcc -o jeu_sdl.o -c jeu_sdl.c
+	${CC} -o jeu_sdl.o -c jeu_sdl.c ${LIBS} ${INCS} ${FLAGS}
 
 fonctions_jeu.o : fonctions_jeu.c fonctions_jeu.h
-	gcc -o fonctions_jeu.o -c fonctions_jeu.c -W -Wall -ansi -pedantic
+	${CC} -o fonctions_jeu.o -c fonctions_jeu.c -W -Wall -ansi -pedantic
 
 fonctions_joueur.o : fonctions_joueur.c fonctions_joueur.h
-	gcc -o fonctions_joueur.o -c fonctions_joueur.c -W -Wall -ansi -pedantic
+	${CC} -o fonctions_joueur.o -c fonctions_joueur.c -W -Wall -ansi -pedantic
 
 mains.o : mains.c mains.h
-	gcc -o mains.o -c mains.c -W -Wall -ansi -pedantic
+	${CC} -o mains.o -c mains.c -W -Wall -ansi -pedantic
 
 clean:
 	rm -f ${PROG}

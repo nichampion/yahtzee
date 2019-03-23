@@ -9,13 +9,12 @@
 
 int main(int argc, char** argv)
 {
-	int i = 0;
 	//creation joueurs
 	t_joueur * j1 = creer_joueur("J1");
 	t_joueur * j2 = creer_joueur("J2");
 	char * mot = "blabla";
 	//grille des possibilités du joueur	après lancement
-	char * temp;
+	char * temp = "";
   //Le pointeur vers la fenetre
 	SDL_Window* pWindow = NULL;
 	//Le pointeur vers la surface incluse dans la fenetre
