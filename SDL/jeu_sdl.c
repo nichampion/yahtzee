@@ -20,7 +20,7 @@ int main(int argc, char** argv)
 	SDL_Window *pWindow = NULL;
 	SDL_Surface *pScreen = NULL;
 
-  	SDL_Surface *partie=NULL, *msg_lancer=NULL, *image=NULL, *decourant=NULL, *de1=NULL, *de2=NULL, *de3=NULL, *de4=NULL, *de5=NULL, *de6=NULL, *img_btn_lancer=NULL, *case1=NULL, *case2=NULL;
+  SDL_Surface *partie=NULL, *msg_lancer=NULL, *tab_score=NULL, *decourant=NULL, *de1=NULL, *de2=NULL, *de3=NULL, *de4=NULL, *de5=NULL, *de6=NULL, *img_btn_lancer=NULL, *case1=NULL, *case2=NULL;
 	SDL_Renderer *renderer=NULL;
 	SDL_Rect partieDestRect, msg_lancerDestRect, imgDestRect, caseJ1DestRect, caseJ2DestRect;
 	SDL_Texture *image_texde1, *image_texde2, *image_texde3, *image_texde4, *image_texde5;
@@ -31,10 +31,10 @@ int main(int argc, char** argv)
 	SDL_Color couleurRouge = {255, 0, 0};
 
  	/* Initialisation simple */
-  	if (SDL_Init(SDL_INIT_VIDEO) != 0 ) {
-    fprintf(stdout,"Échec de l'initialisation de la SDL (%s)\n",SDL_GetError());
+  if (SDL_Init(SDL_INIT_VIDEO) != 0 ) {
+  	fprintf(stdout,"Échec de l'initialisation de la SDL (%s)\n",SDL_GetError());
     return -1;
-  	}
+  }
 
 	/* Initialisation TTF */
 	if(TTF_Init() == -1) {
@@ -116,22 +116,23 @@ int main(int argc, char** argv)
 		exit(EXIT_FAILURE);
 	}
 
+	SDL_FreeSurface(msg_lancer);
 	SDL_FreeSurface(partie); /* on a la texture, plus besoin du texte */
 
 	// load sample.png into image
 	SDL_RWops *rwopscore=SDL_RWFromFile("img/score.png", "rb");
-	image=IMG_LoadPNG_RW(rwopscore);
-	if(!image) {
+	tab_score=IMG_LoadPNG_RW(rwopscore);
+	if(!tab_score) {
 		printf("IMG_LoadPNG_RW: %s\n", IMG_GetError());
 	}
 
-	SDL_Texture *image_tex = SDL_CreateTextureFromSurface(renderer, image);
-	if(!image_tex){
+	SDL_Texture *tab_score_tex = SDL_CreateTextureFromSurface(renderer, tab_score);
+	if(!tab_score_tex){
 		fprintf(stderr, "Erreur à la création du rendu de l'image : %s\n", SDL_GetError());
 		exit(EXIT_FAILURE);
 	}
 
-	SDL_FreeSurface(image); /* on a la texture, plus besoin de l'image */
+	SDL_FreeSurface(tab_score); /* on a la texture, plus besoin de l'image */
 
 	SDL_RWops *rwopde1=SDL_RWFromFile("img/de1.png", "rb");
 	de1=IMG_LoadPNG_RW(rwopde1);
@@ -190,7 +191,7 @@ int main(int argc, char** argv)
 			SDL_Event e;
 			while(SDL_PollEvent(&e)){
 				switch(e.type) {
-					case SDL_QUIT: 
+					case SDL_QUIT:
 						running = 0;
 					break;
 
@@ -198,22 +199,22 @@ int main(int argc, char** argv)
 						switch(e.window.event){
 				  			case SDL_WINDOWEVENT_SHOWN:
 								/* Le fond de la fenêtre sera vert */
-	            			  	SDL_SetRenderDrawColor(renderer, 55, 99, 78, 255);
-							  	SDL_RenderClear(renderer);
+	            	SDL_SetRenderDrawColor(renderer, 55, 99, 78, 255);
+							  SDL_RenderClear(renderer);
 
-	              				/* Ajout du texte en noir */
-	            			  	SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
+	              /* Ajout du texte en noir */
+	            	SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
 
-  								partieDestRect.x = partieDestRect.y = 10;
+  							partieDestRect.x = partieDestRect.y = 10;
 
 								SDL_QueryTexture(partie_tex, NULL, NULL, &(partieDestRect.w), &(partieDestRect.h));
-	            			  	SDL_RenderCopy(renderer, partie_tex, NULL, &partieDestRect);
+	            	SDL_RenderCopy(renderer, partie_tex, NULL, &partieDestRect);
 
-	      						imgDestRect.x = 10;
+	      				imgDestRect.x = 10;
 								imgDestRect.y = 50;
 
-								SDL_QueryTexture(image_tex, NULL, NULL, &(imgDestRect.w), &(imgDestRect.h));
-								SDL_RenderCopy(renderer, image_tex, NULL, &imgDestRect);
+								SDL_QueryTexture(tab_score_tex, NULL, NULL, &(imgDestRect.w), &(imgDestRect.h));
+								SDL_RenderCopy(renderer, tab_score_tex, NULL, &imgDestRect);
 
 								caseJ1DestRect.x = 200;
 							 	caseJ1DestRect.y = 80;
@@ -239,7 +240,7 @@ int main(int argc, char** argv)
 
 							break;
 						}
-						
+
 					case SDL_MOUSEBUTTONDOWN:
 
 						if(e.motion.x > 575 && e.motion.x < 675 && e.motion.y > 500 && e.motion.y < 550){
@@ -263,6 +264,9 @@ int main(int argc, char** argv)
 									break;
 									case 5:
 										decourant = de5;
+									break;
+									case 6:
+										decourant = de6;
 									break;
 								}
 								switch(i){
@@ -314,27 +318,27 @@ int main(int argc, char** argv)
 								}
 								imgDestRect.x += 100;
 							}
+							msg_lancerDestRect.x = 375;
+							msg_lancerDestRect.y = 100;
+
+							SDL_QueryTexture(msg_lancer_tex, NULL, NULL, &(msg_lancerDestRect.w), &(msg_lancerDestRect.h));
+							SDL_RenderCopy(renderer, msg_lancer_tex, NULL, &msg_lancerDestRect);
+
 							SDL_RenderPresent(renderer);
 							cpt_lancer++;
 
 						}
 
-	      				msg_lancerDestRect.x = 375;
-						msg_lancerDestRect.y = 100;
-
-						SDL_QueryTexture(msg_lancer_tex, NULL, NULL, &(msg_lancerDestRect.w), &(msg_lancerDestRect.h));
-						SDL_RenderCopy(renderer, msg_lancer_tex, NULL, &msg_lancerDestRect);
-						
 						if(e.motion.x > 400 && e.motion.x < 450 && e.motion.y > 300 && e.motion.y < 350){
 
 							imgDestRect.x = 400;
 							imgDestRect.y = 300;
 
-	            			SDL_SetRenderDrawColor(renderer, 55, 99, 78, 255);
+	            SDL_SetRenderDrawColor(renderer, 55, 99, 78, 255);
 							SDL_RenderFillRect(renderer,&imgDestRect);
 
 	 						imgDestRect.y = 600;
-							
+
 							SDL_QueryTexture(image_texde1, NULL, NULL, &(imgDestRect.w), &(imgDestRect.h));
 							SDL_RenderCopy(renderer, image_texde1, NULL, &imgDestRect);
 							SDL_RenderPresent(renderer);
@@ -346,11 +350,11 @@ int main(int argc, char** argv)
 							imgDestRect.x = 500;
 							imgDestRect.y = 300;
 
-	            			SDL_SetRenderDrawColor(renderer, 55, 99, 78, 255);
+	            SDL_SetRenderDrawColor(renderer, 55, 99, 78, 255);
 							SDL_RenderFillRect(renderer,&imgDestRect);
 
 	 						imgDestRect.y = 600;
-							
+
 							SDL_QueryTexture(image_texde2, NULL, NULL, &(imgDestRect.w), &(imgDestRect.h));
 							SDL_RenderCopy(renderer, image_texde2, NULL, &imgDestRect);
 							SDL_RenderPresent(renderer);
@@ -362,11 +366,11 @@ int main(int argc, char** argv)
 							imgDestRect.x = 600;
 							imgDestRect.y = 300;
 
-	            			SDL_SetRenderDrawColor(renderer, 55, 99, 78, 255);
+	            SDL_SetRenderDrawColor(renderer, 55, 99, 78, 255);
 							SDL_RenderFillRect(renderer,&imgDestRect);
 
 	 						imgDestRect.y = 600;
-							
+
 							SDL_QueryTexture(image_texde3, NULL, NULL, &(imgDestRect.w), &(imgDestRect.h));
 							SDL_RenderCopy(renderer, image_texde3, NULL, &imgDestRect);
 							SDL_RenderPresent(renderer);
@@ -378,11 +382,11 @@ int main(int argc, char** argv)
 							imgDestRect.x = 700;
 							imgDestRect.y = 300;
 
-	            			SDL_SetRenderDrawColor(renderer, 55, 99, 78, 255);
+	            SDL_SetRenderDrawColor(renderer, 55, 99, 78, 255);
 							SDL_RenderFillRect(renderer,&imgDestRect);
 
 	 						imgDestRect.y = 600;
-							
+
 							SDL_QueryTexture(image_texde4, NULL, NULL, &(imgDestRect.w), &(imgDestRect.h));
 							SDL_RenderCopy(renderer, image_texde4, NULL, &imgDestRect);
 							SDL_RenderPresent(renderer);
@@ -394,11 +398,11 @@ int main(int argc, char** argv)
 							imgDestRect.x = 800;
 							imgDestRect.y = 300;
 
-	            			SDL_SetRenderDrawColor(renderer, 55, 99, 78, 255);
+	            SDL_SetRenderDrawColor(renderer, 55, 99, 78, 255);
 							SDL_RenderFillRect(renderer,&imgDestRect);
 
 	 						imgDestRect.y = 600;
-							
+
 							SDL_QueryTexture(image_texde5, NULL, NULL, &(imgDestRect.w), &(imgDestRect.h));
 							SDL_RenderCopy(renderer, image_texde5, NULL, &imgDestRect);
 							SDL_RenderPresent(renderer);
