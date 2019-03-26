@@ -57,8 +57,8 @@ void test_mains_NC(t_joueur *j, t_joueur *j_test) {
 
 	if((j->tab.yahtzee) == VAL_INIT)
 		j_test->tab.yahtzee = yahtzee(j);
-	else if((j->tab.yahtzee) == 50)
-		j_test->tab.prime_Yahtzee = 100;
+	else if((j->tab.yahtzee) != VAL_INIT)
+		prime_yahtzee(j_test);
 
 	affichage_possibilites(j,j_test);
 
@@ -98,6 +98,10 @@ void test_max(int *val, int *max, char pos_max[20], char ligne_courante[20]) {
 */
 static
 void choisir_max(t_joueur *j, int max, char pos_max[20]) {
+	if(max == VAL_INIT)
+		max = 0;
+
+	printf("On joue %d sur %s\n", max, pos_max);
 
     if(strcmp(pos_max,"null") == 0) return;
     if(strcmp(pos_max,"as") == 0) j->tab.as = max;
@@ -116,12 +120,11 @@ void choisir_max(t_joueur *j, int max, char pos_max[20]) {
 
 }
 
-
 /**
   *\brief Choisi la main qui rapporte le plus de points pour une combinaison de des donnée.
 */
 void meilleur_score(t_joueur *j, t_joueur *j_test) {
-  int max = VAL_INIT;
+  int max = -2;
   char pos_max[20] = "null";
 
   /* Parcourir feuille de marque de j_test */
@@ -216,7 +219,7 @@ int choix_des_strat_sup(int tab[6], t_joueur *j) {
 /**
   *\brief Applique la stratégie consisitant a obtenir la prime dans la section superieure (de la feuille de marque Yahtzee)
 */
-int strat_superieur(t_joueur *j, t_joueur *j_test) {
+int strat_superieur(t_joueur *j, t_joueur *j_test, int nb_lance_Restant) {
   int i;
   int nb_des[6];
 
@@ -233,14 +236,20 @@ int strat_superieur(t_joueur *j, t_joueur *j_test) {
   int val_des_a_garder = choix_des_strat_sup(nb_des, j);
 
   /* Relancer les des pour obtenir le plus de des de cette valeur */
-  int nb_lance;
-  /* 3 fois et tant que tous les des ne sont = a des_a_garder */
-  for(nb_lance = 3; nb_lance > 1; nb_lance--) {
+  /* 2 fois et tant que tous les des ne sont = a des_a_garder */
+	int nb_lance;
+  for(nb_lance = nb_lance_Restant; nb_lance > 0; nb_lance--) {
     for(i = 0; i < 5; i++) {
       if(j->des[i] != val_des_a_garder)
         lancer(j, i);
     }
-    test_mains(j); // Permet l'affichage
+    j_test = test_mains(j); // Permet l'affichage
+
+		/* Test : Si jamais on obtient un yahtzee */
+		if(yahtzee(j) != -1) {
+			utiliser_yahtzee(j, j_test);
+			return 2; // L'ordi a joue (mais pas la strat sup)
+		}
   }
 
   /* Cela est-il pertinent d'appliquer cette stratégie ? */
@@ -282,7 +291,7 @@ int val_dans_tab(int val, int tab[], int taille) {
   return 0;
 }
 
-int stra_p_g_suite(t_joueur *j, t_joueur *j_test) {
+int stra_p_g_suite(t_joueur *j, t_joueur *j_test, int nb_lance_Restant) {
   int i;
   int nb_des[6];
 
@@ -316,8 +325,9 @@ int stra_p_g_suite(t_joueur *j, t_joueur *j_test) {
     return 0; /* Si aucune sequence reperes => Sortir de cette fonction */
 
   /* Relancement */
-  int nb_lance, exit_code = 0;
-  for(nb_lance = 3; (nb_lance > 1); nb_lance--) {
+  int exit_code = 0;
+	int nb_lance;
+  for(nb_lance = nb_lance_Restant; (nb_lance > 0); nb_lance--) {
     for(i = 0; i < 5; i++) {
 
       /* Cas ou il ne faut pas relancer => des a garder ET 1 exemplaire */
@@ -337,10 +347,9 @@ int stra_p_g_suite(t_joueur *j, t_joueur *j_test) {
     for(i = 0; i < 6; i++)
       nb_des[i] = compter_des(j, i + 1);
 
-    test_mains_NC(j, j_test); // Permet l'affichage
+    test_mains_NC(j, j_test); // Permet l'a	nb_ffichage
 
     /* Si on a Gde ou Pte suite => On utilise */
-    // ICI cas DU YAHTZEE => TODO
     if((j_test->tab.grande_Suite != VAL_INIT) && (j->tab.grande_Suite == VAL_INIT)) {
         exit_code = -1;
         nb_lance = -1;
@@ -370,23 +379,68 @@ int stra_p_g_suite(t_joueur *j, t_joueur *j_test) {
     return 0;
 }
 
+
+/* ****************** Obtention Yahtzee (Avec sacrifice si besoin) ****************** */
+
+
+//int obtenir_yahtzee
+
+/**
+  *\brief On suppose que l'on a une main de type yahtzee
+*/
+int utiliser_yahtzee(t_joueur *j, t_joueur *j_test) {
+
+	/* Sacrifier */
+	if((j->tab.six == VAL_INIT) && (j->des[0] == 6)) {
+		j->tab.six = j_test->tab.six;
+		return 2; // L'ordi a joué mais pas un yahtzee
+	}
+	else if((j->tab.cinq == VAL_INIT) && (j->des[0] == 5)) {
+		j->tab.cinq = j_test->tab.cinq;
+		return 2; // L'ordi a joué mais pas un yahtzee
+	}
+	else if((j->tab.quatres == VAL_INIT) && (j->des[0] == 4)) {
+		j->tab.quatres = j_test->tab.quatres;
+		return 2; // L'ordi a joué mais pas un yahtzee
+	}
+
+	else {
+		if(j->tab.yahtzee == VAL_INIT)
+			j->tab.yahtzee = j_test->tab.yahtzee;
+		else
+			j->tab.prime_Yahtzee = j_test->tab.prime_Yahtzee;
+		return 1; // L'ordi joue un yahtzee
+	}
+
+}
+
+/*
+int strat_yahtzee(t_joueur *j, t_joueur *j_test, int nb_lance_Restant) {
+	int i;
+	int nb_des[6];
+
+}
+*/
+
+
 /* ***************************************************************************** */
 
 
 int tour_ordinateur(t_joueur *j) {
-  int i;
+  int i, nb_lance = 2;
   t_joueur *tempo = creer_joueur("tempo");
 
-  /*for(i = 0; i < 5; i++)
+  for(i = 0; i < 5; i++)
     lancer(j, i);
-  */
 
   /* Val de tests */
+	/*
   j->des[0] = 4;
-  j->des[1] = 5;
-  j->des[2] = 6;
-  j->des[3] = 5;
-  j->des[4] = 5;
+  j->des[1] = 4;
+  j->des[2] = 4;
+  j->des[3] = 4;
+  j->des[4] = 4;
+	*/
 
   test_mains_NC(j, tempo); // Celle de Zack => Fuite memoire !!!!!!!!!
 
@@ -394,26 +448,30 @@ int tour_ordinateur(t_joueur *j) {
 
   /* ***** Analyse des mains (avec les des initiaux) ***** */
 
-  if((tempo->tab.yahtzee != VAL_INIT) && (j->tab.yahtzee == VAL_INIT))
-    j->tab.yahtzee = tempo->tab.yahtzee;
+	if(yahtzee(j) != -1) {
+		utiliser_yahtzee(j, tempo);
+		return 2; // L'ordi a joue (mais pas la strat sup)
+	}
 
-  else if((tempo->tab.grande_Suite != VAL_INIT) && (j->tab.grande_Suite == VAL_INIT))
-    j->tab.grande_Suite = tempo->tab.grande_Suite;
+  else if((tempo->tab.grande_Suite != VAL_INIT) && (j->tab.grande_Suite == VAL_INIT)) {
+		j->tab.grande_Suite = tempo->tab.grande_Suite;
+		return 0;
+	}
 
-  else if((tempo->tab.petite_Suite != VAL_INIT) && (j->tab.petite_Suite == VAL_INIT))
-    j->tab.petite_Suite = tempo->tab.petite_Suite;
+  else if((tempo->tab.petite_Suite != VAL_INIT) && (j->tab.petite_Suite == VAL_INIT)) {
+		j->tab.petite_Suite = tempo->tab.petite_Suite;
+		return 0;
+	}
 
   /* ***** Application d'une strategie ***** */
 
-  /*
-  else if(strat_superieur(j, tempo))
-    return 0; // Strategie a pu etre applique, l'ordi a jouer
-  */
-
-  else if(stra_p_g_suite(j, tempo))
+  else if(strat_superieur(j, tempo, nb_lance))
     return 0; // Strategie a pu etre applique, l'ordi a jouer
 
-  meilleur_score(j, tempo);
+  else if(stra_p_g_suite(j, tempo, nb_lance))
+    return 0; // Strategie a pu etre applique, l'ordi a jouer
 
-  return 0; // Ordi a jouer
+	meilleur_score(j, tempo);
+	return 0;
+
 }
