@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <time.h>
 #include "SDL2/SDL.h"
 #include "SDL2/SDL_ttf.h"
 #include "SDL2/SDL_image.h"
@@ -9,12 +10,13 @@
 
 int main(int argc, char** argv)
 {
+	srand(time(NULL));
 
 	t_joueur * j1 = creer_joueur("J1");
 	t_joueur * j2 = creer_joueur("J2");
 	t_joueur * j_choix = creer_joueur("Choix");
 
-	int cpt_lancer = 0;
+	int cpt_lancer = 0, de_pos[5] = {0,0,0,0,0};
 	char  temp[20];
 
 	SDL_Window *pWindow = NULL;
@@ -192,7 +194,8 @@ int main(int argc, char** argv)
 			while(SDL_PollEvent(&e)){
 				switch(e.type) {
 					case SDL_QUIT:
-						running = 0;
+						running =								SDL_QueryTexture(case1_tex, NULL, NULL, &(caseJ1DestRect.w), &(caseJ1DestRect.h));
+								SDL_RenderCopy(renderer, case1_tex, NULL, &(caseJ1DestRect)); 0;
 					break;
 
 					case SDL_WINDOWEVENT:
@@ -243,78 +246,85 @@ int main(int argc, char** argv)
 
 					case SDL_MOUSEBUTTONDOWN:
 
-						if(e.motion.x > 575 && e.motion.x < 675 && e.motion.y > 500 && e.motion.y < 550){
+						if(e.motion.x > 575 && e.motion.x < 675 && e.motion.y > 500 && e.motion.y < 550 && cpt_lancer < 3){
 							imgDestRect.x = 400;
 			 				imgDestRect.y = 300;
 
 							for(int i = 0; i < 5; i++){
-								lancer(j1,i);
-								switch(j1->des[i]){
-									case 1:
-										decourant = de1;
-									break;
-									case 2:
-										decourant = de2;
-									break;
-									case 3:
-										decourant = de3;
-									break;
-									case 4:
-										decourant = de4;
-									break;
-									case 5:
-										decourant = de5;
-									break;
-									case 6:
-										decourant = de6;
-									break;
-								}
-								switch(i){
-									case 0:
-					 					image_texde1 = SDL_CreateTextureFromSurface(renderer, decourant);
-										if(!image_texde1){
-											fprintf(stderr, "Erreur à la création du rendu de l'image : %s\n", SDL_GetError());
-											exit(EXIT_FAILURE);
-										}
-					 					SDL_QueryTexture(image_texde1, NULL, NULL, &(imgDestRect.w), &(imgDestRect.h));
-					 					SDL_RenderCopy(renderer, image_texde1, NULL, &imgDestRect);
-									break;
-									case 1:
-					 					image_texde2 = SDL_CreateTextureFromSurface(renderer, decourant);
-										if(!image_texde2){
-											fprintf(stderr, "Erreur à la création du rendu de l'image : %s\n", SDL_GetError());
-											exit(EXIT_FAILURE);
-										}
-										SDL_QueryTexture(image_texde2, NULL, NULL, &(imgDestRect.w), &(imgDestRect.h));
-					 					SDL_RenderCopy(renderer, image_texde2, NULL, &imgDestRect);
-									break;
-									case 2:
-					 					image_texde3 = SDL_CreateTextureFromSurface(renderer, decourant);
-										if(!image_texde3){
-											fprintf(stderr, "Erreur à la création du rendu de l'image : %s\n", SDL_GetError());
-											exit(EXIT_FAILURE);
-										}
-										SDL_QueryTexture(image_texde3, NULL, NULL, &(imgDestRect.w), &(imgDestRect.h));
-					 					SDL_RenderCopy(renderer, image_texde3, NULL, &imgDestRect);
-									break;
-									case 3:
-					 					image_texde4 = SDL_CreateTextureFromSurface(renderer, decourant);
-										if(!image_texde4){
-											fprintf(stderr, "Erreur à la création du rendu de l'image : %s\n", SDL_GetError());
-											exit(EXIT_FAILURE);
-										}
-					 					SDL_QueryTexture(image_texde4, NULL, NULL, &(imgDestRect.w), &(imgDestRect.h));
-					 					SDL_RenderCopy(renderer, image_texde4, NULL, &imgDestRect);
-									break;
-									case 4:
-					 					image_texde5 = SDL_CreateTextureFromSurface(renderer, decourant);
-										if(!image_texde5){
-											fprintf(stderr, "Erreur à la création du rendu de l'image : %s\n", SDL_GetError());
-											exit(EXIT_FAILURE);
-										}
-										SDL_QueryTexture(image_texde5, NULL, NULL, &(imgDestRect.w), &(imgDestRect.h));
-					 					SDL_RenderCopy(renderer, image_texde5, NULL, &imgDestRect);
-									break;
+								if(de_pos[i] == 0){
+									lancer(j1,i);
+									switch(j1->des[i]){
+										case 1:
+											decourant = de1;
+										break;
+										case 2:
+											decourant = de2;
+										break;
+										case 3:
+											decourant = de3;
+										break;
+										case 4:
+											decourant = de4;
+										break;
+										case 5:
+											decourant = de5;
+										break;
+										case 6:
+											decourant = de6;
+										break;
+									}
+									switch(i){
+										case 0:
+						 					image_texde1 = SDL_CreateTextureFromSurface(renderer, decourant);
+											if(!image_texde1){
+												fprintf(stderr, "Erreur à la création du rendu de l'image : %s\n", SDL_GetError());
+												exit(EXIT_FAILURE);
+											}
+						 					SDL_QueryTexture(image_texde1, NULL, NULL, &(imgDestRect.w), &(imgDestRect.h));
+						 					SDL_RenderCopy(renderer, image_texde1, NULL, &imgDestRect);
+											de_pos[i] = 0;
+										break;
+										case 1:
+						 					image_texde2 = SDL_CreateTextureFromSurface(renderer, decourant);
+											if(!image_texde2){
+												fprintf(stderr, "Erreur à la création du rendu de l'image : %s\n", SDL_GetError());
+												exit(EXIT_FAILURE);
+											}
+											SDL_QueryTexture(image_texde2, NULL, NULL, &(imgDestRect.w), &(imgDestRect.h));
+						 					SDL_RenderCopy(renderer, image_texde2, NULL, &imgDestRect);
+											de_pos[i] = 0;
+										break;
+										case 2:
+						 					image_texde3 = SDL_CreateTextureFromSurface(renderer, decourant);
+											if(!image_texde3){
+												fprintf(stderr, "Erreur à la création du rendu de l'image : %s\n", SDL_GetError());
+												exit(EXIT_FAILURE);
+											}
+											SDL_QueryTexture(image_texde3, NULL, NULL, &(imgDestRect.w), &(imgDestRect.h));
+						 					SDL_RenderCopy(renderer, image_texde3, NULL, &imgDestRect);
+											de_pos[i] = 0;
+										break;
+										case 3:
+						 					image_texde4 = SDL_CreateTextureFromSurface(renderer, decourant);
+											if(!image_texde4){
+												fprintf(stderr, "Erreur à la création du rendu de l'image : %s\n", SDL_GetError());
+												exit(EXIT_FAILURE);
+											}
+						 					SDL_QueryTexture(image_texde4, NULL, NULL, &(imgDestRect.w), &(imgDestRect.h));
+						 					SDL_RenderCopy(renderer, image_texde4, NULL, &imgDestRect);
+											de_pos[i] = 0;
+										break;
+										case 4:
+						 					image_texde5 = SDL_CreateTextureFromSurface(renderer, decourant);
+											if(!image_texde5){
+												fprintf(stderr, "Erreur à la création du rendu de l'image : %s\n", SDL_GetError());
+												exit(EXIT_FAILURE);
+											}
+											SDL_QueryTexture(image_texde5, NULL, NULL, &(imgDestRect.w), &(imgDestRect.h));
+						 					SDL_RenderCopy(renderer, image_texde5, NULL, &imgDestRect);
+											de_pos[i] = 0;
+										break;
+									}
 								}
 								imgDestRect.x += 100;
 							}
@@ -327,9 +337,10 @@ int main(int argc, char** argv)
 							SDL_RenderPresent(renderer);
 							cpt_lancer++;
 
+
 						}
 
-						if(e.motion.x > 400 && e.motion.x < 450 && e.motion.y > 300 && e.motion.y < 350){
+						if(e.motion.x > 400 && e.motion.x < 450 && e.motion.y > 300 && e.motion.y < 350 && de_pos[0] == 0){
 
 							imgDestRect.x = 400;
 							imgDestRect.y = 300;
@@ -343,9 +354,26 @@ int main(int argc, char** argv)
 							SDL_RenderCopy(renderer, image_texde1, NULL, &imgDestRect);
 							SDL_RenderPresent(renderer);
 
+							de_pos[0] = 1;
+						}
+						else if(e.motion.x > 400 && e.motion.x < 450 && e.motion.y > 600 && e.motion.y < 650 && de_pos[0] == 1){
+
+							imgDestRect.x = 400;
+							imgDestRect.y = 600;
+
+	            SDL_SetRenderDrawColor(renderer, 55, 99, 78, 255);
+							SDL_RenderFillRect(renderer,&imgDestRect);
+
+	 						imgDestRect.y = 300;
+
+							SDL_QueryTexture(image_texde1, NULL, NULL, &(imgDestRect.w), &(imgDestRect.h));
+							SDL_RenderCopy(renderer, image_texde1, NULL, &imgDestRect);
+							SDL_RenderPresent(renderer);
+
+							de_pos[0] = 0;
 						}
 
-						if(e.motion.x > 500 && e.motion.x < 550 && e.motion.y > 300 && e.motion.y < 350){
+						if(e.motion.x > 500 && e.motion.x < 550 && e.motion.y > 300 && e.motion.y < 350 && de_pos[1] == 0){
 
 							imgDestRect.x = 500;
 							imgDestRect.y = 300;
@@ -359,9 +387,26 @@ int main(int argc, char** argv)
 							SDL_RenderCopy(renderer, image_texde2, NULL, &imgDestRect);
 							SDL_RenderPresent(renderer);
 
+							de_pos[1] = 1;
+						}
+						else if(e.motion.x > 500 && e.motion.x < 550 && e.motion.y > 600 && e.motion.y < 650 && de_pos[1] == 1){
+
+							imgDestRect.x = 500;
+							imgDestRect.y = 600;
+
+	            SDL_SetRenderDrawColor(renderer, 55, 99, 78, 255);
+							SDL_RenderFillRect(renderer,&imgDestRect);
+
+	 						imgDestRect.y = 300;
+
+							SDL_QueryTexture(image_texde2, NULL, NULL, &(imgDestRect.w), &(imgDestRect.h));
+							SDL_RenderCopy(renderer, image_texde2, NULL, &imgDestRect);
+							SDL_RenderPresent(renderer);
+
+							de_pos[1] = 0;
 						}
 
-						if(e.motion.x > 600 && e.motion.x < 650 && e.motion.y > 300 && e.motion.y < 350){
+						if(e.motion.x > 600 && e.motion.x < 650 && e.motion.y > 300 && e.motion.y < 350 && de_pos[2] == 0){
 
 							imgDestRect.x = 600;
 							imgDestRect.y = 300;
@@ -375,9 +420,26 @@ int main(int argc, char** argv)
 							SDL_RenderCopy(renderer, image_texde3, NULL, &imgDestRect);
 							SDL_RenderPresent(renderer);
 
+							de_pos[2] = 1;
+						}
+						else if(e.motion.x > 600 && e.motion.x < 650 && e.motion.y > 600 && e.motion.y < 650 && de_pos[2] == 1){
+
+							imgDestRect.x = 600;
+							imgDestRect.y = 600;
+
+	            SDL_SetRenderDrawColor(renderer, 55, 99, 78, 255);
+							SDL_RenderFillRect(renderer,&imgDestRect);
+
+	 						imgDestRect.y = 300;
+
+							SDL_QueryTexture(image_texde3, NULL, NULL, &(imgDestRect.w), &(imgDestRect.h));
+							SDL_RenderCopy(renderer, image_texde3, NULL, &imgDestRect);
+							SDL_RenderPresent(renderer);
+
+							de_pos[2] = 0;
 						}
 
-						if(e.motion.x > 700 && e.motion.x < 750 && e.motion.y > 300 && e.motion.y < 350){
+						if(e.motion.x > 700 && e.motion.x < 750 && e.motion.y > 300 && e.motion.y < 350 && de_pos[3] == 0){
 
 							imgDestRect.x = 700;
 							imgDestRect.y = 300;
@@ -391,9 +453,26 @@ int main(int argc, char** argv)
 							SDL_RenderCopy(renderer, image_texde4, NULL, &imgDestRect);
 							SDL_RenderPresent(renderer);
 
+							de_pos[3] = 1;
+						}
+						else if(e.motion.x > 700 && e.motion.x < 750 && e.motion.y > 600 && e.motion.y < 650 && de_pos[3] == 1){
+
+							imgDestRect.x = 700;
+							imgDestRect.y = 600;
+
+	            SDL_SetRenderDrawColor(renderer, 55, 99, 78, 255);
+							SDL_RenderFillRect(renderer,&imgDestRect);
+
+	 						imgDestRect.y = 300;
+
+							SDL_QueryTexture(image_texde4, NULL, NULL, &(imgDestRect.w), &(imgDestRect.h));
+							SDL_RenderCopy(renderer, image_texde4, NULL, &imgDestRect);
+							SDL_RenderPresent(renderer);
+
+							de_pos[3] = 0;
 						}
 
-						if(e.motion.x > 800 && e.motion.x < 850 && e.motion.y > 300 && e.motion.y < 350){
+						if(e.motion.x > 800 && e.motion.x < 850 && e.motion.y > 300 && e.motion.y < 350 && de_pos[4] == 0){
 
 							imgDestRect.x = 800;
 							imgDestRect.y = 300;
@@ -407,7 +486,25 @@ int main(int argc, char** argv)
 							SDL_RenderCopy(renderer, image_texde5, NULL, &imgDestRect);
 							SDL_RenderPresent(renderer);
 
+							de_pos[4] = 1;
 						}
+						else if(e.motion.x > 800 && e.motion.x < 850 && e.motion.y > 600 && e.motion.y < 650 && de_pos[4] == 1){
+
+							imgDestRect.x = 800;
+							imgDestRect.y = 600;
+
+	            SDL_SetRenderDrawColor(renderer, 55, 99, 78, 255);
+							SDL_RenderFillRect(renderer,&imgDestRect);
+
+	 						imgDestRect.y = 300;
+
+							SDL_QueryTexture(image_texde5, NULL, NULL, &(imgDestRect.w), &(imgDestRect.h));
+							SDL_RenderCopy(renderer, image_texde5, NULL, &imgDestRect);
+							SDL_RenderPresent(renderer);
+
+							de_pos[4] = 0;
+						}
+
 					break;
 				}
 			}
