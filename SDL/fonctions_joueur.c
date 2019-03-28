@@ -20,28 +20,11 @@
   *\author Nicolas CHAMPION
 */
 void init_bloc_note(t_joueur *j) {
+  int i;
 
-  j->tab.as = VAL_INIT;
-  j->tab.deux = VAL_INIT;
-  j->tab.trois = VAL_INIT;
-  j->tab.quatres = VAL_INIT;
-  j->tab.cinq = VAL_INIT;
-  j->tab.six = VAL_INIT;
-  j->tab.prime_35pts = VAL_INIT;
-
-  j->tab.brelan = VAL_INIT;
-  j->tab.carre = VAL_INIT;
-  j->tab.full = VAL_INIT;
-  j->tab.petite_Suite = VAL_INIT;
-  j->tab.grande_Suite = VAL_INIT;
-  j->tab.chance = VAL_INIT;
-  j->tab.yahtzee = VAL_INIT;
-  j->tab.prime_Yahtzee = VAL_INIT;
-
-  j->tab.total_Sup = VAL_INIT;
-  j->tab.total_Inf = VAL_INIT;
-
-  j->tab.total_Gen = VAL_INIT;
+  for(i = 0; i < 18; i++){
+    j->tab[i] = VAL_INIT;
+  }
 
 }
 
@@ -87,14 +70,16 @@ void detruire_joueur(t_joueur **j) {
 */
 void prime_tab(t_joueur *j){
   int tot_tab_sup = 0;
+  int i;
 
-  tot_tab_sup = (j->tab.as)+(j->tab.deux)+(j->tab.trois)+(j->tab.quatres)+
-                     (j->tab.cinq)+(j->tab.six);
+  for(i = 0; i < 6; i++){
+    tot_tab_sup += j->tab[i];
+  }
 
   if(tot_tab_sup >= 63)
-    j->tab.prime_35pts = 35;
+    j->tab[6] = 35;
   else
-   j->tab.prime_35pts = 0;
+   j->tab[6] = 0;
 }
 
 
@@ -106,8 +91,8 @@ void prime_tab(t_joueur *j){
 */
 void prime_yahtzee(t_joueur *j){
   if(yahtzee(j) !=  VAL_INIT){
-    if(j->tab.yahtzee == 50)
-      j->tab.prime_Yahtzee = 100;
+    if(j->tab[13] == 50)
+      j->tab[14] = 100;
   }
 }
 
@@ -123,15 +108,19 @@ void prime_yahtzee(t_joueur *j){
 void calcul_totaux(t_joueur *j){
   int tot_ssup_apprime = 0;
   int tot_sinf = 0;
+  int i;
 
   prime_tab(j);
-  tot_ssup_apprime = (j->tab.as)+(j->tab.deux)+(j->tab.trois)+(j->tab.quatres)+
-                     (j->tab.cinq)+(j->tab.six)+ j->tab.prime_35pts;
 
-  tot_sinf = (j->tab.brelan)+(j->tab.carre)+(j->tab.full)+(j->tab.petite_Suite)+
-             (j->tab.grande_Suite)+(j->tab.yahtzee)+(j->tab.chance)+(j->tab.prime_Yahtzee);
+  for(i = 0; i < 7; i++){
+    tot_ssup_apprime += j->tab[i];
+  }
 
-  j->tab.total_Sup = tot_ssup_apprime;
-  j->tab.total_Inf = tot_sinf;
-  j->tab.total_Gen = tot_ssup_apprime+tot_sinf;
+  for(i = 7; i < 15; i++){
+    tot_sinf += j->tab[i];
+  }
+
+  j->tab[15] = tot_ssup_apprime;
+  j->tab[16] = tot_sinf;
+  j->tab[17] = tot_ssup_apprime+tot_sinf;
 }
