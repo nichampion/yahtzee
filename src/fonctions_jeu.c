@@ -416,7 +416,7 @@ void affichage_possibilites(t_joueur * j, t_joueur * j_test){
 	else
 	  printf("*\t| 13 Yahtzee\t%d\t\t|\t\t*\n", j->tab.yahtzee);
 
-	  printf("*\t| Prime\t\t%d\t\t|\t\t*\n", j->tab.prime_Yahtzee);
+	printf("*\t| Prime\t\t%d\t\t|\t\t*\n", j->tab.prime_Yahtzee);
 
 	printf("*\t| Total\t\t%d\t\t|\t\t*\n", j->tab.total_Inf);
   printf("*\t|-------------------------------|\t\t*\n");

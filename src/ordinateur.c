@@ -277,6 +277,7 @@ int strat_superieur(t_joueur *j, t_joueur *j_test, int nb_lance_Restant) {
 
 /* ****************** Obtention des suites (Petite et grande) ****************** */
 
+
 /**
   *\return Renvoie un booleen
 */
@@ -381,6 +382,8 @@ int strat_p_g_suite(t_joueur *j, t_joueur *j_test, int nb_lance_Restant) {
 
 
 /* ****************** Obtention Yahtzee (Avec sacrifice si besoin) ****************** */
+
+
 /**
   *\brief Renvoi la valeur présente le plus grand nombre de fois dans la main.
 */
@@ -431,6 +434,8 @@ int utiliser_yahtzee(t_joueur *j, t_joueur *j_test) {
 
 /**
   *\brief Permet (d'essayer) d'obtenir une main de type yahtzee en relancant
+*//**
+  *\brief Permet (d'essayer) d'obtenir une main de type yahtzee en relancant
 */
 int strat_yahtzee(t_joueur *j, t_joueur *j_test, int nb_lance_Restant) {
 	int i;
@@ -465,6 +470,216 @@ int strat_yahtzee(t_joueur *j, t_joueur *j_test, int nb_lance_Restant) {
 }
 
 
+/* ****************** Obtention brelan ****************** */
+
+
+/**
+  *\brief Permet (d'essayer) d'obtenir une main de type brelan en relancant
+	*\author Thibault Lemarchand
+	*\author Nicolas Champion
+*/
+int strat_brelan(t_joueur *j, t_joueur *j_test, int nb_lance_Restant) {
+
+	/* Strategie possible */
+	if(j->tab.brelan != VAL_INIT)
+		return 0; /* Strat non applicable */
+
+	int i;
+	int nb_des[6];
+
+	/* Compter les des */
+  for(i = 0; i < 6; i++)
+    nb_des[i] = compter_des(j, i + 1);
+
+	/* Choisir des a garder (Val en plus grand nombre) */
+	int val_des_a_garder = val_qte_max_tab(nb_des, 6);
+
+	/* Relancer les des pour obtenir le plus de des de cette valeur */
+	/* 2 fois et tant que tous les des ne sont = a des_a_garder */
+	int nb_lance;
+	for(nb_lance = nb_lance_Restant; nb_lance > 0; nb_lance--) {
+
+		/* Cas : Mois de 3 des identiques */
+		for(i = 0; i < 5; i++) {
+			if(j->des[i] != val_des_a_garder)
+				lancer(j, i);
+		}
+
+		j_test = test_mains(j); // Permet l'affichage
+
+		/* Test : Si jamais on obtient un brelan */
+		if(brelan(j) != -1) {
+			j->tab.brelan = j_test->tab.brelan; // Jouer le brelan
+			return 1;
+		}
+	}
+
+	return 0; // Pas de brelan
+
+}
+
+
+/* ****************** Obtention carre ****************** */
+
+
+/**
+  *\brief Permet (d'essayer) d'obtenir une main de type carre en relancant
+	*\author Thibault Lemarchand
+	*\author Nicolas Champion
+*/
+int strat_carre(t_joueur *j, t_joueur *j_test, int nb_lance_Restant) {
+
+	/* Strategie possible */
+	if(j->tab.carre != VAL_INIT)
+		return 0; /* Strat non applicable */
+
+	int i;
+	int nb_des[6];
+
+	/* Compter les des */
+  for(i = 0; i < 6; i++)
+    nb_des[i] = compter_des(j, i + 1);
+
+	/* Choisir des a garder (Val en plus grand nombre) */
+	int val_des_a_garder = val_qte_max_tab(nb_des, 6);
+
+	/* Relancer les des pour obtenir le plus de des de cette valeur */
+	/* 2 fois et tant que tous les des ne sont = a des_a_garder */
+	int nb_lance;
+	for(nb_lance = nb_lance_Restant; nb_lance > 0; nb_lance--) {
+
+		/* Cas : Mois de 3 des identiques */
+		for(i = 0; i < 5; i++) {
+			if(j->des[i] != val_des_a_garder)
+				lancer(j, i);
+		}
+
+		j_test = test_mains(j); // Permet l'affichage
+
+		/* Test : Si jamais on obtient un carre */
+		if(carre(j) != -1) {
+			j->tab.carre = j_test->tab.carre; // Jouer le carre
+			return 1;
+		}
+	}
+
+	return 0; // Pas de carre
+
+}
+
+
+/* ****************** Obtention full ****************** */
+
+
+/**
+  *\brief Permet (d'essayer) d'obtenir une main de type full en relancant
+	*\author Thibault Lemarchand
+	*\author Nicolas Champion
+*/
+int strat_full(t_joueur *j, t_joueur *j_test, int nb_lance_Restant) {
+
+	/* Strategie possible */
+	if(j->tab.full != VAL_INIT)
+		return 0; /* Strat non applicable */
+
+	int i;
+	int nb_des[6];
+
+	/* Compter les des */
+  for(i = 0; i < 6; i++)
+    nb_des[i] = compter_des(j, i + 1);
+
+	/* Choisir des a garder (Val en plus grand nombre) */
+	int val_des_a_garder = val_qte_max_tab(nb_des, 6);
+
+	/* Relancer les des pour obtenir le plus de des de cette valeur */
+	/* 2 fois et tant que tous les des ne sont = a des_a_garder */
+	int nb_lance;
+	for(nb_lance = nb_lance_Restant; nb_lance > 0; nb_lance--) {
+
+		/* Cas : 4 des identiques */
+		if(nb_des[val_des_a_garder - 1] == 4) {
+			for(i = 0; i < 5; i++) {
+
+				/* Sous Cas 1 : 3 des identiques */
+				if(j->des[i] == val_des_a_garder) {
+					lancer(j, i);
+					i = 5; // Permet de n'en relancer qu'un
+				}
+			}
+		}
+
+		/* Cas : 3 des identiques => Relancer 1 des pour obtenir une paire */
+		else if(nb_des[val_des_a_garder - 1] == 3) {
+			for(i = 0; i < 5; i++) {
+
+				/* Sous Cas 1 : 3 des identiques */
+				if(j->des[i] != val_des_a_garder) {
+					lancer(j, i);
+					i = 5; // Permet de n'en relancer qu'un
+				}
+			}
+		}
+
+		/* Cas : moins de 3 des identiques */
+		else if(nb_des[val_des_a_garder - 1] < 3) {
+			/* On compte les paires */
+			int nb_paire = 0, val_des_a_relancer = 0;
+			for(i = 0; i < 6; i++) {
+				if(nb_des[i] == 2)
+					nb_paire++;
+				else
+					val_des_a_relancer = i + 1;
+			}
+
+			/* Sous cas : 2 paires */
+			if(nb_paire == 2) {
+				for(i = 0; i < 5; i++) {
+
+					if(j->des[i] == val_des_a_relancer) {
+						lancer(j, i);
+					}
+				}
+			}
+
+
+			/* Sous cas : 1 paire */
+			else if(nb_paire == 1) {
+				for(i = 0; i < 5; i++) {
+
+					if(j->des[i] != val_des_a_garder) {
+						lancer(j, i);
+					}
+				}
+			}
+
+			/* Sous cas : aucune paire */
+			else {
+				for(i = 1; i < 5; i++) {
+						lancer(j, i);
+				}
+			}
+
+		}
+
+		j_test = test_mains(j); // Permet l'affichage
+
+		/* Test : Si jamais on obtient un full */
+		if(full(j) != -1) {
+			j->tab.full = j_test->tab.full; // Jouer le full
+			return 1;
+		}
+
+		/* (re)Compter les des */
+		for(i = 0; i < 6; i++)
+			nb_des[i] = compter_des(j, i + 1);
+	}
+
+	return 0; // Pas de full
+
+}
+
+
 /* ***************************************************************************** */
 
 
@@ -472,17 +687,18 @@ int tour_ordinateur(t_joueur *j) {
   int i, nb_lance = 2;
   t_joueur *tempo = creer_joueur("tempo");
 
+
   for(i = 0; i < 5; i++)
     lancer(j, i);
 
+
   /* Val de tests */
-	/*// Verifier a chaque relancement qu'on a pas un yahtzee !!!!!
-  j->des[0] = 4;
+	// Verifier a chaque relancement qu'on a pas un yahtzee !!!!!
+/*  j->des[0] = 4;
   j->des[1] = 4;
   j->des[2] = 4;
   j->des[3] = 4;
-  j->des[4] = 4;
-	*/
+  j->des[4] = 5;*/
 
   test_mains_NC(j, tempo); // Celle de Zack => Fuite memoire !!!!!!!!!
 
@@ -503,6 +719,21 @@ int tour_ordinateur(t_joueur *j) {
 		return 0;
 	}
 
+	else if((tempo->tab.carre != VAL_INIT) && (j->tab.carre == VAL_INIT)) {
+		j->tab.carre = tempo->tab.carre;
+		return 0;
+	}
+
+	else if((tempo->tab.brelan != VAL_INIT) && (j->tab.brelan == VAL_INIT)) {
+		j->tab.brelan = tempo->tab.brelan;
+		return 0;
+	}
+
+	else if((tempo->tab.full != VAL_INIT) && (j->tab.full == VAL_INIT)) {
+		j->tab.full = tempo->tab.full;
+		return 0;
+	}
+
   /* ***** Application d'une strategie ***** */
 
   else if(strat_superieur(j, tempo, nb_lance))
@@ -512,7 +743,16 @@ int tour_ordinateur(t_joueur *j) {
     return 0; // Strategie a pu etre applique, l'ordi a jouer
 
 	else if(strat_yahtzee(j, tempo, nb_lance))
-	   return 0; // Strategie a pu etre applique, l'ordi a jouer
+	  return 0; // Strategie a pu etre applique, l'ordi a jouer
+
+	else if(strat_brelan(j, tempo, nb_lance))
+	  return 0; // Strategie a pu etre applique, l'ordi a jouer
+
+	 else if(strat_carre(j, tempo, nb_lance))
+ 		return 0; // Strategie a pu etre applique, l'ordi a jouer
+
+	 else if(strat_full(j, tempo, nb_lance))
+		return 0; // Strategie a pu etre applique, l'ordi a jouer
 
 	meilleur_score(j, tempo);
 	return 0;
