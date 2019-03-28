@@ -252,11 +252,11 @@ int strat_superieur(t_joueur *j, t_joueur *j_test, int nb_lance_Restant) {
 		}
   }
 
-  /* Cela est-il pertinent d'appliquer cette stratégie ? */
+  /* Est-il pertinent d'appliquer cette stratégie ? */
   for(i = 0; i < 6; i++)
     nb_des[i] = compter_des(j, i + 1);
 
-  if(nb_des[val_des_a_garder - 1] < 3)
+  if(nb_des[val_des_a_garder - 1] < 3) /* Cas : pas assez de des identiques pour obtenir le bonus superieur */
     return 0;
 
   /* On applique cette stratégie */
@@ -291,7 +291,7 @@ int val_dans_tab(int val, int tab[], int taille) {
   return 0;
 }
 
-int stra_p_g_suite(t_joueur *j, t_joueur *j_test, int nb_lance_Restant) {
+int strat_p_g_suite(t_joueur *j, t_joueur *j_test, int nb_lance_Restant) {
   int i;
   int nb_des[6];
 
@@ -381,12 +381,26 @@ int stra_p_g_suite(t_joueur *j, t_joueur *j_test, int nb_lance_Restant) {
 
 
 /* ****************** Obtention Yahtzee (Avec sacrifice si besoin) ****************** */
+/**
+  *\brief Renvoi la valeur présente le plus grand nombre de fois dans la main.
+*/
+static
+int val_qte_max_tab(int tab[], int taille)  {
+	int i, qte_max = 0, val_qte_max;
 
+	for(i = 0; i < taille; i++) {
+		if(tab[i] > qte_max) {
+			qte_max = tab[i];
+			val_qte_max = i + 1;
+		}
+	}
 
-//int obtenir_yahtzee
+	return val_qte_max;
+}
+
 
 /**
-  *\brief On suppose que l'on a une main de type yahtzee
+  *\brief On suppose que l'on a une main de type yahtzee (Donc tous les des identiques)
 */
 int utiliser_yahtzee(t_joueur *j, t_joueur *j_test) {
 
@@ -414,13 +428,41 @@ int utiliser_yahtzee(t_joueur *j, t_joueur *j_test) {
 
 }
 
-/*
+
+/**
+  *\brief Permet (d'essayer) d'obtenir une main de type yahtzee en relancant
+*/
 int strat_yahtzee(t_joueur *j, t_joueur *j_test, int nb_lance_Restant) {
 	int i;
-	int nb_des[6];
+  int nb_des[6];
+
+	/* Compter les des */
+  for(i = 0; i < 6; i++)
+    nb_des[i] = compter_des(j, i + 1);
+
+	/* Choisir des a garder (Val en plus grand nombre) */
+	int val_des_a_garder = val_qte_max_tab(nb_des, 6);
+
+	/* Relancer les des pour obtenir le plus de des de cette valeur */
+	/* 2 fois et tant que tous les des ne sont = a des_a_garder */
+	int nb_lance;
+	for(nb_lance = nb_lance_Restant; nb_lance > 0; nb_lance--) {
+		for(i = 0; i < 5; i++) {
+			if(j->des[i] != val_des_a_garder)
+				lancer(j, i);
+		}
+		j_test = test_mains(j); // Permet l'affichage
+
+		/* Test : Si jamais on obtient un yahtzee */
+		if(yahtzee(j) != -1) {
+			utiliser_yahtzee(j, j_test); // Jouer le yahtzee
+			return 1;
+		}
+	}
+
+	return 0; // Pas de yahtzee
 
 }
-*/
 
 
 /* ***************************************************************************** */
@@ -434,7 +476,7 @@ int tour_ordinateur(t_joueur *j) {
     lancer(j, i);
 
   /* Val de tests */
-	/*
+	/*// Verifier a chaque relancement qu'on a pas un yahtzee !!!!!
   j->des[0] = 4;
   j->des[1] = 4;
   j->des[2] = 4;
@@ -443,8 +485,6 @@ int tour_ordinateur(t_joueur *j) {
 	*/
 
   test_mains_NC(j, tempo); // Celle de Zack => Fuite memoire !!!!!!!!!
-
-// Verifier a chaque relancement qu'on a pas un yahtzee !!!!!
 
   /* ***** Analyse des mains (avec les des initiaux) ***** */
 
@@ -468,8 +508,11 @@ int tour_ordinateur(t_joueur *j) {
   else if(strat_superieur(j, tempo, nb_lance))
     return 0; // Strategie a pu etre applique, l'ordi a jouer
 
-  else if(stra_p_g_suite(j, tempo, nb_lance))
+  else if(strat_p_g_suite(j, tempo, nb_lance))
     return 0; // Strategie a pu etre applique, l'ordi a jouer
+
+	else if(strat_yahtzee(j, tempo, nb_lance))
+	   return 0; // Strategie a pu etre applique, l'ordi a jouer
 
 	meilleur_score(j, tempo);
 	return 0;
