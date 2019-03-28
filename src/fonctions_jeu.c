@@ -120,10 +120,10 @@ t_joueur * test_mains(t_joueur *j){
 */
 int choix_placement(t_joueur *j, t_joueur * j_test){
 	int choix, placement = 0;
-	printf("Choisir la case à remplir (1-14) : ");
+	printf("Choisir la case à remplir (1-13) : ");
 	scanf("%d",&choix);
-	while(choix < 1 || choix > 14){
-		printf("Choisir la case à remplir (1-14) : ");
+	while(choix < 1 || choix > 13){
+		printf("Choisir la case à remplir (1-13) : ");
 		scanf("%d",&choix);
 	}
 
@@ -415,10 +415,8 @@ void affichage_possibilites(t_joueur * j, t_joueur * j_test){
 	  printf("*\t| 13 Yahtzee\t%d?\t\t|\t\t*\n", j_test->tab.yahtzee);
 	else
 	  printf("*\t| 13 Yahtzee\t%d\t\t|\t\t*\n", j->tab.yahtzee);
-	if(j_test->tab.prime_Yahtzee != VAL_INIT)
-	  printf("*\t| 14 Prime\t%d?\t\t|\t\t*\n", j->tab.prime_Yahtzee);
-	else
-	  printf("*\t| 14 Prime\t%d\t\t|\t\t*\n", j_test->tab.prime_Yahtzee);
+
+	  printf("*\t| Prime\t\t%d\t\t|\t\t*\n", j->tab.prime_Yahtzee);
 
 	printf("*\t| Total\t\t%d\t\t|\t\t*\n", j->tab.total_Inf);
   printf("*\t|-------------------------------|\t\t*\n");
@@ -441,7 +439,10 @@ void affichage_possibilites(t_joueur * j, t_joueur * j_test){
 	*\Author : Sunny BIARD
 */
 int fin_de_partie(t_joueur * j){
-	if(j->tab.as != VAL_INIT && j->tab.deux != VAL_INIT && j->tab.trois != VAL_INIT && j->tab.quatres != VAL_INIT && j->tab.cinq != VAL_INIT && j->tab.six != VAL_INIT && j->tab.brelan != VAL_INIT && j->tab.carre != VAL_INIT && j->tab.full != VAL_INIT && j->tab.petite_Suite != VAL_INIT && j->tab.petite_Suite != VAL_INIT && j->tab.grande_Suite != VAL_INIT && j->tab.chance != VAL_INIT && j->tab.yahtzee != VAL_INIT && j->tab.prime_Yahtzee != VAL_INIT){
+	if(j->tab.as != VAL_INIT && j->tab.deux != VAL_INIT && j->tab.trois != VAL_INIT && j->tab.quatres != VAL_INIT && j->tab.cinq != VAL_INIT && j->tab.six != VAL_INIT && j->tab.brelan != VAL_INIT && j->tab.carre != VAL_INIT && j->tab.full != VAL_INIT && j->tab.petite_Suite != VAL_INIT && j->tab.petite_Suite != VAL_INIT && j->tab.grande_Suite != VAL_INIT && j->tab.chance != VAL_INIT && j->tab.yahtzee != VAL_INIT){
+		if(j->tab.prime_Yahtzee == VAL_INIT)
+			j->tab.prime_Yahtzee = 0;
+
 		calcul_totaux(j);
 		prime_tab(j);
 		return 1;
