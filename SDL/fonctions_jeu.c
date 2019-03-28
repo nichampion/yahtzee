@@ -106,8 +106,6 @@ t_joueur * test_mains(t_joueur *j){
 	else if((j->tab.yahtzee) == 50)
 		j_test->tab.prime_Yahtzee = 100;
 
-	affichage_possibilites(j,j_test);
-
 	return j_test;
 
 }

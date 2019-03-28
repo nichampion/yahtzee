@@ -22,10 +22,14 @@ int main(int argc, char** argv)
 	SDL_Window *pWindow = NULL;
 	SDL_Surface *pScreen = NULL;
 
-  SDL_Surface *partie=NULL, *msg_lancer=NULL, *tab_score=NULL, *decourant=NULL, *de1=NULL, *de2=NULL, *de3=NULL, *de4=NULL, *de5=NULL, *de6=NULL, *img_btn_lancer=NULL, *case1=NULL, *case2=NULL;
+  SDL_Surface *partie=NULL, *msg_lancer=NULL, *tab_score=NULL, *decourant=NULL, *de1=NULL, *de2=NULL, *de3=NULL, *de4=NULL, *de5=NULL, *de6=NULL, *img_btn_lancer=NULL, *case1=NULL;
 	SDL_Renderer *renderer=NULL;
-	SDL_Rect partieDestRect, msg_lancerDestRect, imgDestRect, caseJ1DestRect, caseJ2DestRect;
-	SDL_Texture *image_texde1, *image_texde2, *image_texde3, *image_texde4, *image_texde5;
+	SDL_Rect partieDestRect, msg_lancerDestRect, imgDestRect, caseJ1DestRect;
+
+	caseJ1DestRect.w = 31;
+	caseJ1DestRect.h = 20;
+
+	SDL_Texture *image_texde1, *image_texde2, *image_texde3, *image_texde4, *image_texde5, *case1_tex;
 
 	TTF_Font *police = NULL;
 
@@ -78,20 +82,6 @@ int main(int argc, char** argv)
 		exit(EXIT_FAILURE);
 	}
 
-	sprintf(temp,"%d",j1->tab.as);
-	case1 = TTF_RenderUTF8_Blended(police, temp, couleurNoire);
-	if(!case1){
-		fprintf(stderr, "Erreur à la création du texte : %s\n", SDL_GetError());
-		exit(EXIT_FAILURE);
-	}
-
-	sprintf(temp,"%d",j2->tab.as);
-	case2 = TTF_RenderUTF8_Blended(police, temp, couleurNoire);
-	if(!case2){
-		fprintf(stderr, "Erreur à la création du texte : %s\n", SDL_GetError());
-		exit(EXIT_FAILURE);
-	}
-
 	SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
 
 	SDL_Texture *partie_tex = SDL_CreateTextureFromSurface(renderer, partie);
@@ -102,18 +92,6 @@ int main(int argc, char** argv)
 
 	SDL_Texture *msg_lancer_tex = SDL_CreateTextureFromSurface(renderer, msg_lancer);
 	if(!msg_lancer_tex){
-		fprintf(stderr, "Erreur à la création du rendu du texte : %s\n", SDL_GetError());
-		exit(EXIT_FAILURE);
-	}
-
-	SDL_Texture *case1_tex = SDL_CreateTextureFromSurface(renderer, case1);
-	if(!case1_tex){
-		fprintf(stderr, "Erreur à la création du rendu du texte : %s\n", SDL_GetError());
-		exit(EXIT_FAILURE);
-	}
-
-	SDL_Texture *case2_tex = SDL_CreateTextureFromSurface(renderer, case2);
-	if(!case2_tex){
 		fprintf(stderr, "Erreur à la création du rendu du texte : %s\n", SDL_GetError());
 		exit(EXIT_FAILURE);
 	}
@@ -194,8 +172,7 @@ int main(int argc, char** argv)
 			while(SDL_PollEvent(&e)){
 				switch(e.type) {
 					case SDL_QUIT:
-						running =								SDL_QueryTexture(case1_tex, NULL, NULL, &(caseJ1DestRect.w), &(caseJ1DestRect.h));
-								SDL_RenderCopy(renderer, case1_tex, NULL, &(caseJ1DestRect)); 0;
+						running = 0;
 					break;
 
 					case SDL_WINDOWEVENT:
@@ -218,18 +195,6 @@ int main(int argc, char** argv)
 
 								SDL_QueryTexture(tab_score_tex, NULL, NULL, &(imgDestRect.w), &(imgDestRect.h));
 								SDL_RenderCopy(renderer, tab_score_tex, NULL, &imgDestRect);
-
-								caseJ1DestRect.x = 200;
-							 	caseJ1DestRect.y = 80;
-
-								SDL_QueryTexture(case1_tex, NULL, NULL, &(caseJ1DestRect.w), &(caseJ1DestRect.h));
-								SDL_RenderCopy(renderer, case1_tex, NULL, &(caseJ1DestRect));
-
-								caseJ2DestRect.x = 250;
-							 	caseJ2DestRect.y = 80;
-
-								SDL_QueryTexture(case2_tex, NULL, NULL, &(caseJ2DestRect.w), &(caseJ2DestRect.h));
-								SDL_RenderCopy(renderer, case2_tex, NULL, &(caseJ2DestRect));
 
 								imgDestRect.x = 575;
 								imgDestRect.y = 500;
@@ -333,6 +298,51 @@ int main(int argc, char** argv)
 
 							SDL_QueryTexture(msg_lancer_tex, NULL, NULL, &(msg_lancerDestRect.w), &(msg_lancerDestRect.h));
 							SDL_RenderCopy(renderer, msg_lancer_tex, NULL, &msg_lancerDestRect);
+
+							j_choix = test_mains(j1);
+
+							sprintf(temp,"%d",j_choix->tab.as);
+							case1 = TTF_RenderUTF8_Blended(police, temp, couleurRouge);
+							if(!case1){
+								fprintf(stderr, "Erreur à la création du texte : %s\n", SDL_GetError());
+								exit(EXIT_FAILURE);
+							}
+
+							case1_tex = SDL_CreateTextureFromSurface(renderer, case1);
+							if(!case1_tex){
+								fprintf(stderr, "Erreur à la création du rendu du texte : %s\n", SDL_GetError());
+								exit(EXIT_FAILURE);
+							}
+
+							caseJ1DestRect.x = 202;
+							caseJ1DestRect.y = 82;
+
+							SDL_SetRenderDrawColor(renderer, 255, 255, 255, 255);
+							SDL_RenderFillRect(renderer,&caseJ1DestRect);
+
+							SDL_QueryTexture(case1_tex, NULL, NULL, &(caseJ1DestRect.w), &(caseJ1DestRect.h));
+							SDL_RenderCopy(renderer, case1_tex, NULL, &(caseJ1DestRect));
+
+							sprintf(temp,"%d",j_choix->tab.deux);
+							case1 = TTF_RenderUTF8_Blended(police, temp, couleurRouge);
+							if(!case1){
+								fprintf(stderr, "Erreur à la création du texte : %s\n", SDL_GetError());
+								exit(EXIT_FAILURE);
+							}
+
+							case1_tex = SDL_CreateTextureFromSurface(renderer, case1);
+							if(!case1_tex){
+								fprintf(stderr, "Erreur à la création du rendu du texte : %s\n", SDL_GetError());
+								exit(EXIT_FAILURE);
+							}
+
+							caseJ1DestRect.y += 30;
+
+							SDL_SetRenderDrawColor(renderer, 255, 255, 255, 255);
+							SDL_RenderFillRect(renderer,&caseJ1DestRect);
+
+							SDL_QueryTexture(case1_tex, NULL, NULL, &(caseJ1DestRect.w), &(caseJ1DestRect.h));
+							SDL_RenderCopy(renderer, case1_tex, NULL, &(caseJ1DestRect));
 
 							SDL_RenderPresent(renderer);
 							cpt_lancer++;
@@ -514,7 +524,6 @@ int main(int argc, char** argv)
 		fprintf(stderr,"Erreur de création de la fenêtre: %s\n",SDL_GetError());
 	}
 	SDL_FreeSurface(case1);
-	SDL_FreeSurface(case2);
 
 	SDL_FreeSurface(de1); /* on a la texture, plus besoin de l'image */
 	SDL_FreeSurface(de2); /* on a la texture, plus besoin de l'image */
