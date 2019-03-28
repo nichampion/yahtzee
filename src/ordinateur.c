@@ -219,7 +219,7 @@ int choix_des_strat_sup(int tab[6], t_joueur *j) {
 /**
   *\brief Applique la stratégie consisitant a obtenir la prime dans la section superieure (de la feuille de marque Yahtzee)
 */
-int strat_superieur(t_joueur *j, t_joueur *j_test, int nb_lance_Restant) {
+int strat_superieur(t_joueur *j, t_joueur *j_test, int *nb_lance_Restant) {
   int i;
   int nb_des[6];
 
@@ -238,7 +238,7 @@ int strat_superieur(t_joueur *j, t_joueur *j_test, int nb_lance_Restant) {
   /* Relancer les des pour obtenir le plus de des de cette valeur */
   /* 2 fois et tant que tous les des ne sont = a des_a_garder */
 	int nb_lance;
-  for(nb_lance = nb_lance_Restant; nb_lance > 0; nb_lance--) {
+  for(nb_lance = *nb_lance_Restant; nb_lance > 0; nb_lance--) {
     for(i = 0; i < 5; i++) {
       if(j->des[i] != val_des_a_garder)
         lancer(j, i);
@@ -292,7 +292,7 @@ int val_dans_tab(int val, int tab[], int taille) {
   return 0;
 }
 
-int strat_p_g_suite(t_joueur *j, t_joueur *j_test, int nb_lance_Restant) {
+int strat_p_g_suite(t_joueur *j, t_joueur *j_test, int *nb_lance_Restant) {
   int i;
   int nb_des[6];
 
@@ -328,7 +328,7 @@ int strat_p_g_suite(t_joueur *j, t_joueur *j_test, int nb_lance_Restant) {
   /* Relancement */
   int exit_code = 0;
 	int nb_lance;
-  for(nb_lance = nb_lance_Restant; (nb_lance > 0); nb_lance--) {
+  for(nb_lance = *nb_lance_Restant; (nb_lance > 0); nb_lance--) {
     for(i = 0; i < 5; i++) {
 
       /* Cas ou il ne faut pas relancer => des a garder ET 1 exemplaire */
@@ -437,7 +437,7 @@ int utiliser_yahtzee(t_joueur *j, t_joueur *j_test) {
 *//**
   *\brief Permet (d'essayer) d'obtenir une main de type yahtzee en relancant
 */
-int strat_yahtzee(t_joueur *j, t_joueur *j_test, int nb_lance_Restant) {
+int strat_yahtzee(t_joueur *j, t_joueur *j_test, int *nb_lance_Restant) {
 	int i;
   int nb_des[6];
 
@@ -451,7 +451,7 @@ int strat_yahtzee(t_joueur *j, t_joueur *j_test, int nb_lance_Restant) {
 	/* Relancer les des pour obtenir le plus de des de cette valeur */
 	/* 2 fois et tant que tous les des ne sont = a des_a_garder */
 	int nb_lance;
-	for(nb_lance = nb_lance_Restant; nb_lance > 0; nb_lance--) {
+	for(nb_lance = *nb_lance_Restant; nb_lance > 0; nb_lance--) {
 		for(i = 0; i < 5; i++) {
 			if(j->des[i] != val_des_a_garder)
 				lancer(j, i);
@@ -478,7 +478,7 @@ int strat_yahtzee(t_joueur *j, t_joueur *j_test, int nb_lance_Restant) {
 	*\author Thibault Lemarchand
 	*\author Nicolas Champion
 */
-int strat_brelan(t_joueur *j, t_joueur *j_test, int nb_lance_Restant) {
+int strat_brelan(t_joueur *j, t_joueur *j_test, int *nb_lance_Restant) {
 
 	/* Strategie possible */
 	if(j->tab.brelan != VAL_INIT)
@@ -497,7 +497,7 @@ int strat_brelan(t_joueur *j, t_joueur *j_test, int nb_lance_Restant) {
 	/* Relancer les des pour obtenir le plus de des de cette valeur */
 	/* 2 fois et tant que tous les des ne sont = a des_a_garder */
 	int nb_lance;
-	for(nb_lance = nb_lance_Restant; nb_lance > 0; nb_lance--) {
+	for(nb_lance = *nb_lance_Restant; nb_lance > 0; nb_lance--) {
 
 		/* Cas : Mois de 3 des identiques */
 		for(i = 0; i < 5; i++) {
@@ -527,7 +527,7 @@ int strat_brelan(t_joueur *j, t_joueur *j_test, int nb_lance_Restant) {
 	*\author Thibault Lemarchand
 	*\author Nicolas Champion
 */
-int strat_carre(t_joueur *j, t_joueur *j_test, int nb_lance_Restant) {
+int strat_carre(t_joueur *j, t_joueur *j_test, int *nb_lance_Restant) {
 
 	/* Strategie possible */
 	if(j->tab.carre != VAL_INIT)
@@ -546,7 +546,7 @@ int strat_carre(t_joueur *j, t_joueur *j_test, int nb_lance_Restant) {
 	/* Relancer les des pour obtenir le plus de des de cette valeur */
 	/* 2 fois et tant que tous les des ne sont = a des_a_garder */
 	int nb_lance;
-	for(nb_lance = nb_lance_Restant; nb_lance > 0; nb_lance--) {
+	for(nb_lance = *nb_lance_Restant; nb_lance > 0; nb_lance--) {
 
 		/* Cas : Mois de 3 des identiques */
 		for(i = 0; i < 5; i++) {
@@ -576,7 +576,7 @@ int strat_carre(t_joueur *j, t_joueur *j_test, int nb_lance_Restant) {
 	*\author Thibault Lemarchand
 	*\author Nicolas Champion
 */
-int strat_full(t_joueur *j, t_joueur *j_test, int nb_lance_Restant) {
+int strat_full(t_joueur *j, t_joueur *j_test, int *nb_lance_Restant) {
 
 	/* Strategie possible */
 	if(j->tab.full != VAL_INIT)
@@ -595,7 +595,7 @@ int strat_full(t_joueur *j, t_joueur *j_test, int nb_lance_Restant) {
 	/* Relancer les des pour obtenir le plus de des de cette valeur */
 	/* 2 fois et tant que tous les des ne sont = a des_a_garder */
 	int nb_lance;
-	for(nb_lance = nb_lance_Restant; nb_lance > 0; nb_lance--) {
+	for(nb_lance = *nb_lance_Restant; nb_lance > 0; nb_lance--) {
 
 		/* Cas : 4 des identiques */
 		if(nb_des[val_des_a_garder - 1] == 4) {
@@ -702,12 +702,16 @@ int tour_ordinateur(t_joueur *j) {
 
   test_mains_NC(j, tempo); // Celle de Zack => Fuite memoire !!!!!!!!!
 
-  /* ***** Analyse des mains (avec les des initiaux) ***** */
-
 	if(yahtzee(j) != -1) {
 		utiliser_yahtzee(j, tempo);
 		return 2; // L'ordi a joue (mais pas la strat sup)
 	}
+
+	else if(strat_superieur(j, tempo, &nb_lance))
+    return 0; // Strategie a pu etre applique, l'ordi a jouer
+
+	else if(strat_yahtzee(j, tempo, &nb_lance))
+	  return 0; // Strategie a pu etre applique, l'ordi a jouer
 
   else if((tempo->tab.grande_Suite != VAL_INIT) && (j->tab.grande_Suite == VAL_INIT)) {
 		j->tab.grande_Suite = tempo->tab.grande_Suite;
@@ -719,40 +723,32 @@ int tour_ordinateur(t_joueur *j) {
 		return 0;
 	}
 
+	else if(strat_p_g_suite(j, tempo, &nb_lance))
+		return 0; // Strategie a pu etre applique, l'ordi a jouer
+
 	else if((tempo->tab.carre != VAL_INIT) && (j->tab.carre == VAL_INIT)) {
 		j->tab.carre = tempo->tab.carre;
 		return 0;
 	}
+
+	else if(strat_carre(j, tempo, &nb_lance))
+	 return 0; // Strategie a pu etre applique, l'ordi a jouer
 
 	else if((tempo->tab.brelan != VAL_INIT) && (j->tab.brelan == VAL_INIT)) {
 		j->tab.brelan = tempo->tab.brelan;
 		return 0;
 	}
 
+	else if(strat_brelan(j, tempo, &nb_lance))
+		return 0; // Strategie a pu etre applique, l'ordi a jouer
+
 	else if((tempo->tab.full != VAL_INIT) && (j->tab.full == VAL_INIT)) {
 		j->tab.full = tempo->tab.full;
 		return 0;
 	}
 
-  /* ***** Application d'une strategie ***** */
-
-  else if(strat_superieur(j, tempo, nb_lance))
-    return 0; // Strategie a pu etre applique, l'ordi a jouer
-
-  else if(strat_p_g_suite(j, tempo, nb_lance))
-    return 0; // Strategie a pu etre applique, l'ordi a jouer
-
-	else if(strat_yahtzee(j, tempo, nb_lance))
-	  return 0; // Strategie a pu etre applique, l'ordi a jouer
-
-	else if(strat_brelan(j, tempo, nb_lance))
-	  return 0; // Strategie a pu etre applique, l'ordi a jouer
-
-	 else if(strat_carre(j, tempo, nb_lance))
- 		return 0; // Strategie a pu etre applique, l'ordi a jouer
-
-	 else if(strat_full(j, tempo, nb_lance))
-		return 0; // Strategie a pu etre applique, l'ordi a jouer
+	else if(strat_full(j, tempo, &nb_lance))
+	 return 0; // Strategie a pu etre applique, l'ordi a jouer
 
 	meilleur_score(j, tempo);
 	return 0;
