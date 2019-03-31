@@ -67,8 +67,11 @@ void test_mains_NC(t_joueur *j, t_joueur *j_test) {
 
 
 /**
+	*\fn int compter_des(t_joueur *joueur, int nb_test)
+	*\param Un pointeur vers un t_joueur (représentant le joueur) et la valeur de dès à compter
   *\brief Sous fonction. Intervient dans plusieurs fonctions.
-  *\return Le nombre de des nb_test qu'il y a dans la main du joueur.
+  *\return Le nombre de des nb_test(valeur) qu'il y a dans la main du joueur.
+	*\author Nicolas Champion
 */
 static
 int compter_des(t_joueur *joueur, int nb_test){
@@ -85,7 +88,10 @@ int compter_des(t_joueur *joueur, int nb_test){
 
 
 /**
+	*\fn void test_max(int *val, int *max, char pos_max[20], char ligne_courante[20])
+	*\param Un pointeur vers la valeur courante d'un dès, la valeur max, une chaine stockant la position de la plus grande par rappport a la feuille de marque du yahtzee et une chaine de caractere stockant la position courante dans le feuille de marque du yahtzee
   *\brief Sous fonction. Intervient dans la fonction meilleur_score
+	*\author Nicolas Champion
 */
 static
 void test_max(int *val, int *max, char pos_max[20], char ligne_courante[20]) {
@@ -98,6 +104,7 @@ void test_max(int *val, int *max, char pos_max[20], char ligne_courante[20]) {
 
 /**
   *\brief Sous fonction. Intervient dans la fonction meilleur_score
+	*\author Nicolas Champion
 */
 static
 void choisir_max(t_joueur *j, int max, char pos_max[20]) {
@@ -125,6 +132,7 @@ void choisir_max(t_joueur *j, int max, char pos_max[20]) {
 
 /**
   *\brief Choisi la main qui rapporte le plus de points pour une combinaison de des donnée.
+	*\author Nicolas Champion
 */
 void meilleur_score(t_joueur *j, t_joueur *j_test) {
   int max = -2;
@@ -181,6 +189,7 @@ void meilleur_score(t_joueur *j, t_joueur *j_test) {
 
 /**
   *\brief Strategie permettant d'obtenir le maximum de points dans la section superieur de la feuille de marque
+	*\author Nicolas Champion
 */
 void val_des_max(int val_c, int *val_max, int nb_des_c, int *nb_des_max) {
   if(nb_des_c >= *nb_des_max) {
@@ -192,6 +201,7 @@ void val_des_max(int val_c, int *val_max, int nb_des_c, int *nb_des_max) {
 
 /**
   *\brief Retourne la val des des les plus elevee en plus grand nombre et disponible (Valeur non jouée dans la feuille de marque)
+	*\author Nicolas Champion
 */
 int choix_des_strat_sup(int tab[6], t_joueur *j) {
   int val_max = 0;
@@ -221,6 +231,7 @@ int choix_des_strat_sup(int tab[6], t_joueur *j) {
 
 /**
   *\brief Applique la stratégie consisitant a obtenir la prime dans la section superieure (de la feuille de marque Yahtzee)
+	*\author Nicolas Champion
 */
 int strat_superieur(t_joueur *j, t_joueur *j_test, int *nb_lance_Restant) {
   int i;
@@ -282,6 +293,7 @@ int strat_superieur(t_joueur *j, t_joueur *j_test, int *nb_lance_Restant) {
 
 /**
   *\return Renvoie un booleen
+	*\author Nicolas Champion
 */
 int val_dans_tab(int val, int tab[], int taille) {
   int i;
@@ -294,6 +306,10 @@ int val_dans_tab(int val, int tab[], int taille) {
   return 0;
 }
 
+
+/**
+	*\author Nicolas Champion
+*/
 int strat_p_g_suite(t_joueur *j, t_joueur *j_test, int *nb_lance_Restant) {
   int i;
   int nb_des[6];
@@ -387,6 +403,7 @@ int strat_p_g_suite(t_joueur *j, t_joueur *j_test, int *nb_lance_Restant) {
 
 /**
   *\brief Renvoi la valeur présente le plus grand nombre de fois dans la main.
+	*\author Nicolas Champion
 */
 static
 int val_qte_max_tab(int tab[], int taille)  {
@@ -405,6 +422,7 @@ int val_qte_max_tab(int tab[], int taille)  {
 
 /**
   *\brief On suppose que l'on a une main de type yahtzee (Donc tous les des identiques)
+	*\author Nicolas Champion
 */
 int utiliser_yahtzee(t_joueur *j, t_joueur *j_test) {
 
@@ -435,6 +453,7 @@ int utiliser_yahtzee(t_joueur *j, t_joueur *j_test) {
 
 /**
   *\brief Permet (d'essayer) d'obtenir une main de type yahtzee en relancant
+	*\author Nicolas Champion
 */
 int strat_yahtzee(t_joueur *j, t_joueur *j_test, int *nb_lance_Restant) {
 	int i;
@@ -678,6 +697,11 @@ int strat_full(t_joueur *j, t_joueur *j_test, int *nb_lance_Restant) {
 /* ***************************************************************************** */
 
 
+/**
+  *\brief
+	*\author Thibault Lemarchand
+	*\author Nicolas Champion
+*/
 int tour_ordinateur(t_joueur *j) {
   int i, nb_lance = 2;
   t_joueur *tempo = creer_joueur("tempo");
