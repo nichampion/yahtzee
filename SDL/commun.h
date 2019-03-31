@@ -31,8 +31,8 @@
 	/**< tab[9] : (Full) 25 points : 3 chiffres X + 2 chiffres Y */
 	/**< tab[10] : (Petite Suite) 30 points (4 des) */
 	/**< tab[11] : (Grande Suite) 40 points (5 des) */
-	/**< tab[12] : (Chance) Total des 5 des */
-	/**< tab[13] : (Yahtzee) 50 points :  5 chiffres identiques */
+	/**< tab[12] : (Yahtzee) 50 points :  5 chiffres identiques */
+	/**< tab[13] : (Chance) Total des 5 des */
 	/**< tab[14] : (Prime Yahtzee) 100 points */
 
 	/* Totaux */

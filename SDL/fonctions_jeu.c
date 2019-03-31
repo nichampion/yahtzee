@@ -99,12 +99,12 @@ t_joueur * test_mains(t_joueur *j){
 		j_test->tab[11] = grande_suite(j);
 
 	if((j->tab[12]) == VAL_INIT)
-		j_test->tab[12] = chance(j);
-
-	if((j->tab[13]) == VAL_INIT)
-		j_test->tab[13] = yahtzee(j);
+		j_test->tab[12] = yahtzee(j);
 	else if((j->tab[13]) == 50)
 		j_test->tab[14] = 100;
+
+	if((j->tab[13]) == VAL_INIT)
+		j_test->tab[13] = chance(j);
 
 	return j_test;
 
@@ -406,13 +406,13 @@ void affichage_possibilites(t_joueur * j, t_joueur * j_test){
 	else
   	  printf("*\t| 11 G Suite\t%d\t\t|\t\t*\n", j->tab[11]);
 	if(j_test->tab[12] != VAL_INIT)
-	  printf("*\t| 12 Chance\t%d?\t\t|\t\t*\n", j_test->tab[12]);
+	  printf("*\t| 12 Yahtzee\t%d?\t\t|\t\t*\n", j_test->tab[12]);
 	else
-  	  printf("*\t| 12 Chance\t%d\t\t|\t\t*\n", j->tab[12]);
+  	  printf("*\t| 12 Yahtzee\t%d\t\t|\t\t*\n", j->tab[12]);
 	if(j_test->tab[13] != VAL_INIT)
-	  printf("*\t| 13 Yahtzee\t%d?\t\t|\t\t*\n", j_test->tab[13]);
+	  printf("*\t| 13 Chance\t%d?\t\t|\t\t*\n", j_test->tab[13]);
 	else
-	  printf("*\t| 13 Yahtzee\t%d\t\t|\t\t*\n", j->tab[13]);
+	  printf("*\t| 13 Chance\t%d\t\t|\t\t*\n", j->tab[13]);
 	if(j_test->tab[14] != VAL_INIT)
 	  printf("*\t| 14 Prime\t%d?\t\t|\t\t*\n", j->tab[14]);
 	else
