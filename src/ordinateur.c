@@ -17,6 +17,7 @@
 /*Lien strat 1 -> http://www.ultraboardgames.com/yahtzee/tips.php*/
 /*Lien strat 2 -> https://fr.wikihow.com/jouer-au-yahtzee*/
 
+
 void test_mains_NC(t_joueur *j, t_joueur *j_test) {
 
 	if((j->tab.as) == VAL_INIT)
@@ -64,6 +65,7 @@ void test_mains_NC(t_joueur *j, t_joueur *j_test) {
 
 }
 
+
 /**
   *\brief Sous fonction. Intervient dans plusieurs fonctions.
   *\return Le nombre de des nb_test qu'il y a dans la main du joueur.
@@ -77,6 +79,7 @@ int compter_des(t_joueur *joueur, int nb_test){
   }
   return res;
 }
+
 
 /* ****************** Calcul de la meilleur main ****************** */
 
@@ -237,8 +240,7 @@ int strat_superieur(t_joueur *j, t_joueur *j_test, int *nb_lance_Restant) {
 
   /* Relancer les des pour obtenir le plus de des de cette valeur */
   /* 2 fois et tant que tous les des ne sont = a des_a_garder */
-	int nb_lance;
-  for(nb_lance = *nb_lance_Restant; nb_lance > 0; nb_lance--) {
+  for(; *nb_lance_Restant > 0; (*nb_lance_Restant)--) {
     for(i = 0; i < 5; i++) {
       if(j->des[i] != val_des_a_garder)
         lancer(j, i);
@@ -327,8 +329,7 @@ int strat_p_g_suite(t_joueur *j, t_joueur *j_test, int *nb_lance_Restant) {
 
   /* Relancement */
   int exit_code = 0;
-	int nb_lance;
-  for(nb_lance = *nb_lance_Restant; (nb_lance > 0); nb_lance--) {
+  for(; (*nb_lance_Restant > 0); (*nb_lance_Restant)--) {
     for(i = 0; i < 5; i++) {
 
       /* Cas ou il ne faut pas relancer => des a garder ET 1 exemplaire */
@@ -353,11 +354,11 @@ int strat_p_g_suite(t_joueur *j, t_joueur *j_test, int *nb_lance_Restant) {
     /* Si on a Gde ou Pte suite => On utilise */
     if((j_test->tab.grande_Suite != VAL_INIT) && (j->tab.grande_Suite == VAL_INIT)) {
         exit_code = -1;
-        nb_lance = -1;
+        (*nb_lance_Restant) = -1;
     }
     else if((j_test->tab.petite_Suite != VAL_INIT) && (j->tab.petite_Suite == VAL_INIT)) {
         exit_code = -2;
-        nb_lance = -1;
+        (*nb_lance_Restant) = -1;
     }
   }
 
@@ -434,8 +435,6 @@ int utiliser_yahtzee(t_joueur *j, t_joueur *j_test) {
 
 /**
   *\brief Permet (d'essayer) d'obtenir une main de type yahtzee en relancant
-*//**
-  *\brief Permet (d'essayer) d'obtenir une main de type yahtzee en relancant
 */
 int strat_yahtzee(t_joueur *j, t_joueur *j_test, int *nb_lance_Restant) {
 	int i;
@@ -450,8 +449,7 @@ int strat_yahtzee(t_joueur *j, t_joueur *j_test, int *nb_lance_Restant) {
 
 	/* Relancer les des pour obtenir le plus de des de cette valeur */
 	/* 2 fois et tant que tous les des ne sont = a des_a_garder */
-	int nb_lance;
-	for(nb_lance = *nb_lance_Restant; nb_lance > 0; nb_lance--) {
+	for(; *nb_lance_Restant > 0; (*nb_lance_Restant)--) {
 		for(i = 0; i < 5; i++) {
 			if(j->des[i] != val_des_a_garder)
 				lancer(j, i);
@@ -496,8 +494,7 @@ int strat_brelan(t_joueur *j, t_joueur *j_test, int *nb_lance_Restant) {
 
 	/* Relancer les des pour obtenir le plus de des de cette valeur */
 	/* 2 fois et tant que tous les des ne sont = a des_a_garder */
-	int nb_lance;
-	for(nb_lance = *nb_lance_Restant; nb_lance > 0; nb_lance--) {
+	for(; *nb_lance_Restant > 0; (*nb_lance_Restant)--) {
 
 		/* Cas : Mois de 3 des identiques */
 		for(i = 0; i < 5; i++) {
@@ -545,8 +542,7 @@ int strat_carre(t_joueur *j, t_joueur *j_test, int *nb_lance_Restant) {
 
 	/* Relancer les des pour obtenir le plus de des de cette valeur */
 	/* 2 fois et tant que tous les des ne sont = a des_a_garder */
-	int nb_lance;
-	for(nb_lance = *nb_lance_Restant; nb_lance > 0; nb_lance--) {
+	for(; *nb_lance_Restant > 0; (*nb_lance_Restant)--) {
 
 		/* Cas : Mois de 3 des identiques */
 		for(i = 0; i < 5; i++) {
@@ -594,8 +590,7 @@ int strat_full(t_joueur *j, t_joueur *j_test, int *nb_lance_Restant) {
 
 	/* Relancer les des pour obtenir le plus de des de cette valeur */
 	/* 2 fois et tant que tous les des ne sont = a des_a_garder */
-	int nb_lance;
-	for(nb_lance = *nb_lance_Restant; nb_lance > 0; nb_lance--) {
+	for(; *nb_lance_Restant > 0; (*nb_lance_Restant)--) {
 
 		/* Cas : 4 des identiques */
 		if(nb_des[val_des_a_garder - 1] == 4) {
