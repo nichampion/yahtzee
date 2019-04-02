@@ -1,56 +1,53 @@
 #ifndef commun_h
 #define commun_h
 
-#define N 5 /* Nombre de des */
-#define T 3 /* Taille nom joueur */
+	#define N 5 /* Nombre de des */
+	#define T 3 /* Taille nom joueur */
 
-/**
-  *\file commun.h
-  *\brief
-	*\version 1.0
-*/
+	/* ***** Constantes pour le tableau ***** */
 
-/**
-	*\struct t_tableau
-	*\brief Feuille de marque du Yahtzee
-	*\brief Correspond a un joueur, pour une partie.
-*/
-typedef struct {
+	#define TAILLE_TAB 18
+
 	/* Section supérieure */
-	int as;				/**< Total des 1 */
-	int deux;			/**< Total des 2 */
-	int trois;			/**< Total des 3 */
-	int quatres;		/**< Total des 4 */
-	int cinq;			/**< Total des 5 */
-	int six;			/**< Total des 6 */
-	int prime_35pts;	/**< +35pts si total_Sup >= 63 */
+	#define AS 0 /**< Total des 1 */
+	#define DEUX 1 /**< Total des 2 */
+	#define TROIS 2 /**< Total des 3 */
+	#define QUATRE 3 /**< Total des 4 */
+	#define CINQ 4 /**< Total des 5 */
+	#define SIX 5	/**< Total des 6 */
+	#define PRIME_35 6 /**< +35pts si total_Sup >= 63 */
 
 	/* Section inférieure */
-	int brelan; 		/**< Total des 5 des : 3 chiffres X + 2 autres quelconques */
-	int carre;			/**< Total des 5 des : 4 chiffres X + 1 chiffres Y */
-	int full;			/**< 25 points : 3 chiffres X + 2 chiffres Y */
-	int petite_Suite;	/**< 30 points (4 des) */
-	int grande_Suite;	/**< 40 points (5 des) */
-	int yahtzee;		/**< 50 points :  5 chiffres identiques */
-	int chance;			/**< Total des 5 des */
-	int prime_Yahtzee;	/**< 100 points */
+	#define BRELAN 7 /**< Total des 5 des : 3 chiffres X + 2 autres quelconques */
+	#define CARRE 8 /**< Total des 5 des : 4 chiffres X + 1 chiffres Y */
+	#define FULL 9 /**< 25 points : 3 chiffres X + 2 chiffres Y */
+	#define PETITE_SUITE 10 /**< 30 points (4 des) */
+	#define GRANDE_SUITE 11 /**< 40 points (5 des) */
+	#define YAHTZEE 12 /**< 50 points :  5 chiffres identiques */
+	#define CHANCE 13 /**< Total des 5 des */
+	#define PRIME_YAHTZEE 14 /**< 100 points */
 
 	/* Totaux */
-	int total_Sup;
-	int total_Inf;
-	int total_Gen;
+	#define TOTAL_SUP 15
+	#define TOTAL_INF 16
+	#define TOTAL_GEN 17
 
-} t_tableau;
+	/* ************************************** */
 
+	/**
+	  *\file commun.h
+	  *\brief
+		*\version 1.0
+	*/
 
-/**
-	*\struct t_joueur
-	*\brief Type joueur avec sa feuille de marque et des
-*/
-typedef struct {
-	t_tableau tab;
-	int des[N];
-	char nom[T];
-} t_joueur;
+	/**
+		*\struct t_joueur
+		*\brief Type joueur avec sa feuille de marque et des
+	*/
+	typedef struct {
+		int tab[TAILLE_TAB];
+		int des[N];
+		char nom[T];
+	} t_joueur;
 
 #endif

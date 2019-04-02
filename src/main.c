@@ -35,14 +35,14 @@ void tour_joueur(t_joueur * j){
 		lancer(j,i);
 	}
 
-	j_choix = test_mains(j);
+	test_mains(j, j_choix);
 
 	if((rel = relancer(j)) == 1)
 	{
 
-		j_choix = test_mains(j);
+		test_mains(j, j_choix);
 		if((rel += relancer(j)) == 2)
-			j_choix = test_mains(j);
+			test_mains(j, j_choix);
 
 	}
 

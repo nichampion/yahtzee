@@ -56,59 +56,55 @@ int relancer(t_joueur * j){
 }
 
 /**
-	*\Fn : t_joueur * test_mains(t_joueur * j)
-	*\Param : Un pointeur sur un joueur
+	*\Fn : t_joueur * test_mains(t_joueur *j, t_joueur *j_test)
+	*\Param : Un pointeur sur un joueur + Pointeur sur un joueur de test
 	*\Brief : Test de toutes les combinaisons possibles avec les dés du joueur j
 	*\Author : Sunny BIARD
 */
-t_joueur * test_mains(t_joueur *j){
+void test_mains(t_joueur *j, t_joueur *j_test){
 
-	t_joueur * j_test = creer_joueur("Choix");
+		if((j->tab[AS]) == VAL_INIT)
+			j_test->tab[AS] = section_superieure(j,1);
 
-	if((j->tab.as) == VAL_INIT)
-		j_test->tab.as = section_superieure(j,1);
+		if((j->tab[DEUX]) == VAL_INIT)
+			j_test->tab[DEUX] = section_superieure(j,2);
 
-	if((j->tab.deux) == VAL_INIT)
-		j_test->tab.deux = section_superieure(j,2);
+		if((j->tab[TROIS]) == VAL_INIT)
+			j_test->tab[TROIS] = section_superieure(j,3);
 
-	if((j->tab.trois) == VAL_INIT)
-		j_test->tab.trois = section_superieure(j,3);
+		if((j->tab[QUATRE]) == VAL_INIT)
+			j_test->tab[QUATRE] = section_superieure(j,4);
 
-	if((j->tab.quatres) == VAL_INIT)
-		j_test->tab.quatres = section_superieure(j,4);
+		if((j->tab[CINQ]) == VAL_INIT)
+			j_test->tab[CINQ] = section_superieure(j,5);
 
-	if((j->tab.cinq) == VAL_INIT)
-		j_test->tab.cinq = section_superieure(j,5);
+		if((j->tab[SIX]) == VAL_INIT)
+			j_test->tab[SIX] = section_superieure(j,6);
 
-	if((j->tab.six) == VAL_INIT)
-		j_test->tab.six = section_superieure(j,6);
+		if((j->tab[BRELAN]) == VAL_INIT)
+			j_test->tab[BRELAN] = brelan(j);
 
-	if((j->tab.brelan) == VAL_INIT)
-		j_test->tab.brelan = brelan(j);
+		if((j->tab[CARRE]) == VAL_INIT)
+			j_test->tab[CARRE] = carre(j);
 
-	if((j->tab.carre) == VAL_INIT)
-		j_test->tab.carre = carre(j);
+		if((j->tab[FULL]) == VAL_INIT)
+			j_test->tab[FULL] = full(j);
 
-	if((j->tab.full) == VAL_INIT)
-		j_test->tab.full = full(j);
+		if((j->tab[PETITE_SUITE]) == VAL_INIT)
+			j_test->tab[PETITE_SUITE] = petite_suite(j);
 
-	if((j->tab.petite_Suite) == VAL_INIT)
-		j_test->tab.petite_Suite = petite_suite(j);
+		if((j->tab[GRANDE_SUITE]) == VAL_INIT)
+			j_test->tab[GRANDE_SUITE] = grande_suite(j);
 
-	if((j->tab.grande_Suite) == VAL_INIT)
-		j_test->tab.grande_Suite = grande_suite(j);
+		if((j->tab[CHANCE]) == VAL_INIT)
+			j_test->tab[CHANCE] = chance(j);
 
-	if((j->tab.chance) == VAL_INIT)
-		j_test->tab.chance = chance(j);
+		if((j->tab[YAHTZEE]) == VAL_INIT)
+			j_test->tab[YAHTZEE] = yahtzee(j);
+		else if((j->tab[YAHTZEE]) != VAL_INIT)
+			prime_yahtzee(j_test);
 
-	if((j->tab.yahtzee) == VAL_INIT)
-		j_test->tab.yahtzee = yahtzee(j);
-	else if((j->tab.yahtzee) == 50)
-		j_test->tab.prime_Yahtzee = 100;
-
-	affichage_possibilites(j,j_test);
-
-	return j_test;
+		affichage_possibilites(j,j_test);
 
 }
 
@@ -120,22 +116,22 @@ t_joueur * test_mains(t_joueur *j){
 */
 int choix_placement(t_joueur *j, t_joueur * j_test){
 	int choix, placement = 0;
-	printf("Choisir la case à remplir (1-13) : ");
+	printf("Choisir la case à remplir (1-14) : ");
 	scanf("%d",&choix);
-	while(choix < 1 || choix > 13){
-		printf("Choisir la case à remplir (1-13) : ");
+	while(choix < 1 || choix > 14){
+		printf("Choisir la case à remplir (1-14) : ");
 		scanf("%d",&choix);
 	}
 
 	switch(choix)
 	{
 		case 1 :
-			if(j->tab.as == VAL_INIT){
-				if(j_test->tab.as != VAL_INIT){
-					j->tab.as = j_test->tab.as;
+			if(j->tab[AS] == VAL_INIT){
+				if(j_test->tab[AS] != VAL_INIT){
+					j->tab[AS] = j_test->tab[AS];
 				}
 				else{
-					j->tab.as = 0;
+					j->tab[AS] = 0;
 				}
 				placement = 1;
 				break;
@@ -145,12 +141,12 @@ int choix_placement(t_joueur *j, t_joueur * j_test){
 				break;
 			}
 		case 2 :
-			if(j->tab.deux == VAL_INIT){
-				if(j_test->tab.deux != VAL_INIT){
-					j->tab.deux = j_test->tab.deux;
+			if(j->tab[DEUX] == VAL_INIT){
+				if(j_test->tab[DEUX] != VAL_INIT){
+					j->tab[DEUX] = j_test->tab[DEUX];
 				}
 				else{
-					j->tab.deux = 0;
+					j->tab[DEUX] = 0;
 				}
 				placement = 1;
 				break;
@@ -160,12 +156,12 @@ int choix_placement(t_joueur *j, t_joueur * j_test){
 				break;
 			}
 		case 3 :
-			if(j->tab.trois == VAL_INIT){
-				if(j_test->tab.trois != VAL_INIT){
-					j->tab.trois = j_test->tab.trois;
+			if(j->tab[TROIS] == VAL_INIT){
+				if(j_test->tab[TROIS] != VAL_INIT){
+					j->tab[TROIS] = j_test->tab[TROIS];
 				}
 				else{
-					j->tab.trois = 0;
+					j->tab[TROIS] = 0;
 				}
 				placement = 1;
 				break;
@@ -175,12 +171,12 @@ int choix_placement(t_joueur *j, t_joueur * j_test){
 				break;
 			}
 		case 4 :
-			if(j->tab.quatres == VAL_INIT){
-				if(j_test->tab.quatres != VAL_INIT){
-					j->tab.quatres = j_test->tab.quatres;
+			if(j->tab[QUATRE] == VAL_INIT){
+				if(j_test->tab[QUATRE] != VAL_INIT){
+					j->tab[QUATRE] = j_test->tab[QUATRE];
 				}
 				else{
-					j->tab.quatres = 0;
+					j->tab[QUATRE] = 0;
 				}
 				placement = 1;
 				break;
@@ -190,12 +186,12 @@ int choix_placement(t_joueur *j, t_joueur * j_test){
 				break;
 			}
 		case 5 :
-			if(j->tab.cinq == VAL_INIT){
-				if(j_test->tab.cinq != VAL_INIT){
-					j->tab.cinq = j_test->tab.cinq;
+			if(j->tab[CINQ] == VAL_INIT){
+				if(j_test->tab[CINQ] != VAL_INIT){
+					j->tab[CINQ] = j_test->tab[CINQ];
 				}
 				else{
-					j->tab.cinq = 0;
+					j->tab[CINQ] = 0;
 				}
 				placement = 1;
 				break;
@@ -205,12 +201,12 @@ int choix_placement(t_joueur *j, t_joueur * j_test){
 				break;
 			}
 		case 6 :
-			if(j->tab.six == VAL_INIT){
-				if(j_test->tab.six != VAL_INIT){
-					j->tab.six = j_test->tab.six;
+			if(j->tab[SIX] == VAL_INIT){
+				if(j_test->tab[SIX] != VAL_INIT){
+					j->tab[SIX] = j_test->tab[SIX];
 				}
 				else{
-					j->tab.six = 0;
+					j->tab[SIX] = 0;
 				}
 				placement = 1;
 				break;
@@ -220,12 +216,12 @@ int choix_placement(t_joueur *j, t_joueur * j_test){
 				break;
 			}
 		case 7 :
-			if(j->tab.brelan == VAL_INIT){
-				if(j_test->tab.brelan != VAL_INIT){
-					j->tab.brelan = j_test->tab.brelan;
+			if(j->tab[BRELAN] == VAL_INIT){
+				if(j_test->tab[BRELAN] != VAL_INIT){
+					j->tab[BRELAN] = j_test->tab[BRELAN];
 				}
 				else{
-					j->tab.brelan = 0;
+					j->tab[BRELAN] = 0;
 				}
 				placement = 1;
 				break;
@@ -235,12 +231,12 @@ int choix_placement(t_joueur *j, t_joueur * j_test){
 				break;
 			}
 		case 8 :
-			if(j->tab.carre == VAL_INIT){
-				if(j_test->tab.carre != VAL_INIT){
-					j->tab.carre = j_test->tab.carre;
+			if(j->tab[CARRE] == VAL_INIT){
+				if(j_test->tab[CARRE] != VAL_INIT){
+					j->tab[CARRE] = j_test->tab[CARRE];
 				}
 				else{
-					j->tab.carre = 0;
+					j->tab[CARRE] = 0;
 				}
 				placement = 1;
 				break;
@@ -250,12 +246,12 @@ int choix_placement(t_joueur *j, t_joueur * j_test){
 				break;
 			}
 		case 9 :
-			if(j->tab.full == VAL_INIT){
-				if(j_test->tab.full != VAL_INIT){
-					j->tab.full = j_test->tab.full;
+			if(j->tab[FULL] == VAL_INIT){
+				if(j_test->tab[FULL] != VAL_INIT){
+					j->tab[FULL] = j_test->tab[FULL];
 				}
 				else{
-					j->tab.full = 0;
+					j->tab[FULL] = 0;
 				}
 				placement = 1;
 				break;
@@ -265,12 +261,12 @@ int choix_placement(t_joueur *j, t_joueur * j_test){
 				break;
 			}
 		case 10 :
-			if(j->tab.petite_Suite == VAL_INIT){
-				if(j_test->tab.petite_Suite != VAL_INIT){
-					j->tab.petite_Suite = j_test->tab.petite_Suite;
+			if(j->tab[PETITE_SUITE] == VAL_INIT){
+				if(j_test->tab[PETITE_SUITE] != VAL_INIT){
+					j->tab[PETITE_SUITE] = j_test->tab[PETITE_SUITE];
 				}
 				else{
-					j->tab.petite_Suite = 0;
+					j->tab[PETITE_SUITE] = 0;
 				}
 				placement = 1;
 				break;
@@ -280,12 +276,12 @@ int choix_placement(t_joueur *j, t_joueur * j_test){
 				break;
 			}
 		case 11 :
-			if(j->tab.grande_Suite == VAL_INIT){
-				if(j_test->tab.grande_Suite != VAL_INIT){
-					j->tab.grande_Suite = j_test->tab.grande_Suite;
+			if(j->tab[GRANDE_SUITE] == VAL_INIT){
+				if(j_test->tab[GRANDE_SUITE] != VAL_INIT){
+					j->tab[GRANDE_SUITE] = j_test->tab[GRANDE_SUITE];
 				}
 				else{
-					j->tab.grande_Suite = 0;
+					j->tab[GRANDE_SUITE] = 0;
 				}
 				placement = 1;
 				break;
@@ -295,12 +291,12 @@ int choix_placement(t_joueur *j, t_joueur * j_test){
 				break;
 			}
 		case 12 :
-			if(j->tab.chance == VAL_INIT){
-				if(j_test->tab.chance != VAL_INIT){
-					j->tab.chance = j_test->tab.chance;
+			if(j->tab[YAHTZEE] == VAL_INIT){
+				if(j_test->tab[YAHTZEE] != VAL_INIT){
+					j->tab[YAHTZEE] = j_test->tab[YAHTZEE];
 				}
 				else{
-					j->tab.chance = 0;
+					j->tab[YAHTZEE] = 0;
 				}
 				placement = 1;
 				break;
@@ -310,12 +306,12 @@ int choix_placement(t_joueur *j, t_joueur * j_test){
 				break;
 			}
 		case 13 :
-			if(j->tab.yahtzee == VAL_INIT){
-				if(j_test->tab.yahtzee != VAL_INIT){
-					j->tab.yahtzee = j_test->tab.yahtzee;
+			if(j->tab[CHANCE] == VAL_INIT){
+				if(j_test->tab[CHANCE] != VAL_INIT){
+					j->tab[CHANCE] = j_test->tab[CHANCE];
 				}
 				else{
-					j->tab.yahtzee = 0;
+					j->tab[CHANCE] = 0;
 				}
 				placement = 1;
 				break;
@@ -324,21 +320,7 @@ int choix_placement(t_joueur *j, t_joueur * j_test){
 				printf("Impossible de remplir cette case. Veuillez en choisir une autre.\n");
 				break;
 			}
-		case 14 :
-			if(j->tab.prime_Yahtzee == VAL_INIT){
-				if(j_test->tab.prime_Yahtzee != VAL_INIT){
-					j->tab.prime_Yahtzee = j_test->tab.prime_Yahtzee;
-				}
-				else{
-					j->tab.prime_Yahtzee = 0;
-				}
-				placement = 1;
-				break;
-			}
-			else{
-				printf("Impossible de remplir cette case. Veuillez en choisir une autre.\n");
-				break;
-			}
+
 	}
 
 	return placement;
@@ -358,69 +340,71 @@ void affichage_possibilites(t_joueur * j, t_joueur * j_test){
   printf("*\t._______________________________.\t\t*\n");
   printf("*\t|\t\t%s\t\t|\t\t*\n", j->nom);
   printf("*\t|-------------------------------|\t\t*\n");
-	if(j_test->tab.as != VAL_INIT)
-  	  printf("*\t| 1 As\t\t%d?\t\t|\t\t*\n", j_test->tab.as);
+	if(j_test->tab[AS] != VAL_INIT)
+  	  printf("*\t| 1 As\t\t%d?\t\t|\t\t*\n", j_test->tab[AS]);
 	else
-  	  printf("*\t| 1 As\t\t%d\t\t|\t\t*\n", j->tab.as);
-	if(j_test->tab.deux != VAL_INIT)
-	  printf("*\t| 2 Deux\t%d?\t\t|\t\t*\n", j_test->tab.deux);
+  	  printf("*\t| 1 As\t\t%d\t\t|\t\t*\n", j->tab[AS]);
+	if(j_test->tab[DEUX] != VAL_INIT)
+	  printf("*\t| 2 Deux\t%d?\t\t|\t\t*\n", j_test->tab[DEUX]);
 	else
-  	  printf("*\t| 2 Deux\t%d\t\t|\t\t*\n", j->tab.deux);
-	if(j_test->tab.trois != VAL_INIT)
-	  printf("*\t| 3 Trois\t%d?\t\t|\t\t*\n", j_test->tab.trois);
+  	  printf("*\t| 2 Deux\t%d\t\t|\t\t*\n", j->tab[DEUX]);
+	if(j_test->tab[TROIS] != VAL_INIT)
+	  printf("*\t| 3 Trois\t%d?\t\t|\t\t*\n", j_test->tab[TROIS]);
 	else
-  	  printf("*\t| 3 Trois\t%d\t\t|\t\t*\n", j->tab.trois);
-	if(j_test->tab.quatres != VAL_INIT)
-	  printf("*\t| 4 Quatres\t%d?\t\t|\t\t*\n", j_test->tab.quatres);
+  	  printf("*\t| 3 Trois\t%d\t\t|\t\t*\n", j->tab[TROIS]);
+	if(j_test->tab[QUATRE] != VAL_INIT)
+	  printf("*\t| 4 Quatres\t%d?\t\t|\t\t*\n", j_test->tab[QUATRE]);
 	else
-  	  printf("*\t| 4 Quatres\t%d\t\t|\t\t*\n", j->tab.quatres);
-	if(j_test->tab.cinq != VAL_INIT)
-	  printf("*\t| 5 Cinq\t%d?\t\t|\t\t*\n", j_test->tab.cinq);
+  	  printf("*\t| 4 Quatres\t%d\t\t|\t\t*\n", j->tab[QUATRE]);
+	if(j_test->tab[CINQ] != VAL_INIT)
+	  printf("*\t| 5 Cinq\t%d?\t\t|\t\t*\n", j_test->tab[CINQ]);
 	else
-  	  printf("*\t| 5 Cinq\t%d\t\t|\t\t*\n", j->tab.cinq);
-	if(j_test->tab.six != VAL_INIT)
-	  printf("*\t| 6 Six\t\t%d?\t\t|\t\t*\n", j_test->tab.six);
+  	  printf("*\t| 5 Cinq\t%d\t\t|\t\t*\n", j->tab[CINQ]);
+	if(j_test->tab[SIX] != VAL_INIT)
+	  printf("*\t| 6 Six\t\t%d?\t\t|\t\t*\n", j_test->tab[SIX]);
 	else
-  	  printf("*\t| 6 Six\t\t%d\t\t|\t\t*\n", j->tab.six);
+  	  printf("*\t| 6 Six\t\t%d\t\t|\t\t*\n", j->tab[SIX]);
 
-	printf("*\t| Total\t\t%d\t\t|\t\t*\n", j->tab.total_Sup);
-	printf("*\t| Prime\t\t%d\t\t|\t\t*\n", j->tab.prime_35pts);
+	printf("*\t| Total\t\t%d\t\t|\t\t*\n", j->tab[TOTAL_SUP]);
+	printf("*\t| Prime\t\t%d\t\t|\t\t*\n", j->tab[PRIME_35]);
   printf("*\t|-------------------------------|\t\t*\n");
 
-	if(j_test->tab.brelan != VAL_INIT)
-	  printf("*\t| 7 Brelan\t%d?\t\t|\t\t*\n", j_test->tab.brelan);
+	if(j_test->tab[BRELAN] != VAL_INIT)
+	  printf("*\t| 7 Brelan\t%d?\t\t|\t\t*\n", j_test->tab[BRELAN]);
 	else
-  	  printf("*\t| 7 Brelan\t%d\t\t|\t\t*\n", j->tab.brelan);
-	if(j_test->tab.carre != VAL_INIT)
-	  printf("*\t| 8 Carre\t%d?\t\t|\t\t*\n", j_test->tab.carre);
+  	  printf("*\t| 7 Brelan\t%d\t\t|\t\t*\n", j->tab[BRELAN]);
+	if(j_test->tab[CARRE] != VAL_INIT)
+	  printf("*\t| 8 Carre\t%d?\t\t|\t\t*\n", j_test->tab[CARRE]);
 	else
-  	  printf("*\t| 8 Carre\t%d\t\t|\t\t*\n", j->tab.carre);
-	if(j_test->tab.full != VAL_INIT)
-	  printf("*\t| 9 Full\t%d?\t\t|\t\t*\n", j_test->tab.full);
+  	  printf("*\t| 8 Carre\t%d\t\t|\t\t*\n", j->tab[CARRE]);
+	if(j_test->tab[FULL] != VAL_INIT)
+	  printf("*\t| 9 Full\t%d?\t\t|\t\t*\n", j_test->tab[FULL]);
 	else
-  	  printf("*\t| 9 Full\t%d\t\t|\t\t*\n", j->tab.full);
-	if(j_test->tab.petite_Suite != VAL_INIT)
-	  printf("*\t| 10 P Suite\t%d?\t\t|\t\t*\n", j_test->tab.petite_Suite);
+  	  printf("*\t| 9 Full\t%d\t\t|\t\t*\n", j->tab[FULL]);
+	if(j_test->tab[PETITE_SUITE] != VAL_INIT)
+	  printf("*\t| 10 P Suite\t%d?\t\t|\t\t*\n", j_test->tab[PETITE_SUITE]);
 	else
-  	  printf("*\t| 10 P Suite\t%d\t\t|\t\t*\n", j->tab.petite_Suite);
-	if(j_test->tab.grande_Suite != VAL_INIT)
-	  printf("*\t| 11 G Suite\t%d?\t\t|\t\t*\n", j_test->tab.grande_Suite);
+  	  printf("*\t| 10 P Suite\t%d\t\t|\t\t*\n", j->tab[PETITE_SUITE]);
+	if(j_test->tab[GRANDE_SUITE] != VAL_INIT)
+	  printf("*\t| 11 G Suite\t%d?\t\t|\t\t*\n", j_test->tab[GRANDE_SUITE]);
 	else
-  	  printf("*\t| 11 G Suite\t%d\t\t|\t\t*\n", j->tab.grande_Suite);
-	if(j_test->tab.chance != VAL_INIT)
-	  printf("*\t| 12 Chance\t%d?\t\t|\t\t*\n", j_test->tab.chance);
+  	  printf("*\t| 11 G Suite\t%d\t\t|\t\t*\n", j->tab[GRANDE_SUITE]);
+	if(j_test->tab[YAHTZEE] != VAL_INIT)
+	  printf("*\t| 12 Yahtzee\t%d?\t\t|\t\t*\n", j_test->tab[YAHTZEE]);
 	else
-  	  printf("*\t| 12 Chance\t%d\t\t|\t\t*\n", j->tab.chance);
-	if(j_test->tab.yahtzee != VAL_INIT)
-	  printf("*\t| 13 Yahtzee\t%d?\t\t|\t\t*\n", j_test->tab.yahtzee);
+  	  printf("*\t| 12 Yahtzee\t%d\t\t|\t\t*\n", j->tab[YAHTZEE]);
+	if(j_test->tab[CHANCE] != VAL_INIT)
+	  printf("*\t| 13 Chance\t%d?\t\t|\t\t*\n", j_test->tab[CHANCE]);
 	else
-	  printf("*\t| 13 Yahtzee\t%d\t\t|\t\t*\n", j->tab.yahtzee);
+	  printf("*\t| 13 Chance\t%d\t\t|\t\t*\n", j->tab[CHANCE]);
+	if(j_test->tab[PRIME_YAHTZEE] != VAL_INIT)
+	  printf("*\t| 14 Prime\t%d?\t\t|\t\t*\n", j->tab[PRIME_YAHTZEE]);
+	else
+	  printf("*\t| 14 Prime\t%d\t\t|\t\t*\n", j_test->tab[PRIME_YAHTZEE]);
 
-	printf("*\t| Prime\t\t%d\t\t|\t\t*\n", j->tab.prime_Yahtzee);
-
-	printf("*\t| Total\t\t%d\t\t|\t\t*\n", j->tab.total_Inf);
+	printf("*\t| Total\t\t%d\t\t|\t\t*\n", j->tab[TOTAL_INF]);
   printf("*\t|-------------------------------|\t\t*\n");
-  printf("*\t|TOTAL\t\t%d\t\t|\t\t*\n", j->tab.total_Gen);
+  printf("*\t|TOTAL\t\t%d\t\t|\t\t*\n", j->tab[TOTAL_GEN]);
   printf("*\t|_______________________________|\t\t*\n");
   printf("*\t\t\t\t\t\t\t*\n");
   printf("*\t.________________________________.\t\t*\n");
@@ -439,12 +423,11 @@ void affichage_possibilites(t_joueur * j, t_joueur * j_test){
 	*\Author : Sunny BIARD
 */
 int fin_de_partie(t_joueur * j){
-	if(j->tab.as != VAL_INIT && j->tab.deux != VAL_INIT && j->tab.trois != VAL_INIT && j->tab.quatres != VAL_INIT && j->tab.cinq != VAL_INIT && j->tab.six != VAL_INIT && j->tab.brelan != VAL_INIT && j->tab.carre != VAL_INIT && j->tab.full != VAL_INIT && j->tab.petite_Suite != VAL_INIT && j->tab.petite_Suite != VAL_INIT && j->tab.grande_Suite != VAL_INIT && j->tab.chance != VAL_INIT && j->tab.yahtzee != VAL_INIT){
-		if(j->tab.prime_Yahtzee == VAL_INIT)
-			j->tab.prime_Yahtzee = 0;
+	if(j->tab[AS] != VAL_INIT && j->tab[DEUX] != VAL_INIT && j->tab[TROIS] != VAL_INIT && j->tab[QUATRE] != VAL_INIT && j->tab[CINQ] != VAL_INIT && j->tab[SIX] != VAL_INIT && j->tab[BRELAN] != VAL_INIT && j->tab[CARRE] != VAL_INIT && j->tab[FULL] != VAL_INIT && j->tab[PETITE_SUITE] != VAL_INIT && j->tab[PETITE_SUITE] != VAL_INIT && j->tab[GRANDE_SUITE] != VAL_INIT && j->tab[YAHTZEE] != VAL_INIT && j->tab[CHANCE] != VAL_INIT){
+		if(j->tab[PRIME_YAHTZEE] == VAL_INIT)
+			j->tab[PRIME_YAHTZEE] = 0;
 
 		calcul_totaux(j);
-		prime_tab(j);
 		return 1;
 	}
 	else
