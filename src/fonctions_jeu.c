@@ -60,68 +60,29 @@ int relancer(t_joueur * j){
 	*\Param : Un pointeur sur un joueur + Pointeur sur un joueur de test
 	*\Brief : Test de toutes les combinaisons possibles avec les dés du joueur j
 	*\Author : Sunny BIARD
+	*\Author : Nicolas Champion
 */
 void test_mains(t_joueur *j, t_joueur *j_test) {
 	int i;
-
-	if(val_max == VAL_INIT)
-		val_max = 0;
+	int (*pt_fonct[TAILLE_TAB_PF])(t_joueur *j) = {brelan, carre, full, petite_suite, grande_suite, yahtzee, chance}; /* Pointe des fonctions testant les mains des sections inferieur (de la feuille de marque de Yahtzee) */
 
 	/* Parcours section supérieur */
 	for(i = AS; i <= SIX; i++) {
 		if((j->tab[i]) == VAL_INIT)
-			j_test->tab[i] = section_superieure(j, i);
+			j_test->tab[i] = section_superieure(j, i + 1);
 	}
 
 	/* Parcours section inférieur */
 	for(i = BRELAN; i <= CHANCE; i++) {
-		if((j->tab[i]) == VAL_INIT)
-			j_test->tab[i] = section_superieure(j, i);
+		if((j->tab[i]) == VAL_INIT) {
+			if((i == YAHTZEE) && ((j->tab[YAHTZEE]) != VAL_INIT))
+				prime_yahtzee(j_test);
+			else
+				j_test->tab[i] = pt_fonct[i - (TAILLE_TAB_PF - 1)](j); /* Appel la fonction comptant les points de la main (pour une ligne de la feuille de marque du yahtzee) */
+		}
 	}
 
-		if((j->tab[AS]) == VAL_INIT)
-			j_test->tab[AS] = section_superieure(j,1);
-
-		if((j->tab[DEUX]) == VAL_INIT)
-			j_test->tab[DEUX] = section_superieure(j,2);
-
-		if((j->tab[TROIS]) == VAL_INIT)
-			j_test->tab[TROIS] = section_superieure(j,3);
-
-		if((j->tab[QUATRE]) == VAL_INIT)
-			j_test->tab[QUATRE] = section_superieure(j,4);
-
-		if((j->tab[CINQ]) == VAL_INIT)
-			j_test->tab[CINQ] = section_superieure(j,5);
-
-		if((j->tab[SIX]) == VAL_INIT)
-			j_test->tab[SIX] = section_superieure(j,6);
-
-		if((j->tab[BRELAN]) == VAL_INIT)
-			j_test->tab[BRELAN] = brelan(j);
-
-		if((j->tab[CARRE]) == VAL_INIT)
-			j_test->tab[CARRE] = carre(j);
-
-		if((j->tab[FULL]) == VAL_INIT)
-			j_test->tab[FULL] = full(j);
-
-		if((j->tab[PETITE_SUITE]) == VAL_INIT)
-			j_test->tab[PETITE_SUITE] = petite_suite(j);
-
-		if((j->tab[GRANDE_SUITE]) == VAL_INIT)
-			j_test->tab[GRANDE_SUITE] = grande_suite(j);
-
-		if((j->tab[CHANCE]) == VAL_INIT)
-			j_test->tab[CHANCE] = chance(j);
-
-		if((j->tab[YAHTZEE]) == VAL_INIT)
-			j_test->tab[YAHTZEE] = yahtzee(j);
-		else if((j->tab[YAHTZEE]) != VAL_INIT)
-			prime_yahtzee(j_test);
-
 		affichage_possibilites(j,j_test);
-
 }
 
 /**
