@@ -90,10 +90,10 @@ void deux_joueurs() {
 
 		tour_joueur(j1);
 		affichage(j1,j2,j1);
-		sleep(5);
+		sleep(2);
 		tour_joueur(j2);
 		affichage(j1,j2,j1);
-		sleep(5);
+		sleep(2);
 
 		if(fin_de_partie(j1) && fin_de_partie(j2))
 			game_over = 1;
