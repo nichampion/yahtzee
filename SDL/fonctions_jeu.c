@@ -439,9 +439,13 @@ void affichage_possibilites(t_joueur * j, t_joueur * j_test){
 	*\Author : Sunny BIARD
 */
 int fin_de_partie(t_joueur * j){
-	if(j->tab[0] != VAL_INIT && j->tab[1] != VAL_INIT && j->tab[2] != VAL_INIT && j->tab[3] != VAL_INIT && j->tab[4] != VAL_INIT && j->tab[5] != VAL_INIT && j->tab[7] != VAL_INIT && j->tab[8] != VAL_INIT && j->tab[9] != VAL_INIT && j->tab[10] != VAL_INIT && j->tab[10] != VAL_INIT && j->tab[11] != VAL_INIT && j->tab[12] != VAL_INIT && j->tab[13] != VAL_INIT && j->tab[14] != VAL_INIT){
+	if(j->tab[0] != VAL_INIT && j->tab[1] != VAL_INIT && j->tab[2] != VAL_INIT && j->tab[3] != VAL_INIT && j->tab[4] != VAL_INIT && j->tab[5] != VAL_INIT && j->tab[7] != VAL_INIT && j->tab[8] != VAL_INIT && j->tab[9] != VAL_INIT && j->tab[10] != VAL_INIT && j->tab[10] != VAL_INIT && j->tab[11] != VAL_INIT && j->tab[12] != VAL_INIT && j->tab[13] != VAL_INIT){
+
 		calcul_totaux(j);
-		prime_tab(j);
+
+		if(j->tab[14] == VAL_INIT)
+			j->tab[14] = 0;
+
 		return 1;
 	}
 	else

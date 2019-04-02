@@ -91,7 +91,7 @@ void prime_tab(t_joueur *j){
 */
 void prime_yahtzee(t_joueur *j){
   if(yahtzee(j) !=  VAL_INIT){
-    if(j->tab[13] == 50)
+    if(j->tab[12] == 50)
       j->tab[14] = 100;
   }
 }
