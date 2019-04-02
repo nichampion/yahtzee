@@ -61,7 +61,23 @@ int relancer(t_joueur * j){
 	*\Brief : Test de toutes les combinaisons possibles avec les dés du joueur j
 	*\Author : Sunny BIARD
 */
-void test_mains(t_joueur *j, t_joueur *j_test){
+void test_mains(t_joueur *j, t_joueur *j_test) {
+	int i;
+
+	if(val_max == VAL_INIT)
+		val_max = 0;
+
+	/* Parcours section supérieur */
+	for(i = AS; i <= SIX; i++) {
+		if((j->tab[i]) == VAL_INIT)
+			j_test->tab[i] = section_superieure(j, i);
+	}
+
+	/* Parcours section inférieur */
+	for(i = BRELAN; i <= CHANCE; i++) {
+		if((j->tab[i]) == VAL_INIT)
+			j_test->tab[i] = section_superieure(j, i);
+	}
 
 		if((j->tab[AS]) == VAL_INIT)
 			j_test->tab[AS] = section_superieure(j,1);
