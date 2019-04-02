@@ -14,8 +14,9 @@
 	*\version 1.0
 */
 
-/*Lien stratégie 1 -> http://www.ultraboardgames.com/yahtzee/tips.php*/
-/*Lien stratégie 2 -> https://fr.wikihow.com/jouer-au-yahtzee*/
+/* Sources d'inspirations pour la stratégie */
+/*Lien stratégie 1 -> http://www.ultraboardgames.com/yahtzee/tips.php */
+/*Lien stratégie 2 -> https://fr.wikihow.com/jouer-au-yahtzee */
 
 
 /**
@@ -28,7 +29,8 @@
 static
 int compter_des(t_joueur *joueur, int nb_test){
   int i, res = 0;
-  for(i = 0; i<N; i++){
+
+  for(i = 0; i < N; i++){
     if(joueur->des[i] == nb_test)
       res += 1;
   }
@@ -56,38 +58,8 @@ void test_max(int *val_c, int *val_max, int *pos_max, int pos_courante) {
 
 
 /**
-  *\brief Sous fonction. Intervient dans la fonction meilleur_score
-  *\brief Joue le score maximum dans la bonne ligne de la feuille de marque
-	*\author Nicolas Champion
-*/
-static
-int choisir_max(t_joueur *j, int val_max, int pos_max) {
-  int i;
-
-	if(val_max == VAL_INIT)
-		val_max = 0;
-
-  /* Parcours section supérieur */
-  for(i = AS; i <= SIX; i++) {
-    if(pos_max == i) {
-      j->tab[i] = val_max;
-      return 1;
-    }
-  }
-
-  /* Parcours section inférieur */
-  for(i = BRELAN; i <= CHANCE; i++) {
-    if(pos_max == i) {
-      j->tab[i] = val_max;
-      return 1;
-    }
-  }
-
-  return 0;
-}
-
-
-/**
+  *\fn void meilleur_score(t_joueur *j, t_joueur *j_test)
+  *\param Un pointeur vers le joeur courant et vers un joueur temporaire permettant d'effectuer les tests
   *\brief Choisi la main qui rapporte le plus de points pour une combinaison de des donnée.
 	*\author Nicolas Champion
 */
@@ -110,8 +82,9 @@ void meilleur_score(t_joueur *j, t_joueur *j_test) {
   }
 
   /* Enregistrer dans j le max */
-  if(choisir_max(j, val_max, pos_max))
-    printf("L'ordinateur joue le meilleur score...\n");
+  if(val_max == VAL_INIT)
+    val_max = 0;
+  j->tab[pos_max] = val_max;
 }
 
 
