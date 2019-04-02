@@ -10,12 +10,12 @@
 
 /**
 	*\file ordinateur.c
-	*\brief
+	*\brief Fonctions permettant d'appliquer une stratégie
 	*\version 1.0
 */
 
-/*Lien strat 1 -> http://www.ultraboardgames.com/yahtzee/tips.php*/
-/*Lien strat 2 -> https://fr.wikihow.com/jouer-au-yahtzee*/
+/*Lien stratégie 1 -> http://www.ultraboardgames.com/yahtzee/tips.php*/
+/*Lien stratégie 2 -> https://fr.wikihow.com/jouer-au-yahtzee*/
 
 
 /**
@@ -41,98 +41,77 @@ int compter_des(t_joueur *joueur, int nb_test){
 
 /**
 	*\fn void test_max(int *val, int *max, char pos_max[20], char ligne_courante[20])
-	*\param Un pointeur vers la valeur courante d'un dès, la valeur max, une chaine stockant la position de la plus grande par rappport a la feuille de marque du yahtzee et une chaine de caractere stockant la position courante dans le feuille de marque du yahtzee
+	*\param Pointeur sur la valeur courante et la valeur max, la postion sur la feuille de marque du des max et du des courant
   *\brief Sous fonction. Intervient dans la fonction meilleur_score
+  *\brief Permet de choisir la ligne à jouer dans la feuille de marque.
 	*\author Nicolas Champion
 */
 static
-void test_max(int *val, int *max, char pos_max[20], char ligne_courante[20]) {
-  if(*val > *max) {
-    *max = *val;
-    strcpy(pos_max, ligne_courante);
+void test_max(int *val_c, int *val_max, int *pos_max, int pos_courante) {
+  if(*val_c > *val_max) {
+    *val_max = *val_c;
+    *pos_max = pos_courante;
   }
 }
 
 
 /**
   *\brief Sous fonction. Intervient dans la fonction meilleur_score
+  *\brief Joue le score maximum dans la bonne ligne de la feuille de marque
 	*\author Nicolas Champion
 */
 static
-void choisir_max(t_joueur *j, int max, char pos_max[20]) {
-	if(max == VAL_INIT)
-		max = 0;
+int choisir_max(t_joueur *j, int val_max, int pos_max) {
+  int i;
 
-	printf("On joue %d sur %s\n", max, pos_max);
+	if(val_max == VAL_INIT)
+		val_max = 0;
 
-    if(strcmp(pos_max,"null") == 0) return;
-    if(strcmp(pos_max,"as") == 0) j->tab[AS] = max;
-    if(strcmp(pos_max,"deux") == 0) j->tab[DEUX] = max;
-    if(strcmp(pos_max,"trois") == 0) j->tab[TROIS] = max;
-    if(strcmp(pos_max,"quatres") == 0) j->tab[QUATRE] = max;
-    if(strcmp(pos_max,"cinq") == 0) j->tab[CINQ] = max;
-    if(strcmp(pos_max,"six") == 0) j->tab[SIX] = max;
-    if(strcmp(pos_max,"brelan") == 0) j->tab[BRELAN] = max;
-    if(strcmp(pos_max,"carre") == 0) j->tab[CARRE] = max;
-    if(strcmp(pos_max,"full") == 0) j->tab[FULL] = max;
-    if(strcmp(pos_max,"petite_Suite") == 0) j->tab[PETITE_SUITE] = max;
-    if(strcmp(pos_max,"grande_Suite") == 0) j->tab[GRANDE_SUITE] = max;
-    if(strcmp(pos_max,"yahtzee") == 0) j->tab[YAHTZEE] = max;
-    if(strcmp(pos_max,"chance") == 0) j->tab[CHANCE] = max;
+  /* Parcours section supérieur */
+  for(i = AS; i <= SIX; i++) {
+    if(pos_max == i) {
+      j->tab[i] = val_max;
+      return 1;
+    }
+  }
 
+  /* Parcours section inférieur */
+  for(i = BRELAN; i <= CHANCE; i++) {
+    if(pos_max == i) {
+      j->tab[i] = val_max;
+      return 1;
+    }
+  }
+
+  return 0;
 }
+
 
 /**
   *\brief Choisi la main qui rapporte le plus de points pour une combinaison de des donnée.
 	*\author Nicolas Champion
 */
 void meilleur_score(t_joueur *j, t_joueur *j_test) {
-  int max = -2;
-  char pos_max[20] = "null";
+  int val_max = VAL_INIT - 1; /* Doit etre inférieure a VAL_INIT */
+  int pos_max = -1;
+  int i;
 
   /* Parcourir feuille de marque de j_test */
-  if(j->tab[AS] == VAL_INIT)
-    test_max(&(j_test->tab[AS]), &max, pos_max, "as");
+    /* Parcours section supérieur */
+  for(i = AS; i <= SIX; i++) {
+    if(j->tab[i] == VAL_INIT)
+      test_max(&(j_test->tab[i]), &val_max, &pos_max, i);
+  }
 
-  if(j->tab[DEUX] == VAL_INIT)
-    test_max(&(j_test->tab[DEUX]), &max, pos_max, "deux");
-
-  if(j->tab[TROIS] == VAL_INIT)
-    test_max(&(j_test->tab[TROIS]), &max, pos_max, "trois");
-
-  if(j->tab[QUATRE] == VAL_INIT)
-    test_max(&(j_test->tab[QUATRE]), &max, pos_max, "quatres");
-
-  if(j->tab[CINQ] == VAL_INIT)
-    test_max(&(j_test->tab[CINQ]), &max, pos_max, "cinq");
-
-  if(j->tab[SIX] == VAL_INIT)
-    test_max(&(j_test->tab[SIX]), &max, pos_max, "six");
-
-  if(j->tab[BRELAN] == VAL_INIT)
-    test_max(&(j_test->tab[BRELAN]), &max, pos_max, "brelan");
-
-  if(j->tab[CARRE] == VAL_INIT)
-    test_max(&(j_test->tab[CARRE]), &max, pos_max, "carre");
-
-  if(j->tab[FULL] == VAL_INIT)
-    test_max(&(j_test->tab[FULL]), &max, pos_max, "full");
-
-  if(j->tab[PETITE_SUITE] == VAL_INIT)
-    test_max(&(j_test->tab[PETITE_SUITE]), &max, pos_max, "petite_Suite");
-
-  if(j->tab[GRANDE_SUITE] == VAL_INIT)
-    test_max(&(j_test->tab[GRANDE_SUITE]), &max, pos_max, "grande_Suite");
-
-  if(j->tab[YAHTZEE] == VAL_INIT)
-    test_max(&(j_test->tab[YAHTZEE]), &max, pos_max, "yahtzee");
-
-  if(j->tab[CHANCE] == VAL_INIT)
-    test_max(&(j_test->tab[CHANCE]), &max, pos_max, "chance");
+    /* Parcours section inférieur */
+  for(i = BRELAN; i <= CHANCE; i++) {
+    if(j->tab[i] == VAL_INIT)
+      test_max(&(j_test->tab[i]), &val_max, &pos_max, i);
+  }
 
   /* Enregistrer dans j le max */
-  choisir_max(j, max, pos_max);
-
+  if(choisir_max(j, val_max, pos_max))
+    printf("L'ordinateur joue le meilleur score...\n");
 }
 
 
@@ -671,7 +650,7 @@ int tour_ordinateur(t_joueur *j) {
   j->des[3] = 4;
   j->des[4] = 5;*/
 
-  test_mains(j, tempo); 
+  test_mains(j, tempo);
 
 	if(yahtzee(j) != -1) {
 		utiliser_yahtzee(j, tempo);
