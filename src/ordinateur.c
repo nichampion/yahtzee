@@ -619,15 +619,16 @@ int tour_ordinateur(t_joueur *j) {
   int i, nb_lance = 2;
   t_joueur *tempo = creer_joueur("tempo");
 
-/*
+
   for(i = 0; i < 5; i++)
     lancer(j, i);
-    */
+    /*
     j->des[0] = 5;
     j->des[1] = 5;
     j->des[2] = 5;
     j->des[3] = 5;
     j->des[4] = 5;
+    */
 
 
   test_mains(j, tempo);
