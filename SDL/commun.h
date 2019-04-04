@@ -25,12 +25,11 @@
 	#define GRANDE_SUITE 11 /**< 40 points (5 des) */
 	#define YAHTZEE 12 /**< 50 points :  5 chiffres identiques */
 	#define CHANCE 13 /**< Total des 5 des */
-	#define PRIME_YAHTZEE 14 /**< 100 points */
 
 	/* Totaux */
-	#define TOTAL_SUP 15
-	#define TOTAL_INF 16
-	#define TOTAl_GEN 17
+	#define TOTAL_SUP 14
+	#define TOTAL_INF 15
+	#define TOTAl_GEN 16
 
 	/* ************************************** */
 

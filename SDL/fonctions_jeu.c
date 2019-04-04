@@ -100,8 +100,6 @@ t_joueur * test_mains(t_joueur *j){
 
 	if((j->tab[12]) == VAL_INIT)
 		j_test->tab[12] = yahtzee(j);
-	else if((j->tab[13]) == 50)
-		j_test->tab[14] = 100;
 
 	if((j->tab[13]) == VAL_INIT)
 		j_test->tab[13] = chance(j);
@@ -322,21 +320,6 @@ int choix_placement(t_joueur *j, t_joueur * j_test){
 				printf("Impossible de remplir cette case. Veuillez en choisir une autre.\n");
 				break;
 			}
-		case 14 :
-			if(j->tab[14] == VAL_INIT){
-				if(j_test->tab[14] != VAL_INIT){
-					j->tab[14] = j_test->tab[14];
-				}
-				else{
-					j->tab[14] = 0;
-				}
-				placement = 1;
-				break;
-			}
-			else{
-				printf("Impossible de remplir cette case. Veuillez en choisir une autre.\n");
-				break;
-			}
 	}
 
 	return placement;
@@ -381,7 +364,7 @@ void affichage_possibilites(t_joueur * j, t_joueur * j_test){
 	else
   	  printf("*\t| 6 Six\t\t%d\t\t|\t\t*\n", j->tab[5]);
 
-	printf("*\t| Total\t\t%d\t\t|\t\t*\n", j->tab[15]);
+	printf("*\t| Total\t\t%d\t\t|\t\t*\n", j->tab[14]);
 	printf("*\t| Prime\t\t%d\t\t|\t\t*\n", j->tab[6]);
   printf("*\t|-------------------------------|\t\t*\n");
 
@@ -413,14 +396,10 @@ void affichage_possibilites(t_joueur * j, t_joueur * j_test){
 	  printf("*\t| 13 Chance\t%d?\t\t|\t\t*\n", j_test->tab[13]);
 	else
 	  printf("*\t| 13 Chance\t%d\t\t|\t\t*\n", j->tab[13]);
-	if(j_test->tab[14] != VAL_INIT)
-	  printf("*\t| 14 Prime\t%d?\t\t|\t\t*\n", j->tab[14]);
-	else
-	  printf("*\t| 14 Prime\t%d\t\t|\t\t*\n", j_test->tab[14]);
 
-	printf("*\t| Total\t\t%d\t\t|\t\t*\n", j->tab[16]);
+	printf("*\t| Total\t\t%d\t\t|\t\t*\n", j->tab[15]);
   printf("*\t|-------------------------------|\t\t*\n");
-  printf("*\t|TOTAL\t\t%d\t\t|\t\t*\n", j->tab[17]);
+  printf("*\t|TOTAL\t\t%d\t\t|\t\t*\n", j->tab[16]);
   printf("*\t|_______________________________|\t\t*\n");
   printf("*\t\t\t\t\t\t\t*\n");
   printf("*\t.________________________________.\t\t*\n");
@@ -442,9 +421,6 @@ int fin_de_partie(t_joueur * j){
 	if(j->tab[0] != VAL_INIT && j->tab[1] != VAL_INIT && j->tab[2] != VAL_INIT && j->tab[3] != VAL_INIT && j->tab[4] != VAL_INIT && j->tab[5] != VAL_INIT && j->tab[7] != VAL_INIT && j->tab[8] != VAL_INIT && j->tab[9] != VAL_INIT && j->tab[10] != VAL_INIT && j->tab[10] != VAL_INIT && j->tab[11] != VAL_INIT && j->tab[12] != VAL_INIT && j->tab[13] != VAL_INIT){
 
 		calcul_totaux(j);
-
-		if(j->tab[14] == VAL_INIT)
-			j->tab[14] = 0;
 
 		return 1;
 	}

@@ -203,12 +203,6 @@ int main(int argc, char** argv)
 									SDL_QueryTexture(btn_lancer_tex, NULL, NULL, &(imgDestRect.w), &(imgDestRect.h));
 									SDL_RenderCopy(renderer, btn_lancer_tex, NULL, &imgDestRect);
 
-									imgDestRect.x = 575;
-									imgDestRect.y = 200;
-
-									SDL_SetRenderDrawColor(renderer, 255, 255, 255, 255);
-									SDL_RenderFillRect(renderer,&imgDestRect);
-
 									/* On fait le rendu ! */
 									SDL_RenderPresent(renderer);
 
@@ -218,14 +212,13 @@ int main(int argc, char** argv)
 
 					case SDL_MOUSEBUTTONUP:
 						if(fin_de_partie(j1)){
-							printf("test2\n");
 
 							caseJ1DestRect.x = 202;
 							caseDestRect.x = 184;
 							caseDestRect.y = caseJ1DestRect.y = 254;
 							i = 6;
 
-							while(i < 18){
+							while(i < 17){
 
 							SDL_SetRenderDrawColor(renderer, 255, 255, 255, 255);
 							SDL_RenderFillRect(renderer,&caseDestRect);
@@ -247,19 +240,20 @@ int main(int argc, char** argv)
 
 							caseDestRect.y = (caseJ1DestRect.y += 29);
 
-							if(i == 15){
+							if(i == 14){
 								caseDestRect.y = (caseJ1DestRect.y += 222);
 							}
 
 							if(i == 6){
-								i = 15;
+								i = 14;
 							}
 							else
 								i++;
 							}
+							SDL_RenderPresent(renderer);
 						}
 					break;
-					
+
 					case SDL_MOUSEBUTTONDOWN:
 
 						if(e.motion.x > 575 && e.motion.x < 675 && e.motion.y > 500 && e.motion.y < 550 && cpt_lancer < 3){

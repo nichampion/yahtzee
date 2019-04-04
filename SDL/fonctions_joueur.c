@@ -22,7 +22,7 @@
 void init_bloc_note(t_joueur *j) {
   int i;
 
-  for(i = 0; i < 18; i++){
+  for(i = 0; i < 17; i++){
     j->tab[i] = VAL_INIT;
   }
 
@@ -84,20 +84,6 @@ void prime_tab(t_joueur *j){
 
 
 /**
-  *\fn void prime_tab(t_joueur *j)
-  *\param Un pointeur vers un joueur
-  *\brief Correspond a la prime yahtzee
-  *\author Thibault LEMARCHAND
-*/
-void prime_yahtzee(t_joueur *j){
-  if(yahtzee(j) !=  VAL_INIT){
-    if(j->tab[12] == 50)
-      j->tab[14] = 100;
-  }
-}
-
-
-/**
   *\fn void calcul_totaux(t_joueur *j)
   *\param Un pointeur vers un joueur
   *\brief Permet de calculer les totaux.
@@ -116,11 +102,11 @@ void calcul_totaux(t_joueur *j){
     tot_ssup_apprime += j->tab[i];
   }
 
-  for(i = 7; i < 15; i++){
+  for(i = 7; i < 14; i++){
     tot_sinf += j->tab[i];
   }
 
-  j->tab[15] = tot_ssup_apprime;
-  j->tab[16] = tot_sinf;
-  j->tab[17] = tot_ssup_apprime+tot_sinf;
+  j->tab[14] = tot_ssup_apprime;
+  j->tab[15] = tot_sinf;
+  j->tab[16] = tot_ssup_apprime+tot_sinf;
 }
