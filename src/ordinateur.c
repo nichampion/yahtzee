@@ -204,6 +204,9 @@ int strat_superieur(t_joueur *j, t_joueur *j_test, int *nb_lance_Restant) {
 
 
 /**
+  *\fn int val_dans_tab(int val, int tab[], int taille)
+  *\param Une valeur, un tableau et la taille du tableau
+  *\brief Indique si la variable val est dans le tablau de taille 'taille'
   *\return Renvoie un booleen
 	*\author Nicolas Champion
 */
@@ -212,10 +215,10 @@ int val_dans_tab(int val, int tab[], int taille) {
 
   for(i = 0; i < taille; i++) {
     if(tab[i] == val)
-      return 1;
+      return 1; // La valeur est dans le tableau
   }
 
-  return 0;
+  return 0; // // La valeur n'est pas dans le tableau
 }
 
 
