@@ -85,7 +85,8 @@ int chance(t_joueur * joueur){
 	*\param Un pointeur vers un joueur
 	*\return Le nombre de points ou -1 si ce n'est pas un brelan
 	*\brief Total des 5 des : 3 chiffres X + 2 derniers resultats des dés obligatoirement différents
-  *\author CHAMPION Nicolas
+  *\author Champion Nicolas
+  *\author Lemarchand Thibault
 */
 int brelan(t_joueur *j) {
 	int n1 = -1, n2 = -1, n3 = -1;
@@ -119,12 +120,9 @@ int brelan(t_joueur *j) {
 
 	}
 
-  if((nb_n1 == 1) && (nb_n2 == 1) && (nb_n3 == 3))
+  if((nb_n1 >= 3) || (nb_n2 >= 3) || (nb_n3 >= 3))
     return somme_des(j);
-  else if((nb_n1 == 1) && (nb_n2 == 3) && (nb_n3 == 1))
-    return somme_des(j);
-  else if((nb_n1 == 3) && (nb_n2 == 1) && (nb_n3 == 1))
-    return somme_des(j);
+
 	else
 		return -1; /* Retourne -1 si ce n'est pas un brelan */
 }

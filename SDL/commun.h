@@ -6,7 +6,7 @@
 
 	/* ***** Constantes pour le tableau ***** */
 
-	#define TAILLE_TAB 18
+	#define TAILLE_TAB 17
 
 	/* Section supérieure */
 	#define AS 0 /**< Total des 1 */
@@ -29,7 +29,7 @@
 	/* Totaux */
 	#define TOTAL_SUP 14
 	#define TOTAL_INF 15
-	#define TOTAl_GEN 16
+	#define TOTAL_GEN 16
 
 	/* ************************************** */
 

@@ -22,8 +22,8 @@
 void init_bloc_note(t_joueur *j) {
   int i;
 
-  for(i = 0; i < 17; i++){
-    j->tab[i] = VAL_INIT;
+  for(i = AS; i < TAILLE_TAB; i++) {
+    j->tab[i] = VAL_INIT; /* Initialisation de la feuille de marque avec la variable globale VAL_INIT */
   }
 
 }
@@ -40,11 +40,11 @@ t_joueur* creer_joueur(char nom[T]) {
   int i;
   t_joueur *j = malloc(sizeof(t_joueur));
 
-  strcpy(j->nom, nom);
+  strcpy(j->nom, nom); /*Le nom du joueur prend le nom passé en paramètre*/
 
-  init_bloc_note(j);
+  init_bloc_note(j); /*Initialisation de la feuille de marque*/
 
-  for(i = 0; i < N; i++)
+  for(i = 0; i < N; i++) /*Initialisation du tableau de dés*/
     j->des[i] = 0;
 
   return j;
@@ -72,14 +72,18 @@ void prime_tab(t_joueur *j){
   int tot_tab_sup = 0;
   int i;
 
-  for(i = 0; i < 6; i++){
+  for(i = AS; i <= SIX; i++){ /*Calcul du score de la grille supérieure*/
     tot_tab_sup += j->tab[i];
   }
 
-  if(tot_tab_sup >= 63)
-    j->tab[6] = 35;
-  else
-   j->tab[6] = 0;
+  if(tot_tab_sup >= 63) /*Si le score de la partie supérieure est supérieur ou égal
+                        à 63 (nb de pts nécessaire pour avoir la prime)*/
+
+    j->tab[PRIME_35] = 35; /*Alors on ajoute 35 pts dans la prime de la grille
+                            supérieure*/
+
+  else                     /*Sinon la prime est égale à 0*/
+   j->tab[PRIME_35] = 0;
 }
 
 
@@ -96,17 +100,24 @@ void calcul_totaux(t_joueur *j){
   int tot_sinf = 0;
   int i;
 
-  prime_tab(j);
+  prime_tab(j); /*On regarde si le joueur dispose d'assez de points pour avoir la
+                prime de 35 pts avec la grille supérieure*/
 
-  for(i = 0; i < 7; i++){
+  for(i = AS; i <= PRIME_35; i++){           /*Total de points dans la grille supérieure*/
     tot_ssup_apprime += j->tab[i];
   }
 
-  for(i = 7; i < 14; i++){
+  for(i = BRELAN; i <= CHANCE; i++){          /*Total de points dans la grille inférieure*/
     tot_sinf += j->tab[i];
   }
 
-  j->tab[14] = tot_ssup_apprime;
-  j->tab[15] = tot_sinf;
-  j->tab[16] = tot_ssup_apprime+tot_sinf;
+  j->tab[TOTAL_SUP] = tot_ssup_apprime; /*On entre la valeur du total supérieur dans
+                                        la structure joueur*/
+
+  j->tab[TOTAL_INF] = tot_sinf;         /*On entre la valeur du total inférieur dans
+                                        la structure joueur*/
+
+  j->tab[TOTAL_GEN] = tot_ssup_apprime+tot_sinf;/*On additionne le total supérieur
+                                                et le total inférieur afin d avoir
+                                                le score total du joueur*/
 }
