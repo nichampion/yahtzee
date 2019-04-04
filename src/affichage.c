@@ -37,7 +37,6 @@ void affichage(t_joueur *j1, t_joueur *j2, t_joueur *jc) {
   printf("*\t| Grande Suite\t%d\t%d\t|\t\t*\n", j1->tab[GRANDE_SUITE], j2->tab[GRANDE_SUITE]);
   printf("*\t| Chance\t%d\t%d\t|\t\t*\n", j1->tab[CHANCE], j2->tab[CHANCE]);
   printf("*\t| Yahtzee\t%d\t%d\t|\t\t*\n", j1->tab[YAHTZEE], j2->tab[YAHTZEE]);
-  printf("*\t| Prime\t\t%d\t%d\t|\t\t*\n", j1->tab[PRIME_YAHTZEE], j2->tab[PRIME_YAHTZEE]);
   printf("*\t| Total\t\t%d\t%d\t|\t\t*\n", j1->tab[TOTAL_INF], j2->tab[TOTAL_INF]);
   printf("*\t|-------------------------------|\t\t*\n");
   printf("*\t|TOTAL\t\t%d\t%d\t|\t\t*\n", j1->tab[TOTAL_GEN], j2->tab[TOTAL_GEN]);

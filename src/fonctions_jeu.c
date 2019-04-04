@@ -74,12 +74,8 @@ void test_mains(t_joueur *j, t_joueur *j_test) {
 
 	/* Parcours section inférieur */
 	for(i = BRELAN; i <= CHANCE; i++) {
-		if((j->tab[i]) == VAL_INIT) {
-			if((i == YAHTZEE) && ((j->tab[YAHTZEE]) != VAL_INIT))
-				prime_yahtzee(j_test);
-			else
-				j_test->tab[i] = pt_fonct[i - (TAILLE_TAB_PF - 1)](j); /* Appel la fonction comptant les points de la main (pour une ligne de la feuille de marque du yahtzee) */
-		}
+		if((j->tab[i]) == VAL_INIT)
+			j_test->tab[i] = pt_fonct[i - (TAILLE_TAB_PF - 1)](j); /* Appel la fonction comptant les points de la main (pour une ligne de la feuille de marque du yahtzee) */
 	}
 
 		affichage_possibilites(j,j_test);
@@ -374,10 +370,6 @@ void affichage_possibilites(t_joueur * j, t_joueur * j_test){
 	  printf("*\t| 13 Chance\t%d?\t\t|\t\t*\n", j_test->tab[CHANCE]);
 	else
 	  printf("*\t| 13 Chance\t%d\t\t|\t\t*\n", j->tab[CHANCE]);
-	if(j_test->tab[PRIME_YAHTZEE] != VAL_INIT)
-	  printf("*\t| 14 Prime\t%d?\t\t|\t\t*\n", j->tab[PRIME_YAHTZEE]);
-	else
-	  printf("*\t| 14 Prime\t%d\t\t|\t\t*\n", j_test->tab[PRIME_YAHTZEE]);
 
 	printf("*\t| Total\t\t%d\t\t|\t\t*\n", j->tab[TOTAL_INF]);
   printf("*\t|-------------------------------|\t\t*\n");
@@ -401,8 +393,6 @@ void affichage_possibilites(t_joueur * j, t_joueur * j_test){
 */
 int fin_de_partie(t_joueur * j){
 	if(j->tab[AS] != VAL_INIT && j->tab[DEUX] != VAL_INIT && j->tab[TROIS] != VAL_INIT && j->tab[QUATRE] != VAL_INIT && j->tab[CINQ] != VAL_INIT && j->tab[SIX] != VAL_INIT && j->tab[BRELAN] != VAL_INIT && j->tab[CARRE] != VAL_INIT && j->tab[FULL] != VAL_INIT && j->tab[PETITE_SUITE] != VAL_INIT && j->tab[PETITE_SUITE] != VAL_INIT && j->tab[GRANDE_SUITE] != VAL_INIT && j->tab[YAHTZEE] != VAL_INIT && j->tab[CHANCE] != VAL_INIT){
-		if(j->tab[PRIME_YAHTZEE] == VAL_INIT)
-			j->tab[PRIME_YAHTZEE] = 0;
 
 		calcul_totaux(j);
 		return 1;

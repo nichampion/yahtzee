@@ -173,7 +173,7 @@ int strat_superieur(t_joueur *j, t_joueur *j_test, int *nb_lance_Restant) {
     test_mains(j, j_test); // Permet l'affichage
 
 		/* Test : Si jamais on obtient un yahtzee */
-		if(yahtzee(j) != -1) {
+		if((j->tab[YAHTZEE] == VAL_INIT) && (yahtzee(j) != -1)) {
 			utiliser_yahtzee(j, j_test);
 			return 2; // L'ordi a joue (mais pas la strat sup)
 		}
@@ -353,10 +353,7 @@ int utiliser_yahtzee(t_joueur *j, t_joueur *j_test) {
 	}
 
 	else {
-		if(j->tab[YAHTZEE] == VAL_INIT)
-			j->tab[YAHTZEE] = j_test->tab[YAHTZEE];
-		else
-			j->tab[PRIME_YAHTZEE] = j_test->tab[PRIME_YAHTZEE];
+		j->tab[YAHTZEE] = j_test->tab[YAHTZEE];
 		return 1; // L'ordi joue un yahtzee
 	}
 
@@ -370,6 +367,10 @@ int utiliser_yahtzee(t_joueur *j, t_joueur *j_test) {
 int strat_yahtzee(t_joueur *j, t_joueur *j_test, int *nb_lance_Restant) {
 	int i;
   int nb_des[6];
+
+  /* Verif si cette strat est applicable */
+  if(j->tab[YAHTZEE] != VAL_INIT)
+    return 0; // On ne peut pas faire plus d'1 yahtzee
 
 	/* Compter les des */
   for(i = 0; i < 6; i++)
@@ -618,22 +619,20 @@ int tour_ordinateur(t_joueur *j) {
   int i, nb_lance = 2;
   t_joueur *tempo = creer_joueur("tempo");
 
-
+/*
   for(i = 0; i < 5; i++)
     lancer(j, i);
+    */
+    j->des[0] = 5;
+    j->des[1] = 5;
+    j->des[2] = 5;
+    j->des[3] = 5;
+    j->des[4] = 5;
 
-
-  /* Val de tests */
-	// Verifier a chaque relancement qu'on a pas un yahtzee !!!!!
-  /*  j->des[0] = 4;
-  j->des[1] = 4;
-  j->des[2] = 4;
-  j->des[3] = 4;
-  j->des[4] = 5;*/
 
   test_mains(j, tempo);
 
-	if(yahtzee(j) != -1) {
+	if((j->tab[YAHTZEE] == VAL_INIT) && (yahtzee(j) != -1)) {
 		utiliser_yahtzee(j, tempo);
 		return 2; // L'ordi a joue (mais pas la strat sup)
 	}

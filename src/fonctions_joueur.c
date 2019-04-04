@@ -22,9 +22,8 @@
 void init_bloc_note(t_joueur *j) {
   int i;
 
-  for(i = 0; i < 18; i++){ /*Initialisation de la feuille de marque avec la
-                            variable globale VAL_INIT*/
-    j->tab[i] = VAL_INIT;
+  for(i = AS; i < TAILLE_TAB; i++) {
+    j->tab[i] = VAL_INIT; /* Initialisation de la feuille de marque avec la variable globale VAL_INIT */
   }
 
 }
@@ -73,7 +72,7 @@ void prime_tab(t_joueur *j){
   int tot_tab_sup = 0;
   int i;
 
-  for(i = 0; i < 6; i++){ /*Calcul du score de la grille supérieure*/
+  for(i = AS; i <= SIX; i++){ /*Calcul du score de la grille supérieure*/
     tot_tab_sup += j->tab[i];
   }
 
@@ -85,25 +84,6 @@ void prime_tab(t_joueur *j){
 
   else                     /*Sinon la prime est égale à 0*/
    j->tab[PRIME_35] = 0;
-}
-
-
-/**
-  *\fn void prime_tab(t_joueur *j)
-  *\param Un pointeur vers un joueur
-  *\brief Correspond a la prime yahtzee
-  *\author Thibault LEMARCHAND
-*/
-void prime_yahtzee(t_joueur *j){
-  if(yahtzee(j) !=  VAL_INIT){  /*Si la case du yahtzee non nulle*/
-
-    if(j->tab[YAHTZEE] == 50)   /*Si yahtzee*/
-
-      j->tab[PRIME_YAHTZEE] = 100;  /*Si le joueur effectue un autre yahtzee
-                                    alors on ajoute 100 points dans la case
-                                    prime_yahtzee*/
-
-  }
 }
 
 
@@ -123,11 +103,11 @@ void calcul_totaux(t_joueur *j){
   prime_tab(j); /*On regarde si le joueur dispose d'assez de points pour avoir la
                 prime de 35 pts avec la grille supérieure*/
 
-  for(i = 0; i < 7; i++){            /*Total de points dans la grille supérieure*/
+  for(i = AS; i <= PRIME_35; i++){           /*Total de points dans la grille supérieure*/
     tot_ssup_apprime += j->tab[i];
   }
 
-  for(i = 7; i < 15; i++){          /*Total de points dans la grille inférieure*/
+  for(i = BRELAN; i <= CHANCE; i++){          /*Total de points dans la grille inférieure*/
     tot_sinf += j->tab[i];
   }
 
