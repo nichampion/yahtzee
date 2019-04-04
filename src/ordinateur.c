@@ -104,9 +104,13 @@ void meilleur_score(t_joueur *j, t_joueur *j_test) {
 
 
 /**
+  *\fn void val_des_max(int val_c, int *val_max, int nb_des_c, int *nb_des_max)
+  *\param La valeur courante du des, un ponteur vers la valeur max, le nombre de des courant et un pointeur vers le nombre de des avec la valeur max.
   *\brief Strategie permettant d'obtenir le maximum de points dans la section superieur de la feuille de marque
+  *\brief Il faut avoir compter les des de la main avant !!
 	*\author Nicolas Champion
 */
+static
 void val_des_max(int val_c, int *val_max, int nb_des_c, int *nb_des_max) {
   if(nb_des_c >= *nb_des_max) {
     *val_max = val_c;
@@ -137,6 +141,9 @@ int choix_des_strat_sup(int tab[6], t_joueur *j) {
 
 
 /**
+  *\fn int strat_superieur(t_joueur *j, t_joueur *j_test, int *nb_lance_Restant)
+  *\param Un pointeur vers le joeur courant et vers un joueur temporaire permettant d'effectuer les tests et le nombre de relancer restants
+  *\return Renvoie un booleen indiquant si la strategiee a pu etre appliqué.
   *\brief Applique la stratégie consisitant a obtenir la prime dans la section superieure (de la feuille de marque Yahtzee)
 	*\author Nicolas Champion
 */
@@ -181,16 +188,14 @@ int strat_superieur(t_joueur *j, t_joueur *j_test, int *nb_lance_Restant) {
 
   /* On applique cette stratégie */
   test_mains(j, j_test);
-  switch(val_des_a_garder) {
-		case 1 :  j->tab[AS] = j_test->tab[AS]; break;
-    case 2 :  j->tab[DEUX] = j_test->tab[DEUX]; break;
-    case 3 :  j->tab[TROIS] = j_test->tab[TROIS]; break;
-    case 4 :  j->tab[QUATRE] = j_test->tab[QUATRE]; break;
-    case 5 :  j->tab[CINQ] = j_test->tab[CINQ]; break;
-    case 6 :  j->tab[SIX] = j_test->tab[SIX]; break;
+  for(i = AS; i <= SIX; i++) {
+    if(val_des_a_garder == val_des(i)) {
+      j->tab[i] = j_test->tab[i]; // Enregistrement du score
+      return 1; // Fin de la strategie
+    }
   }
 
-  return 1; // Fin de la strategie
+  return 0;
 
 }
 
