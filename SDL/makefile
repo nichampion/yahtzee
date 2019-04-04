@@ -10,8 +10,8 @@ INCS=-I${SDL_INC_DIR}
 
 PROG=jeu_sdl
 
-all: jeu_sdl.o fonctions_jeu.o fonctions_joueur.o mains.o
-	${CC} -o ${PROG} jeu_sdl.o fonctions_jeu.o fonctions_joueur.o mains.o ${LIBS} ${INCS} ${FLAGS}
+all: jeu_sdl.o fonctions_jeu.o fonctions_joueur.o mains.o ordinateur.o
+	${CC} -o ${PROG} jeu_sdl.o fonctions_jeu.o fonctions_joueur.o mains.o ordinateur.o ${LIBS} ${INCS} ${FLAGS}
 
 jeu_sdl.o : jeu_sdl.c
 	${CC} -o jeu_sdl.o -c jeu_sdl.c ${LIBS} ${INCS} ${FLAGS}
@@ -24,6 +24,9 @@ fonctions_joueur.o : fonctions_joueur.c fonctions_joueur.h
 
 mains.o : mains.c mains.h
 	${CC} -o mains.o -c mains.c -W -Wall -ansi -pedantic
+
+ordinateur.o : ordinateur.c ordinateur.h
+	${CC} -o ordinateur.o -c ordinateur.c -W -Wall -ansi -pedantic -std=c99
 
 clean:
 	rm -f ${PROG}
