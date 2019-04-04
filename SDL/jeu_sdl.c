@@ -21,7 +21,7 @@ int main(int argc, char** argv)
 
 	SDL_Window *pWindow = NULL;
 
-  	SDL_Surface *partie=NULL, *msg_lancer=NULL, *tab_score=NULL, *decourant=NULL, *de1=NULL, *de2=NULL, *de3=NULL, *de4=NULL, *de5=NULL, *de6=NULL, *img_btn_lancer=NULL, *case1=NULL;
+  SDL_Surface *partie=NULL, *msg_lancer=NULL, *tab_score=NULL, *decourant=NULL, *de1=NULL, *de2=NULL, *de3=NULL, *de4=NULL, *de5=NULL, *de6=NULL, *img_btn_lancer=NULL, *case1=NULL;
 	SDL_Renderer *renderer=NULL;
 	SDL_Rect partieDestRect, msg_lancerDestRect, imgDestRect, img2DestRect, caseJ1DestRect, caseDestRect;
 
@@ -39,10 +39,10 @@ int main(int argc, char** argv)
 	SDL_Color couleurRouge = {255, 0, 0};
 
  	/* Initialisation simple */
-  	if (SDL_Init(SDL_INIT_VIDEO) != 0 ) {
-  		fprintf(stdout,"Échec de l'initialisation de la SDL (%s)\n",SDL_GetError());
-    	return -1;
-  	}
+  if (SDL_Init(SDL_INIT_VIDEO) != 0 ) {
+  	fprintf(stdout,"Échec de l'initialisation de la SDL (%s)\n",SDL_GetError());
+    return -1;
+  }
 
 	/* Initialisation TTF */
 	if(TTF_Init() == -1) {
@@ -179,89 +179,88 @@ int main(int argc, char** argv)
 					case SDL_WINDOWEVENT:
 						switch(e.window.event){
 				  			case SDL_WINDOWEVENT_SHOWN:
-								/* Le fond de la fenêtre sera vert */
-		            			SDL_SetRenderDrawColor(renderer, 55, 99, 78, 255);
-								SDL_RenderClear(renderer);
+									/* Le fond de la fenêtre sera vert */
+		            	SDL_SetRenderDrawColor(renderer, 55, 99, 78, 255);
+									SDL_RenderClear(renderer);
 
-		             			/* Ajout du texte en noir */
-		            			SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
+		             	/* Ajout du texte en noir */
+		            	SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
 
 	  							partieDestRect.x = partieDestRect.y = 10;
 
-								SDL_QueryTexture(partie_tex, NULL, NULL, &(partieDestRect.w), &(partieDestRect.h));
-		            			SDL_RenderCopy(renderer, partie_tex, NULL, &partieDestRect);
+									SDL_QueryTexture(partie_tex, NULL, NULL, &(partieDestRect.w), &(partieDestRect.h));
+		            	SDL_RenderCopy(renderer, partie_tex, NULL, &partieDestRect);
 
-		      					imgDestRect.x = 10;
-								imgDestRect.y = 50;
+		      				imgDestRect.x = 10;
+									imgDestRect.y = 50;
 
-								SDL_QueryTexture(tab_score_tex, NULL, NULL, &(imgDestRect.w), &(imgDestRect.h));
-								SDL_RenderCopy(renderer, tab_score_tex, NULL, &imgDestRect);
+									SDL_QueryTexture(tab_score_tex, NULL, NULL, &(imgDestRect.w), &(imgDestRect.h));
+									SDL_RenderCopy(renderer, tab_score_tex, NULL, &imgDestRect);
 
-								imgDestRect.x = 575;
-								imgDestRect.y = 500;
+									imgDestRect.x = 575;
+									imgDestRect.y = 500;
 
-								SDL_QueryTexture(btn_lancer_tex, NULL, NULL, &(imgDestRect.w), &(imgDestRect.h));
-								SDL_RenderCopy(renderer, btn_lancer_tex, NULL, &imgDestRect);
+									SDL_QueryTexture(btn_lancer_tex, NULL, NULL, &(imgDestRect.w), &(imgDestRect.h));
+									SDL_RenderCopy(renderer, btn_lancer_tex, NULL, &imgDestRect);
 
-								imgDestRect.x = 575;
-								imgDestRect.y = 200;
+									imgDestRect.x = 575;
+									imgDestRect.y = 200;
 
-								SDL_SetRenderDrawColor(renderer, 255, 255, 255, 255);
-								SDL_RenderFillRect(renderer,&imgDestRect);
+									SDL_SetRenderDrawColor(renderer, 255, 255, 255, 255);
+									SDL_RenderFillRect(renderer,&imgDestRect);
 
-								/* On fait le rendu ! */
-								SDL_RenderPresent(renderer);
+									/* On fait le rendu ! */
+									SDL_RenderPresent(renderer);
 
 							break;
 						}
 					break;
 
-					case SDL_MOUSEBUTTONDOWN:
+					case SDL_MOUSEBUTTONUP:
+						if(fin_de_partie(j1)){
+							printf("test2\n");
 
-						if(e.motion.x > 575 && e.motion.x < 675 && e.motion.y > 200 && e.motion.y < 150){
-							printf("test1\n");
-							if(fin_de_partie(j1)){
-								printf("test2\n");
-								
-								caseJ1DestRect.x = 202;
-								caseDestRect.x = 184;
-								caseDestRect.y = caseJ1DestRect.y = 254;
-								i = 6;
+							caseJ1DestRect.x = 202;
+							caseDestRect.x = 184;
+							caseDestRect.y = caseJ1DestRect.y = 254;
+							i = 6;
 
-								while(i < 18){
+							while(i < 18){
 
-								SDL_SetRenderDrawColor(renderer, 255, 255, 255, 255);
-								SDL_RenderFillRect(renderer,&caseDestRect);
-								sprintf(temp,"%d",j1->tab[i]);
-								case1 = TTF_RenderUTF8_Blended(police, temp, couleurRouge);
-								if(!case1){
-									fprintf(stderr, "Erreur à la création du texte : %s\n", SDL_GetError());
-									exit(EXIT_FAILURE);
-								}
+							SDL_SetRenderDrawColor(renderer, 255, 255, 255, 255);
+							SDL_RenderFillRect(renderer,&caseDestRect);
+							sprintf(temp,"%d",j1->tab[i]);
+							case1 = TTF_RenderUTF8_Blended(police, temp, couleurRouge);
+							if(!case1){
+								fprintf(stderr, "Erreur à la création du texte : %s\n", SDL_GetError());
+								exit(EXIT_FAILURE);
+							}
 
-								case1_tex = SDL_CreateTextureFromSurface(renderer, case1);
-								if(!case1_tex){
-									fprintf(stderr, "Erreur à la création du rendu du texte : %s\n", SDL_GetError());
-									exit(EXIT_FAILURE);
-								}
+							case1_tex = SDL_CreateTextureFromSurface(renderer, case1);
+							if(!case1_tex){
+								fprintf(stderr, "Erreur à la création du rendu du texte : %s\n", SDL_GetError());
+								exit(EXIT_FAILURE);
+							}
 
-								SDL_QueryTexture(case1_tex, NULL, NULL, &(caseJ1DestRect.w), &(caseJ1DestRect.h));
-								SDL_RenderCopy(renderer, case1_tex, NULL, &(caseJ1DestRect));
+							SDL_QueryTexture(case1_tex, NULL, NULL, &(caseJ1DestRect.w), &(caseJ1DestRect.h));
+							SDL_RenderCopy(renderer, case1_tex, NULL, &(caseJ1DestRect));
 
-								caseDestRect.y = (caseJ1DestRect.y += 29);
+							caseDestRect.y = (caseJ1DestRect.y += 29);
 
-								if(i == 15){
-									caseDestRect.y = (caseJ1DestRect.y += 222);
-								}
+							if(i == 15){
+								caseDestRect.y = (caseJ1DestRect.y += 222);
+							}
 
-								if(i == 6){
-									i = 15;
-								}
-								else
-									i++;
-								}
+							if(i == 6){
+								i = 15;
+							}
+							else
+								i++;
 							}
 						}
+					break;
+					
+					case SDL_MOUSEBUTTONDOWN:
 
 						if(e.motion.x > 575 && e.motion.x < 675 && e.motion.y > 500 && e.motion.y < 550 && cpt_lancer < 3){
 							imgDestRect.x = img2DestRect.x = 400;
@@ -473,14 +472,14 @@ int main(int argc, char** argv)
 
 						}
 
-						
+
 
 						if(e.motion.x > 400 && e.motion.x < 450 && e.motion.y > 300 && e.motion.y < 350 && de_pos[0] == 0){
 
 							imgDestRect.x = 400;
 							imgDestRect.y = 300;
 
-	          				SDL_SetRenderDrawColor(renderer, 55, 99, 78, 255);
+	          	SDL_SetRenderDrawColor(renderer, 55, 99, 78, 255);
 							SDL_RenderFillRect(renderer,&imgDestRect);
 
 	 						imgDestRect.y = 600;
@@ -496,7 +495,7 @@ int main(int argc, char** argv)
 							imgDestRect.x = 400;
 							imgDestRect.y = 600;
 
-	            			SDL_SetRenderDrawColor(renderer, 55, 99, 78, 255);
+	            SDL_SetRenderDrawColor(renderer, 55, 99, 78, 255);
 							SDL_RenderFillRect(renderer,&imgDestRect);
 
 	 						imgDestRect.y = 300;
@@ -513,7 +512,7 @@ int main(int argc, char** argv)
 							imgDestRect.x = 500;
 							imgDestRect.y = 300;
 
-	            			SDL_SetRenderDrawColor(renderer, 55, 99, 78, 255);
+	            SDL_SetRenderDrawColor(renderer, 55, 99, 78, 255);
 							SDL_RenderFillRect(renderer,&imgDestRect);
 
 	 						imgDestRect.y = 600;
@@ -529,7 +528,7 @@ int main(int argc, char** argv)
 							imgDestRect.x = 500;
 							imgDestRect.y = 600;
 
-	           				SDL_SetRenderDrawColor(renderer, 55, 99, 78, 255);
+	           	SDL_SetRenderDrawColor(renderer, 55, 99, 78, 255);
 							SDL_RenderFillRect(renderer,&imgDestRect);
 
 	 						imgDestRect.y = 300;
@@ -546,7 +545,7 @@ int main(int argc, char** argv)
 							imgDestRect.x = 600;
 							imgDestRect.y = 300;
 
-	            			SDL_SetRenderDrawColor(renderer, 55, 99, 78, 255);
+	            SDL_SetRenderDrawColor(renderer, 55, 99, 78, 255);
 							SDL_RenderFillRect(renderer,&imgDestRect);
 
 	 						imgDestRect.y = 600;
@@ -562,7 +561,7 @@ int main(int argc, char** argv)
 							imgDestRect.x = 600;
 							imgDestRect.y = 600;
 
-	            			SDL_SetRenderDrawColor(renderer, 55, 99, 78, 255);
+	            SDL_SetRenderDrawColor(renderer, 55, 99, 78, 255);
 							SDL_RenderFillRect(renderer,&imgDestRect);
 
 	 						imgDestRect.y = 300;
@@ -579,7 +578,7 @@ int main(int argc, char** argv)
 							imgDestRect.x = 700;
 							imgDestRect.y = 300;
 
-	            			SDL_SetRenderDrawColor(renderer, 55, 99, 78, 255);
+	            SDL_SetRenderDrawColor(renderer, 55, 99, 78, 255);
 							SDL_RenderFillRect(renderer,&imgDestRect);
 
 	 						imgDestRect.y = 600;
@@ -595,7 +594,7 @@ int main(int argc, char** argv)
 							imgDestRect.x = 700;
 							imgDestRect.y = 600;
 
-	            			SDL_SetRenderDrawColor(renderer, 55, 99, 78, 255);
+	            SDL_SetRenderDrawColor(renderer, 55, 99, 78, 255);
 							SDL_RenderFillRect(renderer,&imgDestRect);
 
 	 						imgDestRect.y = 300;
@@ -612,7 +611,7 @@ int main(int argc, char** argv)
 							imgDestRect.x = 800;
 							imgDestRect.y = 300;
 
-	            			SDL_SetRenderDrawColor(renderer, 55, 99, 78, 255);
+	            SDL_SetRenderDrawColor(renderer, 55, 99, 78, 255);
 							SDL_RenderFillRect(renderer,&imgDestRect);
 
 	 						imgDestRect.y = 600;
@@ -628,7 +627,7 @@ int main(int argc, char** argv)
 							imgDestRect.x = 800;
 							imgDestRect.y = 600;
 
-	           				SDL_SetRenderDrawColor(renderer, 55, 99, 78, 255);
+	           	SDL_SetRenderDrawColor(renderer, 55, 99, 78, 255);
 							SDL_RenderFillRect(renderer,&imgDestRect);
 
 	 						imgDestRect.y = 300;
@@ -641,6 +640,7 @@ int main(int argc, char** argv)
 						}
 
 					break;
+
 				}
 			}
 		}
