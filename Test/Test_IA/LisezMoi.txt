@@ -1,0 +1,1 @@
+Il faut d'abord avoir compiler le programme principal => On utilise les mêmes fichiers objets
