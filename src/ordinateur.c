@@ -38,6 +38,18 @@ int compter_des(t_joueur *joueur, int nb_test){
 }
 
 
+/**
+	*\fn int val_des(int ref_des)
+	*\param Le nom de la valeur du des
+  *\brief Renvoie la valeur d'un AS, DEUX, ...
+  *\return Une valeur numerique
+	*\author Nicolas Champion
+*/
+int val_des(int ref_des) {
+  return ref_des + 1;
+}
+
+
 /* ****************** Calcul de la meilleur main ****************** */
 
 
@@ -104,30 +116,21 @@ void val_des_max(int val_c, int *val_max, int nb_des_c, int *nb_des_max) {
 
 
 /**
+  *\fn int choix_des_strat_sup(int tab[6], t_joueur *j)
+  *\param Un tableau indiquant le nombre d'exemplaire de chaque des en fonction de leur valeur
+  *\brief Il faut avoir compter les des de la main avant !!
   *\brief Retourne la val des des les plus elevee en plus grand nombre et disponible (Valeur non jouée dans la feuille de marque)
 	*\author Nicolas Champion
 */
+static
 int choix_des_strat_sup(int tab[6], t_joueur *j) {
-  int val_max = 0;
-  int nb_des_max = 0;
+  int val_max = 0, nb_des_max = 0;
+  int i;
 
-  if(j->tab[AS] == VAL_INIT)
-    val_des_max(1, &val_max, tab[0], &nb_des_max);
-
-  if(j->tab[DEUX] == VAL_INIT)
-    val_des_max(2, &val_max, tab[1], &nb_des_max);
-
-  if(j->tab[TROIS] == VAL_INIT)
-    val_des_max(3, &val_max, tab[2], &nb_des_max);
-
-  if(j->tab[QUATRE] == VAL_INIT)
-    val_des_max(4, &val_max, tab[3], &nb_des_max);
-
-  if(j->tab[CINQ] == VAL_INIT)
-    val_des_max(5, &val_max, tab[4], &nb_des_max);
-
-  if(j->tab[SIX] == VAL_INIT)
-    val_des_max(6, &val_max, tab[5], &nb_des_max);
+  for(i = AS; i <= SIX; i++) {
+    if(j->tab[i] == VAL_INIT)
+      val_des_max(val_des(i), &val_max, tab[i], &nb_des_max);
+  }
 
   return val_max;
 }
