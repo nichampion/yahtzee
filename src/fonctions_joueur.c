@@ -22,7 +22,8 @@
 void init_bloc_note(t_joueur *j) {
   int i;
 
-  for(i = 0; i < 18; i++){
+  for(i = 0; i < 18; i++){ /*Initialisation de la feuille de marque avec la
+                            variable globale VAL_INIT*/
     j->tab[i] = VAL_INIT;
   }
 
@@ -40,11 +41,11 @@ t_joueur* creer_joueur(char nom[T]) {
   int i;
   t_joueur *j = malloc(sizeof(t_joueur));
 
-  strcpy(j->nom, nom);
+  strcpy(j->nom, nom); /*Le nom du joueur prend le nom passé en paramètre*/
 
-  init_bloc_note(j);
+  init_bloc_note(j); /*Initialisation de la feuille de marque*/
 
-  for(i = 0; i < N; i++)
+  for(i = 0; i < N; i++) /*Initialisation du tableau de dés*/
     j->des[i] = 0;
 
   return j;
@@ -72,14 +73,18 @@ void prime_tab(t_joueur *j){
   int tot_tab_sup = 0;
   int i;
 
-  for(i = 0; i < 6; i++){
+  for(i = 0; i < 6; i++){ /*Calcul du score de la grille supérieure*/
     tot_tab_sup += j->tab[i];
   }
 
-  if(tot_tab_sup >= 63)
-    j->tab[6] = 35;
-  else
-   j->tab[6] = 0;
+  if(tot_tab_sup >= 63) /*Si le score de la partie supérieure est supérieur ou égal
+                        à 63 (nb de pts nécessaire pour avoir la prime)*/
+
+    j->tab[PRIME_35] = 35; /*Alors on ajoute 35 pts dans la prime de la grille
+                            supérieure*/
+
+  else                     /*Sinon la prime est égale à 0*/
+   j->tab[PRIME_35] = 0;
 }
 
 
@@ -90,9 +95,14 @@ void prime_tab(t_joueur *j){
   *\author Thibault LEMARCHAND
 */
 void prime_yahtzee(t_joueur *j){
-  if(yahtzee(j) !=  VAL_INIT){
-    if(j->tab[12] == 50)
-      j->tab[14] = 100;
+  if(yahtzee(j) !=  VAL_INIT){  /*Si la case du yahtzee non nulle*/
+
+    if(j->tab[YAHTZEE] == 50)   /*Si yahtzee*/
+
+      j->tab[PRIME_YAHTZEE] = 100;  /*Si le joueur effectue un autre yahtzee
+                                    alors on ajoute 100 points dans la case
+                                    prime_yahtzee*/
+
   }
 }
 
@@ -110,17 +120,24 @@ void calcul_totaux(t_joueur *j){
   int tot_sinf = 0;
   int i;
 
-  prime_tab(j);
+  prime_tab(j); /*On regarde si le joueur dispose d'assez de points pour avoir la
+                prime de 35 pts avec la grille supérieure*/
 
-  for(i = 0; i < 7; i++){
+  for(i = 0; i < 7; i++){            /*Total de points dans la grille supérieure*/
     tot_ssup_apprime += j->tab[i];
   }
 
-  for(i = 7; i < 15; i++){
+  for(i = 7; i < 15; i++){          /*Total de points dans la grille inférieure*/
     tot_sinf += j->tab[i];
   }
 
-  j->tab[15] = tot_ssup_apprime;
-  j->tab[16] = tot_sinf;
-  j->tab[17] = tot_ssup_apprime+tot_sinf;
+  j->tab[TOTAL_SUP] = tot_ssup_apprime; /*On entre la valeur du total supérieur dans
+                                        la structure joueur*/
+
+  j->tab[TOTAL_INF] = tot_sinf;         /*On entre la valeur du total inférieur dans
+                                        la structure joueur*/
+
+  j->tab[TOTAL_GEN] = tot_ssup_apprime+tot_sinf;/*On additionne le total supérieur
+                                                et le total inférieur afin d avoir
+                                                le score total du joueur*/
 }
