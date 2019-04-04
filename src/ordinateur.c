@@ -153,8 +153,10 @@ int strat_superieur(t_joueur *j, t_joueur *j_test, int *nb_lance_Restant) {
 
   /* Verif si cette strat est applicable */
     /* Si tab sup est entierement plein => impossible */
-  if((j->tab[AS] != VAL_INIT) && (j->tab[DEUX] != VAL_INIT) && (j->tab[TROIS] != VAL_INIT) && (j->tab[QUATRE] != VAL_INIT) && (j->tab[CINQ] != VAL_INIT) && (j->tab[SIX]!= VAL_INIT))
+  if((j->tab[AS] != VAL_INIT) && (j->tab[DEUX] != VAL_INIT) && (j->tab[TROIS] != VAL_INIT) && (j->tab[QUATRE] != VAL_INIT) && (j->tab[CINQ] != VAL_INIT) && (j->tab[SIX]!= VAL_INIT)) {
+    printf("Impossible strat sup \n\n\n\n\n\n");
     return 0;
+  }
 
   /* Compter les des */
   for(i = 0; i < 6; i++)
@@ -162,6 +164,10 @@ int strat_superieur(t_joueur *j, t_joueur *j_test, int *nb_lance_Restant) {
 
   /* Choisir des (plus eleve, en plus gd nombre et dispo (non joue)) */
   int val_des_a_garder = choix_des_strat_sup(nb_des, j);
+
+  /* Cela vaut-il le coup d'appliquer cette strat */
+  if(nb_des[val_des_a_garder - 1] < 1)
+    return 0;
 
   /* Relancer les des pour obtenir le plus de des de cette valeur */
   /* 2 fois et tant que tous les des ne sont = a des_a_garder */
@@ -224,6 +230,7 @@ int val_dans_tab(int val, int tab[], int taille) {
 
 /**
 	*\author Nicolas Champion
+  *\author Thibault Lemarchand
 */
 int strat_p_g_suite(t_joueur *j, t_joueur *j_test, int *nb_lance_Restant) {
   int i;
@@ -237,7 +244,7 @@ int strat_p_g_suite(t_joueur *j, t_joueur *j_test, int *nb_lance_Restant) {
   for(i = 0; i < 6; i++)
     nb_des[i] = compter_des(j, i + 1);
 
-  /* Analyse de la main => On surveille les sequences 2-3-4 OU 4-5-6 */
+  /* Analyse de la main => On surveille les sequences suivantes */
   int val_des_a_garder[3];
 
     /* Seq 2-3-4 */
@@ -247,6 +254,20 @@ int strat_p_g_suite(t_joueur *j, t_joueur *j_test, int *nb_lance_Restant) {
     val_des_a_garder[2] = 4;
   }
 
+    /* Seq 3-4-5 */
+  else if((nb_des[2] != 0) && (nb_des[3] != 0) && (nb_des[4] != 0)) {
+    val_des_a_garder[0] = 3;
+    val_des_a_garder[1] = 4;
+    val_des_a_garder[2] = 5;
+  }
+
+  /* Seq 1-2-3 */
+  if((nb_des[0] != 0) && (nb_des[1] != 0) && (nb_des[2] != 0)) {
+    val_des_a_garder[0] = 1;
+    val_des_a_garder[1] = 2;
+    val_des_a_garder[2] = 3;
+  }
+
     /* Seq 4-5-6 */
   else if((nb_des[3] != 0) && (nb_des[4] != 0) && (nb_des[5] != 0)) {
     val_des_a_garder[0] = 4;
@@ -254,7 +275,36 @@ int strat_p_g_suite(t_joueur *j, t_joueur *j_test, int *nb_lance_Restant) {
     val_des_a_garder[2] = 6;
   }
 
-    /* Les autres cas seront geres par la fonction meilleur_score */
+    /* Seq 1-2-4 */
+  else if((nb_des[0] != 0) && (nb_des[1] != 0) && (nb_des[3] != 0)) {
+    val_des_a_garder[0] = 1;
+    val_des_a_garder[1] = 2;
+    val_des_a_garder[2] = 4;
+  }
+
+    /* Seq 1-3-4 */
+  else if((nb_des[0] != 0) && (nb_des[2] != 0) && (nb_des[3] != 0)) {
+    val_des_a_garder[0] = 1;
+    val_des_a_garder[1] = 3;
+    val_des_a_garder[2] = 4;
+  }
+
+    /* Seq 2-4-5 */
+  else if((nb_des[1] != 0) && (nb_des[3] != 0) && (nb_des[4] != 0)) {
+    val_des_a_garder[0] = 2;
+    val_des_a_garder[1] = 4;
+    val_des_a_garder[2] = 5;
+  }
+
+    /* Seq 3-5-6 */
+  else if((nb_des[2] != 0) && (nb_des[4] != 0) && (nb_des[5] != 0)) {
+    val_des_a_garder[0] = 3;
+    val_des_a_garder[1] = 5;
+    val_des_a_garder[2] = 6;
+  }
+
+
+    /* Les autres cas seront geres par les autres fonction */
   else
     return 0; /* Si aucune sequence reperes => Sortir de cette fonction */
 
@@ -295,14 +345,12 @@ int strat_p_g_suite(t_joueur *j, t_joueur *j_test, int *nb_lance_Restant) {
 
   /* Cas gde suite */
   if(exit_code == -1) {
-    printf("Gde SUITE en rel\n");
     j->tab[GRANDE_SUITE] = j_test->tab[GRANDE_SUITE];
     return 1; // fin de la stratégie
   }
 
   /* Cas pte suite */
   else if(exit_code == -2) {
-    printf("Pte SUITE en rel\n");
     j->tab[PETITE_SUITE] = j_test->tab[PETITE_SUITE];
     return 1; // fin de la stratégie
   }
@@ -381,6 +429,13 @@ int strat_yahtzee(t_joueur *j, t_joueur *j_test, int *nb_lance_Restant) {
 
 	/* Choisir des a garder (Val en plus grand nombre) */
 	int val_des_a_garder = val_qte_max_tab(nb_des, 6);
+
+  /* Cala vaut-il le coup d'applique cette strategie */
+  if(nb_des[val_des_a_garder - 1] < 3) {
+      printf("Impossible strat yahtzee \n\n\n\n\n\n");
+      return 0; // Pas de yahtzee
+  }
+
 
 	/* Relancer les des pour obtenir le plus de des de cette valeur */
 	/* 2 fois et tant que tous les des ne sont = a des_a_garder */
@@ -641,11 +696,10 @@ int tour_ordinateur(t_joueur *j) {
 		return 2; // L'ordi a joue (mais pas la strat sup)
 	}
 
-	else if(strat_superieur(j, tempo, &nb_lance))
+	else if(printf("\n***** Stratégie supérieur *****\n")&&strat_superieur(j, tempo, &nb_lance)) {
+    printf("\nStratégie supérieur appliquée\n");
     return 0; // Strategie a pu etre applique, l'ordi a jouer
-
-	else if(strat_yahtzee(j, tempo, &nb_lance))
-	  return 0; // Strategie a pu etre applique, l'ordi a jouer
+  }
 
   else if((tempo->tab[GRANDE_SUITE] != VAL_INIT) && (j->tab[GRANDE_SUITE] == VAL_INIT)) {
 		j->tab[GRANDE_SUITE] = tempo->tab[GRANDE_SUITE];
@@ -657,34 +711,48 @@ int tour_ordinateur(t_joueur *j) {
 		return 0;
 	}
 
-	else if(strat_p_g_suite(j, tempo, &nb_lance))
-		return 0; // Strategie a pu etre applique, l'ordi a jouer
+	else if(printf("\n***** Stratégie des suites *****\n")&&strat_p_g_suite(j, tempo, &nb_lance)) {
+    printf("\nStratégie suite appliquée\n");
+    return 0; // Strategie a pu etre applique, l'ordi a jouer
+  }
 
 	else if((tempo->tab[CARRE] != VAL_INIT) && (j->tab[CARRE] == VAL_INIT)) {
 		j->tab[CARRE] = tempo->tab[CARRE];
 		return 0;
 	}
 
-	else if(strat_carre(j, tempo, &nb_lance))
-	 return 0; // Strategie a pu etre applique, l'ordi a jouer
+	else if(printf("\n***** Stratégie carré *****\n")&&strat_carre(j, tempo, &nb_lance)) {
+    printf("\nStratégie carré appliquée\n");
+    return 0; // Strategie a pu etre applique, l'ordi a jouer
+  }
 
 	else if((tempo->tab[BRELAN] != VAL_INIT) && (j->tab[BRELAN] == VAL_INIT)) {
 		j->tab[BRELAN] = tempo->tab[BRELAN];
 		return 0;
 	}
 
-	else if(strat_brelan(j, tempo, &nb_lance))
-		return 0; // Strategie a pu etre applique, l'ordi a jouer
+	else if(printf("\n***** Stratégie brelan *****\n")&&strat_brelan(j, tempo, &nb_lance)) {
+    printf("\nStratégie brelan appliquée\n");
+    return 0; // Strategie a pu etre applique, l'ordi a jouer
+  }
 
 	else if((tempo->tab[FULL] != VAL_INIT) && (j->tab[FULL] == VAL_INIT)) {
 		j->tab[FULL] = tempo->tab[FULL];
 		return 0;
 	}
 
-	else if(strat_full(j, tempo, &nb_lance))
-	 return 0; // Strategie a pu etre applique, l'ordi a jouer
+	else if(printf("\n***** Stratégie full *****\n")&&strat_full(j, tempo, &nb_lance)) {
+    printf("\nStratégie full appliquée\n");
+    return 0; // Strategie a pu etre applique, l'ordi a jouer
+  }
+
+  else if(printf("\n***** Stratégie yahtzee *****\n")&&strat_yahtzee(j, tempo, &nb_lance)){
+    printf("\nStratégie yahtzee appliquée\n");
+    return 0; // Strategie a pu etre applique, l'ordi a jouer
+  }
 
 	meilleur_score(j, tempo);
+  printf("\nAucune Stratégie\n");
 	return 0;
 
 }
