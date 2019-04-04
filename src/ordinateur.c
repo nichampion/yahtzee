@@ -696,10 +696,8 @@ int tour_ordinateur(t_joueur *j) {
 		return 2; // L'ordi a joue (mais pas la strat sup)
 	}
 
-	else if(printf("\n***** Stratégie supérieur *****\n")&&strat_superieur(j, tempo, &nb_lance)) {
-    printf("\nStratégie supérieur appliquée\n");
+	else if(strat_superieur(j, tempo, &nb_lance))
     return 0; // Strategie a pu etre applique, l'ordi a jouer
-  }
 
   else if((tempo->tab[GRANDE_SUITE] != VAL_INIT) && (j->tab[GRANDE_SUITE] == VAL_INIT)) {
 		j->tab[GRANDE_SUITE] = tempo->tab[GRANDE_SUITE];
@@ -711,45 +709,35 @@ int tour_ordinateur(t_joueur *j) {
 		return 0;
 	}
 
-	else if(printf("\n***** Stratégie des suites *****\n")&&strat_p_g_suite(j, tempo, &nb_lance)) {
-    printf("\nStratégie suite appliquée\n");
+	else if(strat_p_g_suite(j, tempo, &nb_lance))
     return 0; // Strategie a pu etre applique, l'ordi a jouer
-  }
 
 	else if((tempo->tab[CARRE] != VAL_INIT) && (j->tab[CARRE] == VAL_INIT)) {
 		j->tab[CARRE] = tempo->tab[CARRE];
 		return 0;
 	}
 
-	else if(printf("\n***** Stratégie carré *****\n")&&strat_carre(j, tempo, &nb_lance)) {
-    printf("\nStratégie carré appliquée\n");
+	else if(strat_carre(j, tempo, &nb_lance))
     return 0; // Strategie a pu etre applique, l'ordi a jouer
-  }
 
 	else if((tempo->tab[BRELAN] != VAL_INIT) && (j->tab[BRELAN] == VAL_INIT)) {
 		j->tab[BRELAN] = tempo->tab[BRELAN];
 		return 0;
 	}
 
-	else if(printf("\n***** Stratégie brelan *****\n")&&strat_brelan(j, tempo, &nb_lance)) {
-    printf("\nStratégie brelan appliquée\n");
+	else if(strat_brelan(j, tempo, &nb_lance))
     return 0; // Strategie a pu etre applique, l'ordi a jouer
-  }
 
 	else if((tempo->tab[FULL] != VAL_INIT) && (j->tab[FULL] == VAL_INIT)) {
 		j->tab[FULL] = tempo->tab[FULL];
 		return 0;
 	}
 
-	else if(printf("\n***** Stratégie full *****\n")&&strat_full(j, tempo, &nb_lance)) {
-    printf("\nStratégie full appliquée\n");
+	else if(strat_full(j, tempo, &nb_lance))
     return 0; // Strategie a pu etre applique, l'ordi a jouer
-  }
 
-  else if(printf("\n***** Stratégie yahtzee *****\n")&&strat_yahtzee(j, tempo, &nb_lance)){
-    printf("\nStratégie yahtzee appliquée\n");
+  else if(strat_yahtzee(j, tempo, &nb_lance))
     return 0; // Strategie a pu etre applique, l'ordi a jouer
-  }
 
 	meilleur_score(j, tempo);
   printf("\nAucune Stratégie\n");
