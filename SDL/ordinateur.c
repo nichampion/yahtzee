@@ -154,7 +154,6 @@ int strat_superieur(t_joueur *j, t_joueur *j_test, int *nb_lance_Restant) {
   /* Verif si cette strat est applicable */
     /* Si tab sup est entierement plein => impossible */
   if((j->tab[AS] != VAL_INIT) && (j->tab[DEUX] != VAL_INIT) && (j->tab[TROIS] != VAL_INIT) && (j->tab[QUATRE] != VAL_INIT) && (j->tab[CINQ] != VAL_INIT) && (j->tab[SIX]!= VAL_INIT)) {
-    printf("Impossible strat sup \n\n\n\n\n\n");
     return 0;
   }
 
@@ -432,7 +431,6 @@ int strat_yahtzee(t_joueur *j, t_joueur *j_test, int *nb_lance_Restant) {
 
   /* Cala vaut-il le coup d'applique cette strategie */
   if(nb_des[val_des_a_garder - 1] < 3) {
-      printf("Impossible strat yahtzee \n\n\n\n\n\n");
       return 0; /* Pas de yahtzee */
   }
 
@@ -696,8 +694,7 @@ int tour_ordinateur(t_joueur *j) {
 		return 1; /* L'ordi a joue (mais pas la strat sup) */
 	}
 
-	else if(printf("\n***** Stratégie supérieur *****\n")&&strat_superieur(j, tempo, &nb_lance)) {
-    printf("\nStratégie supérieur appliquée\n");
+	else if(strat_superieur(j, tempo, &nb_lance)) {
     return 0; /*  Strategie a pu etre applique, l'ordi a jouer */
   }
 
@@ -711,8 +708,7 @@ int tour_ordinateur(t_joueur *j) {
 		return 0;
 	}
 
-	else if(printf("\n***** Stratégie des suites *****\n")&&strat_p_g_suite(j, tempo, &nb_lance)) {
-    printf("\nStratégie suite appliquée\n");
+	else if(strat_p_g_suite(j, tempo, &nb_lance)) {
     return 0; /* Strategie a pu etre applique, l'ordi a jouer */
   }
 
@@ -721,8 +717,7 @@ int tour_ordinateur(t_joueur *j) {
 		return 0;
 	}
 
-	else if(printf("\n***** Stratégie carré *****\n")&&strat_carre(j, tempo, &nb_lance)) {
-    printf("\nStratégie carré appliquée\n");
+	else if(strat_carre(j, tempo, &nb_lance)) {
     return 0; /* Strategie a pu etre applique, l'ordi a jouer */
   }
 
@@ -731,8 +726,7 @@ int tour_ordinateur(t_joueur *j) {
 		return 0;
 	}
 
-	else if(printf("\n***** Stratégie brelan *****\n")&&strat_brelan(j, tempo, &nb_lance)) {
-    printf("\nStratégie brelan appliquée\n");
+	else if(strat_brelan(j, tempo, &nb_lance)) {
     return 0; /* Strategie a pu etre applique, l'ordi a jouer */
   }
 
@@ -741,18 +735,15 @@ int tour_ordinateur(t_joueur *j) {
 		return 0;
 	}
 
-	else if(printf("\n***** Stratégie full *****\n")&&strat_full(j, tempo, &nb_lance)) {
-    printf("\nStratégie full appliquée\n");
+	else if(strat_full(j, tempo, &nb_lance)) {
     return 0; /* Strategie a pu etre applique, l'ordi a jouer */
   }
 
-  else if(printf("\n***** Stratégie yahtzee *****\n")&&strat_yahtzee(j, tempo, &nb_lance)){
-    printf("\nStratégie yahtzee appliquée\n");
+  else if(strat_yahtzee(j, tempo, &nb_lance)){
     return 0; /* Strategie a pu etre applique, l'ordi a jouer */
   }
 
 	meilleur_score(j, tempo);
-  printf("\nAucune Stratégie\n");
 	return 0;
 
 }

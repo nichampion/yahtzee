@@ -8,13 +8,18 @@ SDL_INC_DIR=${SDL_DIR}/include
 LIBS=-L${SDL_LIB_DIR} -lSDL2 -lSDL2_ttf -lSDL2_image
 INCS=-I${SDL_INC_DIR}
 
-PROG=jeu_sdl
+PROG1=jeu_1j
+PROG2=jeu_2j
 
-all: jeu_sdl.o fonctions_jeu.o fonctions_joueur.o mains.o ordinateur.o
-	${CC} -o ${PROG} jeu_sdl.o fonctions_jeu.o fonctions_joueur.o mains.o ordinateur.o ${LIBS} ${INCS} ${FLAGS}
+all: jeu_1j.o jeu_2j.o fonctions_jeu.o fonctions_joueur.o mains.o ordinateur.o
+	${CC} -o ${PROG1} jeu_1j.o fonctions_jeu.o fonctions_joueur.o mains.o ordinateur.o ${LIBS} ${INCS} ${FLAGS}
+	${CC} -o ${PROG2} jeu_2j.o fonctions_jeu.o fonctions_joueur.o mains.o ordinateur.o ${LIBS} ${INCS} ${FLAGS}
 
-jeu_sdl.o : jeu_sdl.c
-	${CC} -o jeu_sdl.o -c jeu_sdl.c ${LIBS} ${INCS} ${FLAGS}
+jeu_1j.o : jeu_1j.c
+	${CC} -o jeu_1j.o -c jeu_1j.c ${LIBS} ${INCS} ${FLAGS}
+
+jeu_2j.o : jeu_2j.c
+	${CC} -o jeu_2j.o -c jeu_2j.c ${LIBS} ${INCS} ${FLAGS}
 
 fonctions_jeu.o : fonctions_jeu.c fonctions_jeu.h
 	${CC} -o fonctions_jeu.o -c fonctions_jeu.c -W -Wall -ansi -pedantic
