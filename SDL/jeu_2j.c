@@ -78,12 +78,12 @@ int main(int argc, char** argv)
 	}
 
 
-	if( (police_score = TTF_OpenFont("Bebas-Regular.ttf", 20)) == NULL){
+	if( (police_score = TTF_OpenFont("coolvetica rg.ttf", 20)) == NULL){
 		fprintf(stderr, "Erreur au chargement de la police\n");
 		exit(EXIT_FAILURE);
 	}
 
-	if( (police_jeu = TTF_OpenFont("Bebas-Regular.ttf", 50)) == NULL){
+	if( (police_jeu = TTF_OpenFont("coolvetica rg.ttf", 50)) == NULL){
 		fprintf(stderr, "Erreur au chargement de la police\n");
 		exit(EXIT_FAILURE);
 	}
