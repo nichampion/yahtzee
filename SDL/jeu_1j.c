@@ -37,6 +37,8 @@ int main(int argc, char** argv)
 	img2DestRect.h = 50;
 
 	j_courantDestRect.y = 50;
+	j_courantDestRect.w = 100;
+	j_courantDestRect.h = 100;
 
 	clearDestRect.x = 300;
 	clearDestRect.y = 0;
@@ -44,6 +46,7 @@ int main(int argc, char** argv)
 	clearDestRect.w = 700;
 
 	SDL_Texture *image_texde1, *image_texde2, *image_texde3, *image_texde4, *image_texde5, *caseJ_tex;
+	SDL_Texture **pt_image_texde[5] = {&image_texde1,&image_texde2,&image_texde3,&image_texde4,&image_texde5};
 
 	TTF_Font *police_jeu = NULL, *police_score = NULL;
 
@@ -417,7 +420,7 @@ int main(int argc, char** argv)
 					 				imgDestRect.y = 300;
 									img2DestRect.y = 600;
 
-									for(int i = 0; i < 5; i++){
+									for(i = 0; i < 5; i++){
 										if(de_pos[i] == 0 || cpt_lancer == 0){
 											lancer(*ptj,i);
 											switch((*ptj)->des[i]){
@@ -570,6 +573,49 @@ int main(int argc, char** argv)
 
 								}
 
+								clic_borneG_x = 400;
+								clic_borneD_x = 450;
+
+								for(i = 0; i < 5; i++){
+
+									if(e.motion.x > clic_borneG_x && e.motion.x < clic_borneD_x && e.motion.y > 300 && e.motion.y < 350 && de_pos[i] == 0){
+
+										imgDestRect.x = clic_borneG_x;
+										imgDestRect.y = 300;
+
+				          				SDL_SetRenderDrawColor(renderer, 55, 99, 78, 255);
+										SDL_RenderFillRect(renderer,&imgDestRect);
+
+				 						imgDestRect.y = 600;
+
+										SDL_QueryTexture(*pt_image_texde[i], NULL, NULL, &(imgDestRect.w), &(imgDestRect.h));
+										SDL_RenderCopy(renderer, *pt_image_texde[i], NULL, &imgDestRect);
+										SDL_RenderPresent(renderer);
+
+										de_pos[i] = 1;
+									}
+
+									else if(e.motion.x > clic_borneG_x && e.motion.x < clic_borneD_x && e.motion.y > 600 && e.motion.y < 650 && de_pos[i] == 1){
+
+										imgDestRect.x = clic_borneG_x;
+										imgDestRect.y = 600;
+
+				            			SDL_SetRenderDrawColor(renderer, 55, 99, 78, 255);
+										SDL_RenderFillRect(renderer,&imgDestRect);
+
+				 						imgDestRect.y = 300;
+
+										SDL_QueryTexture(*pt_image_texde[i], NULL, NULL, &(imgDestRect.w), &(imgDestRect.h));
+										SDL_RenderCopy(renderer, *pt_image_texde[i], NULL, &imgDestRect);
+										SDL_RenderPresent(renderer);
+
+										de_pos[i] = 0;
+									}
+
+									clic_borneG_x += 100;
+									clic_borneD_x += 100;
+								}
+
 								scoreDestRect.x = 202;
 								caseDestRect.x = 184;
 								caseDestRect.y = scoreDestRect.y = 80;
@@ -645,173 +691,6 @@ int main(int argc, char** argv)
 									clic_borneI_y += 29;
 									p++;
 
-								}
-
-
-
-								if(e.motion.x > 400 && e.motion.x < 450 && e.motion.y > 300 && e.motion.y < 350 && de_pos[0] == 0){
-
-									imgDestRect.x = 400;
-									imgDestRect.y = 300;
-
-			          				SDL_SetRenderDrawColor(renderer, 55, 99, 78, 255);
-									SDL_RenderFillRect(renderer,&imgDestRect);
-
-			 						imgDestRect.y = 600;
-
-									SDL_QueryTexture(image_texde1, NULL, NULL, &(imgDestRect.w), &(imgDestRect.h));
-									SDL_RenderCopy(renderer, image_texde1, NULL, &imgDestRect);
-									SDL_RenderPresent(renderer);
-
-									de_pos[0] = 1;
-								}
-								else if(e.motion.x > 400 && e.motion.x < 450 && e.motion.y > 600 && e.motion.y < 650 && de_pos[0] == 1){
-
-									imgDestRect.x = 400;
-									imgDestRect.y = 600;
-
-			            			SDL_SetRenderDrawColor(renderer, 55, 99, 78, 255);
-									SDL_RenderFillRect(renderer,&imgDestRect);
-
-			 						imgDestRect.y = 300;
-
-									SDL_QueryTexture(image_texde1, NULL, NULL, &(imgDestRect.w), &(imgDestRect.h));
-									SDL_RenderCopy(renderer, image_texde1, NULL, &imgDestRect);
-									SDL_RenderPresent(renderer);
-
-									de_pos[0] = 0;
-								}
-
-								if(e.motion.x > 500 && e.motion.x < 550 && e.motion.y > 300 && e.motion.y < 350 && de_pos[1] == 0){
-
-									imgDestRect.x = 500;
-									imgDestRect.y = 300;
-
-			            			SDL_SetRenderDrawColor(renderer, 55, 99, 78, 255);
-									SDL_RenderFillRect(renderer,&imgDestRect);
-
-			 						imgDestRect.y = 600;
-
-									SDL_QueryTexture(image_texde2, NULL, NULL, &(imgDestRect.w), &(imgDestRect.h));
-									SDL_RenderCopy(renderer, image_texde2, NULL, &imgDestRect);
-									SDL_RenderPresent(renderer);
-
-									de_pos[1] = 1;
-								}
-								else if(e.motion.x > 500 && e.motion.x < 550 && e.motion.y > 600 && e.motion.y < 650 && de_pos[1] == 1){
-
-									imgDestRect.x = 500;
-									imgDestRect.y = 600;
-
-			           				SDL_SetRenderDrawColor(renderer, 55, 99, 78, 255);
-									SDL_RenderFillRect(renderer,&imgDestRect);
-
-			 						imgDestRect.y = 300;
-
-									SDL_QueryTexture(image_texde2, NULL, NULL, &(imgDestRect.w), &(imgDestRect.h));
-									SDL_RenderCopy(renderer, image_texde2, NULL, &imgDestRect);
-									SDL_RenderPresent(renderer);
-
-									de_pos[1] = 0;
-								}
-
-								if(e.motion.x > 600 && e.motion.x < 650 && e.motion.y > 300 && e.motion.y < 350 && de_pos[2] == 0){
-
-									imgDestRect.x = 600;
-									imgDestRect.y = 300;
-
-			            			SDL_SetRenderDrawColor(renderer, 55, 99, 78, 255);
-									SDL_RenderFillRect(renderer,&imgDestRect);
-
-			 						imgDestRect.y = 600;
-
-									SDL_QueryTexture(image_texde3, NULL, NULL, &(imgDestRect.w), &(imgDestRect.h));
-									SDL_RenderCopy(renderer, image_texde3, NULL, &imgDestRect);
-									SDL_RenderPresent(renderer);
-
-									de_pos[2] = 1;
-								}
-								else if(e.motion.x > 600 && e.motion.x < 650 && e.motion.y > 600 && e.motion.y < 650 && de_pos[2] == 1){
-
-									imgDestRect.x = 600;
-									imgDestRect.y = 600;
-
-			            			SDL_SetRenderDrawColor(renderer, 55, 99, 78, 255);
-									SDL_RenderFillRect(renderer,&imgDestRect);
-
-			 						imgDestRect.y = 300;
-
-									SDL_QueryTexture(image_texde3, NULL, NULL, &(imgDestRect.w), &(imgDestRect.h));
-									SDL_RenderCopy(renderer, image_texde3, NULL, &imgDestRect);
-									SDL_RenderPresent(renderer);
-
-									de_pos[2] = 0;
-								}
-
-								if(e.motion.x > 700 && e.motion.x < 750 && e.motion.y > 300 && e.motion.y < 350 && de_pos[3] == 0){
-
-									imgDestRect.x = 700;
-									imgDestRect.y = 300;
-
-			            			SDL_SetRenderDrawColor(renderer, 55, 99, 78, 255);
-									SDL_RenderFillRect(renderer,&imgDestRect);
-
-			 						imgDestRect.y = 600;
-
-									SDL_QueryTexture(image_texde4, NULL, NULL, &(imgDestRect.w), &(imgDestRect.h));
-									SDL_RenderCopy(renderer, image_texde4, NULL, &imgDestRect);
-									SDL_RenderPresent(renderer);
-
-									de_pos[3] = 1;
-								}
-								else if(e.motion.x > 700 && e.motion.x < 750 && e.motion.y > 600 && e.motion.y < 650 && de_pos[3] == 1){
-
-									imgDestRect.x = 700;
-									imgDestRect.y = 600;
-
-			            			SDL_SetRenderDrawColor(renderer, 55, 99, 78, 255);
-									SDL_RenderFillRect(renderer,&imgDestRect);
-
-			 						imgDestRect.y = 300;
-
-									SDL_QueryTexture(image_texde4, NULL, NULL, &(imgDestRect.w), &(imgDestRect.h));
-									SDL_RenderCopy(renderer, image_texde4, NULL, &imgDestRect);
-									SDL_RenderPresent(renderer);
-
-									de_pos[3] = 0;
-								}
-
-								if(e.motion.x > 800 && e.motion.x < 850 && e.motion.y > 300 && e.motion.y < 350 && de_pos[4] == 0){
-
-									imgDestRect.x = 800;
-									imgDestRect.y = 300;
-
-			            			SDL_SetRenderDrawColor(renderer, 55, 99, 78, 255);
-									SDL_RenderFillRect(renderer,&imgDestRect);
-
-			 						imgDestRect.y = 600;
-
-									SDL_QueryTexture(image_texde5, NULL, NULL, &(imgDestRect.w), &(imgDestRect.h));
-									SDL_RenderCopy(renderer, image_texde5, NULL, &imgDestRect);
-									SDL_RenderPresent(renderer);
-
-									de_pos[4] = 1;
-								}
-								else if(e.motion.x > 800 && e.motion.x < 850 && e.motion.y > 600 && e.motion.y < 650 && de_pos[4] == 1){
-
-									imgDestRect.x = 800;
-									imgDestRect.y = 600;
-
-			           				SDL_SetRenderDrawColor(renderer, 55, 99, 78, 255);
-									SDL_RenderFillRect(renderer,&imgDestRect);
-
-			 						imgDestRect.y = 300;
-
-									SDL_QueryTexture(image_texde5, NULL, NULL, &(imgDestRect.w), &(imgDestRect.h));
-									SDL_RenderCopy(renderer, image_texde5, NULL, &imgDestRect);
-									SDL_RenderPresent(renderer);
-
-									de_pos[4] = 0;
 								}
 							}
 						}
