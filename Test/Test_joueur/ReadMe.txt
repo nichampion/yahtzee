@@ -1,0 +1,1 @@
+Nous avons fait un programme de test seulement pour la fonction Prime_Tab car le reste des fonctions sont testées avec l'affichage du score des joueurs. Si les totaux sont incorrects en fin de partie, alors la fonction de calcul des totaux est incorrecte.
