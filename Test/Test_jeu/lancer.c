@@ -22,7 +22,7 @@ int main(){
     }
 
     for(i = 0;i<N;i++){
-        if(j1->des[i] == 0){
+        if(j1->des[i] < 1 || j1->des[i] > 6){
           printf("Fonction lancer incorrecte\n");
           return 0;
         }
