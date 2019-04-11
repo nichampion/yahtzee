@@ -8,7 +8,7 @@
 
 /**
 	*\file fonctions_joueur.c
-	*\brief
+	*\brief Gestion des joueurs et d'attrtibution des primes
 	*\version 1.0
 */
 

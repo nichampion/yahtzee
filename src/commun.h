@@ -35,7 +35,7 @@
 
 	/**
 	  *\file commun.h
-	  *\brief
+	  *\brief Structure et variables du jeu
 		*\version 1.0
 	*/
 

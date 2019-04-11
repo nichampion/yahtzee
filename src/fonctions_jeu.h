@@ -1,14 +1,6 @@
 #ifndef fonctions_jeu_h
 #define fonctions_jeu_h
 
-  /**
-  	*\File fonctions_jeu.h
-  	*\Prototypes des fonctions de fonctions_jeu.c
-  	*\version 1.0
-  	*\Author : Sunny BIARD
-    *\Author : Nicolas Champion
-  */
-
   #define TAILLE_TAB_PF 8
 
   void lancer(t_joueur * j, int i);

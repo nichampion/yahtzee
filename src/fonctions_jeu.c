@@ -9,17 +9,17 @@
 #include "mains.h"
 
 /**
-	*\File : fonctions_jeu.c
-	*\Brief : Fonctions du jeu
+	*\file : fonctions_jeu.c
+	*\brief : Fonctions du jeu
 	*\version 1.0
-	*\Author : Sunny BIARD
+	*\author : Sunny BIARD
 */
 
 /**
-	*\Fn : void lancer(t_joueur * j, int i)
-	*\Param : Un pointeur sur un joueur, un int correspondant au dé à lancer
-	*\Brief : Affectation d'un nombre tiré aléatoirement entre 1 et 6 au dé n°i
-	*\Author : Sunny BIARD
+	*\fn : void lancer(t_joueur * j, int i)
+	*\param : Un pointeur sur un joueur, un int correspondant au dé à lancer
+	*\brief : Affectation d'un nombre tiré aléatoirement entre 1 et 6 au dé n°i
+	*\author : Sunny BIARD
 */
 void lancer(t_joueur * j, int i){
 
@@ -28,10 +28,10 @@ void lancer(t_joueur * j, int i){
 }
 
 /**
-	*\Fn : int relancer(t_joueur * j)
-	*\Param : Un pointeur sur un joueur
-	*\Brief : Choix du/des dé(s) à relancer, Relancement de ce(s) dé(s) par appel de "lancer"
-	*\Author : Sunny BIARD
+	*\fn : int relancer(t_joueur * j)
+	*\param : Un pointeur sur un joueur
+	*\brief : Choix du/des dé(s) à relancer, Relancement de ce(s) dé(s) par appel de "lancer"
+	*\author : Sunny BIARD
 */
 int relancer(t_joueur * j){
 
@@ -56,11 +56,11 @@ int relancer(t_joueur * j){
 }
 
 /**
-	*\Fn : t_joueur * test_mains(t_joueur *j, t_joueur *j_test)
-	*\Param : Un pointeur sur un joueur + Pointeur sur un joueur de test
-	*\Brief : Test de toutes les combinaisons possibles avec les dés du joueur j
-	*\Author : Sunny BIARD
-	*\Author : Nicolas Champion
+	*\fn : t_joueur * test_mains(t_joueur *j, t_joueur *j_test)
+	*\param : Un pointeur sur un joueur + Pointeur sur un joueur de test
+	*\brief : Test de toutes les combinaisons possibles avec les dés du joueur j
+	*\author : Sunny BIARD
+	*\author : Nicolas Champion
 */
 void test_mains(t_joueur *j, t_joueur *j_test) {
 	int i;
@@ -82,10 +82,10 @@ void test_mains(t_joueur *j, t_joueur *j_test) {
 }
 
 /**
-	*\Fn : int choix_placement(t_joueur * j, t_joueur * j_test)
-	*\Param : Un pointeur sur un joueur, un autre pointeur sur un joueur test
-	*\Brief : Choix de remplissage d'une case du joueur courant
-	*\Author : Sunny BIARD
+	*\fn : int choix_placement(t_joueur * j, t_joueur * j_test)
+	*\param : Un pointeur sur un joueur, un autre pointeur sur un joueur test
+	*\brief : Choix de remplissage d'une case du joueur courant
+	*\author : Sunny BIARD
 */
 int choix_placement(t_joueur *j, t_joueur * j_test){
 	int choix, placement = 0;
@@ -301,10 +301,10 @@ int choix_placement(t_joueur *j, t_joueur * j_test){
 }
 
 /**
-	*\Fn : void affichage_possibilites(t_joueur * j, t_joueur * j_test)
-	*\Param : Un pointeur sur un joueur, un pointeur sur un joueur test
-	*\Brief : Affichage des combinaisons possibles et croix pour les cases déjà remplies pour le joueur j
-	*\Author : Sunny BIARD
+	*\fn : void affichage_possibilites(t_joueur * j, t_joueur * j_test)
+	*\param : Un pointeur sur un joueur, un pointeur sur un joueur test
+	*\brief : Affichage des combinaisons possibles et croix pour les cases déjà remplies pour le joueur j
+	*\author : Sunny BIARD
 */
 void affichage_possibilites(t_joueur * j, t_joueur * j_test){
 
@@ -386,10 +386,10 @@ void affichage_possibilites(t_joueur * j, t_joueur * j_test){
 }
 
 /**
-	*\Fn : int fin_de_partie(t_joueur * j)
-	*\Param : Un pointeur sur un joueur
-	*\Brief : Test si toutes les cases du joueur sont remplies, renvoie vrai si rempli
-	*\Author : Sunny BIARD
+	*\fn : int fin_de_partie(t_joueur * j)
+	*\param : Un pointeur sur un joueur
+	*\brief : Test si toutes les cases du joueur sont remplies, renvoie vrai si rempli
+	*\author : Sunny BIARD
 */
 int fin_de_partie(t_joueur * j){
 	if(j->tab[AS] != VAL_INIT && j->tab[DEUX] != VAL_INIT && j->tab[TROIS] != VAL_INIT && j->tab[QUATRE] != VAL_INIT && j->tab[CINQ] != VAL_INIT && j->tab[SIX] != VAL_INIT && j->tab[BRELAN] != VAL_INIT && j->tab[CARRE] != VAL_INIT && j->tab[FULL] != VAL_INIT && j->tab[PETITE_SUITE] != VAL_INIT && j->tab[PETITE_SUITE] != VAL_INIT && j->tab[GRANDE_SUITE] != VAL_INIT && j->tab[YAHTZEE] != VAL_INIT && j->tab[CHANCE] != VAL_INIT){

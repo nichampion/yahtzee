@@ -5,7 +5,8 @@
 
 /**
 	*\file affichage.c
-	*\brief Permet l'affichage du jeu
+	*\brief Permet l'affichage du jeu (version non graphique)
+  *\version 1
 */
 
 /**

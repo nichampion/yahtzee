@@ -6,6 +6,13 @@
 
 
 /**
+	*\file : mains.c
+	*\brief : Reconnaissance des mains
+	*\version 1.0
+*/
+
+
+/**
 	*\fn int somme_des(t_joueur *j)
 	*\param Un pointeur vers un joueur
 	*\return La somme des des

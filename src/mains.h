@@ -1,7 +1,7 @@
 #ifndef mains_h
 #define mains_h
 
-  	/* Section supérieure */
+  /* Section supérieure */
   int section_superieure(t_joueur *j, int nb_test);
 
   /* Section inférieure */
