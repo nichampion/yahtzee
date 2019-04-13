@@ -426,7 +426,7 @@ int main(int argc, char** argv)
 								msgDestRect.x = 375;
 								msgDestRect.y = 200;
 
-								msg = TTF_RenderUTF8_Blended(police_score, "Veuillez choisir une case a remplir ou selectionner les des a relancer", blanc);
+								msg = TTF_RenderUTF8_Blended(police_score, "Veuillez choisir une case a remplir ou selectionner les des a garder", blanc);
 								if(!msg){
 									fprintf(stderr, "Erreur à la création du texte : %s\n", SDL_GetError());
 									exit(EXIT_FAILURE);
