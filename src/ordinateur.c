@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
+#include <string.h>
 
 #include "commun.h"
 #include "ordinateur.h"
@@ -11,12 +12,12 @@
 /**
 	*\file ordinateur.c
 	*\brief Fonctions permettant d'appliquer une stratégie
-	*\version 1.0
+	*\version 2.0
 */
 
 /* Sources d'inspirations pour la stratégie */
-/*Lien stratégie 1 -> http://www.ultraboardgames.com/yahtzee/tips.php */
-/*Lien stratégie 2 -> https://fr.wikihow.com/jouer-au-yahtzee */
+/* Lien stratégie 1 -> http://www.ultraboardgames.com/yahtzee/tips.php */
+/* Lien stratégie 2 -> https://fr.wikihow.com/jouer-au-yahtzee */
 
 
 /**
@@ -45,6 +46,7 @@ int compter_des(t_joueur *joueur, int nb_test){
   *\return Une valeur numerique
 	*\author Nicolas Champion
 */
+static
 int val_des(int ref_des) {
   return ref_des + 1;
 }
@@ -54,7 +56,7 @@ int val_des(int ref_des) {
 
 
 /**
-	*\fn void test_max(int *val, int *max, char pos_max[20], char ligne_courante[20])
+	*\fn void test_max(int *val_c, int *val_max, int *pos_max, int pos_courante)
 	*\param Pointeur sur la valeur courante et la valeur max, la postion sur la feuille de marque du des max et du des courant
   *\brief Sous fonction. Intervient dans la fonction meilleur_score
   *\brief Permet de choisir la ligne à jouer dans la feuille de marque.
@@ -71,8 +73,9 @@ void test_max(int *val_c, int *val_max, int *pos_max, int pos_courante) {
 
 /**
   *\fn void meilleur_score(t_joueur *j, t_joueur *j_test)
-  *\param Un pointeur vers le joeur courant et vers un joueur temporaire permettant d'effectuer les tests
+  *\param Un pointeur vers le joueur courant et vers un joueur temporaire permettant d'effectuer les tests
   *\brief Choisi la main qui rapporte le plus de points pour une combinaison de des donnée.
+  *\brief stratégie par défaut
 	*\author Nicolas Champion
 */
 void meilleur_score(t_joueur *j, t_joueur *j_test) {
@@ -105,7 +108,7 @@ void meilleur_score(t_joueur *j, t_joueur *j_test) {
 
 /**
   *\fn void val_des_max(int val_c, int *val_max, int nb_des_c, int *nb_des_max)
-  *\param La valeur courante du des, un ponteur vers la valeur max, le nombre de des courant et un pointeur vers le nombre de des avec la valeur max.
+  *\param La valeur courante du des, un pointeur vers la valeur max, le nombre de des courant et un pointeur vers le nombre de des avec la valeur max.
   *\brief Strategie permettant d'obtenir le maximum de points dans la section superieur de la feuille de marque
   *\brief Il faut avoir compter les des de la main avant !!
 	*\author Nicolas Champion
@@ -123,7 +126,7 @@ void val_des_max(int val_c, int *val_max, int nb_des_c, int *nb_des_max) {
   *\fn int choix_des_strat_sup(int tab[6], t_joueur *j)
   *\param Un tableau indiquant le nombre d'exemplaire de chaque des en fonction de leur valeur
   *\brief Il faut avoir compter les des de la main avant !!
-  *\brief Retourne la val des des les plus elevee en plus grand nombre et disponible (Valeur non jouée dans la feuille de marque)
+  *\brief Retourne la val des dès les plus elevee en plus grand nombre et disponible (Valeur non jouée dans la feuille de marque)
 	*\author Nicolas Champion
 */
 static
@@ -144,7 +147,7 @@ int choix_des_strat_sup(int tab[6], t_joueur *j) {
   *\fn int strat_superieur(t_joueur *j, t_joueur *j_test, int *nb_lance_Restant)
   *\param Un pointeur vers le joeur courant et vers un joueur temporaire permettant d'effectuer les tests et le nombre de relancer restants
   *\return Renvoie un booleen indiquant si la strategiee a pu etre appliqué.
-  *\brief Applique la stratégie consisitant a obtenir la prime dans la section superieure (de la feuille de marque Yahtzee)
+  *\brief Essaye d'appliquer la stratégie consisitant a obtenir la prime dans la section superieure (de la feuille de marque Yahtzee)
 	*\author Nicolas Champion
 */
 int strat_superieur(t_joueur *j, t_joueur *j_test, int *nb_lance_Restant) {
@@ -215,6 +218,7 @@ int strat_superieur(t_joueur *j, t_joueur *j_test, int *nb_lance_Restant) {
   *\return Renvoie un booleen
 	*\author Nicolas Champion
 */
+static
 int val_dans_tab(int val, int tab[], int taille) {
   int i;
 
@@ -228,6 +232,10 @@ int val_dans_tab(int val, int tab[], int taille) {
 
 
 /**
+  *\fn int strat_p_g_suite(t_joueur *j, t_joueur *j_test, int *nb_lance_Restant)
+  *\param Un pointeur vers le joueur courant et vers un joueur temporaire permettant d'effectuer les tests, le nombre de relance disponible
+  *\return Renvoie un booleen indiquant si la stratgie a pu etre appliqué
+  *\brief Strategie permettant d'essayer d'obtenir les petite et grande suites (si possible)
 	*\author Nicolas Champion
   *\author Thibault Lemarchand
 */
@@ -244,7 +252,7 @@ int strat_p_g_suite(t_joueur *j, t_joueur *j_test, int *nb_lance_Restant) {
     nb_des[i] = compter_des(j, i + 1);
 
   /* Analyse de la main => On surveille les sequences suivantes */
-  int val_des_a_garder[3];
+  int val_des_a_garder[3]; // Tableau enregistrant les valeurs des dès à garder
 
     /* Seq 2-3-4 */
   if((nb_des[1] != 0) && (nb_des[2] != 0) && (nb_des[3] != 0)) {
@@ -260,8 +268,8 @@ int strat_p_g_suite(t_joueur *j, t_joueur *j_test, int *nb_lance_Restant) {
     val_des_a_garder[2] = 5;
   }
 
-  /* Seq 1-2-3 */
-  if((nb_des[0] != 0) && (nb_des[1] != 0) && (nb_des[2] != 0)) {
+    /* Seq 1-2-3 */
+  else if((nb_des[0] != 0) && (nb_des[1] != 0) && (nb_des[2] != 0)) {
     val_des_a_garder[0] = 1;
     val_des_a_garder[1] = 2;
     val_des_a_garder[2] = 3;
@@ -302,7 +310,6 @@ int strat_p_g_suite(t_joueur *j, t_joueur *j_test, int *nb_lance_Restant) {
     val_des_a_garder[2] = 6;
   }
 
-
     /* Les autres cas seront geres par les autres fonction */
   else
     return 0; /* Si aucune sequence reperes => Sortir de cette fonction */
@@ -329,16 +336,16 @@ int strat_p_g_suite(t_joueur *j, t_joueur *j_test, int *nb_lance_Restant) {
     for(i = 0; i < 6; i++)
       nb_des[i] = compter_des(j, i + 1);
 
-    test_mains(j, j_test); /* Permet l'a	nb_ffichage */
+    test_mains(j, j_test); /* Permet l'affichage */
 
     /* Si on a Gde ou Pte suite => On utilise */
     if((j_test->tab[GRANDE_SUITE] != VAL_INIT) && (j->tab[GRANDE_SUITE] == VAL_INIT)) {
         exit_code = -1;
-        (*nb_lance_Restant) = -1;
+        (*nb_lance_Restant) = -1; // Permet de sortir de la boucle
     }
     else if((j_test->tab[PETITE_SUITE] != VAL_INIT) && (j->tab[PETITE_SUITE] == VAL_INIT)) {
         exit_code = -2;
-        (*nb_lance_Restant) = -1;
+        (*nb_lance_Restant) = -1; // Permet de sortir de la boucle
     }
   }
 
@@ -364,11 +371,14 @@ int strat_p_g_suite(t_joueur *j, t_joueur *j_test, int *nb_lance_Restant) {
 
 
 /**
-  *\brief Renvoi la valeur présente le plus grand nombre de fois dans la main.
+  *\fn int val_qte_max_tab(int tab[], int taille)
+  *\param Un tableau de int et sa taille
+  *\return La valeur la plus grande et la plus fréquente
+  *\brief Renvoi la valeur présente le plus grand nombre de fois dans le tablau.
 	*\author Nicolas Champion
 */
 static
-int val_qte_max_tab(int tab[], int taille)  {
+int val_qte_max_tab(int tab[], int taille) {
 	int i, qte_max = 0, val_qte_max;
 
 	for(i = 0; i < taille; i++) {
@@ -383,7 +393,11 @@ int val_qte_max_tab(int tab[], int taille)  {
 
 
 /**
+  *\fn int utiliser_yahtzee(t_joueur *j, t_joueur *j_test)
+  *\param Un pointeur vers le joueur courant et vers un joueur temporaire permettant d'effectuer les tests
+  *\return Un booleen
   *\brief On suppose que l'on a une main de type yahtzee (Donc tous les des identiques)
+  *\brief Joue de maniere strategique un yahtzee dans la feuille de marque
 	*\author Nicolas Champion
 */
 int utiliser_yahtzee(t_joueur *j, t_joueur *j_test) {
@@ -411,7 +425,10 @@ int utiliser_yahtzee(t_joueur *j, t_joueur *j_test) {
 
 
 /**
+  *\fn int strat_yahtzee(t_joueur *j, t_joueur *j_test, int *nb_lance_Restant)
+  *\param Un pointeur vers le joueur courant et vers un joueur temporaire permettant d'effectuer les tests et le nombre de relances restantes
   *\brief Permet (d'essayer) d'obtenir une main de type yahtzee en relancant
+  *\return Un booleen
 	*\author Nicolas Champion
 */
 int strat_yahtzee(t_joueur *j, t_joueur *j_test, int *nb_lance_Restant) {
@@ -460,6 +477,9 @@ int strat_yahtzee(t_joueur *j, t_joueur *j_test, int *nb_lance_Restant) {
 
 
 /**
+  *\fn int strat_brelan(t_joueur *j, t_joueur *j_test, int *nb_lance_Restant)
+  *\param Un pointeur vers le joueur courant et vers un joueur temporaire permettant d'effectuer les tests et le nombre de relances restantes
+  *\return Un booleen
   *\brief Permet (d'essayer) d'obtenir une main de type brelan en relancant
 	*\author Thibault Lemarchand
 	*\author Nicolas Champion
@@ -508,6 +528,9 @@ int strat_brelan(t_joueur *j, t_joueur *j_test, int *nb_lance_Restant) {
 
 
 /**
+  *\fn int strat_carre(t_joueur *j, t_joueur *j_test, int *nb_lance_Restant)
+  *\param Un pointeur vers le joueur courant et vers un joueur temporaire permettant d'effectuer les tests et le nombre de relances restantes
+  *\return Un booleen
   *\brief Permet (d'essayer) d'obtenir une main de type carre en relancant
 	*\author Thibault Lemarchand
 	*\author Nicolas Champion
@@ -532,7 +555,7 @@ int strat_carre(t_joueur *j, t_joueur *j_test, int *nb_lance_Restant) {
 	/* 2 fois et tant que tous les des ne sont = a des_a_garder */
 	for(; *nb_lance_Restant > 0; (*nb_lance_Restant)--) {
 
-		/* Cas : Mois de 3 des identiques */
+		/* Cas : Moins de 3 des identiques */
 		for(i = 0; i < 5; i++) {
 			if(j->des[i] != val_des_a_garder)
 				lancer(j, i);
@@ -556,6 +579,9 @@ int strat_carre(t_joueur *j, t_joueur *j_test, int *nb_lance_Restant) {
 
 
 /**
+  *\fn int strat_full(t_joueur *j, t_joueur *j_test, int *nb_lance_Restant)
+  *\param Un pointeur vers le joueur courant et vers un joueur temporaire permettant d'effectuer les tests et le nombre de relances restantes
+  *\return Un booleen
   *\brief Permet (d'essayer) d'obtenir une main de type full en relancant
 	*\author Thibault Lemarchand
 	*\author Nicolas Champion
@@ -667,7 +693,10 @@ int strat_full(t_joueur *j, t_joueur *j_test, int *nb_lance_Restant) {
 
 
 /**
-  *\brief
+  *\fn int tour_ordinateur(t_joueur *j)
+  *\param Un pointeur vers une structure de type t_joueur : Il s'agit de l'ordinateur
+  *\return Renvoie un booleen indiquant que l'ordinateur a bien joué
+  *\brief Permet d'appliquer une stratégie de jeu au yahtzee par l'appel de plusieurs stratégies
 	*\author Thibault Lemarchand
 	*\author Nicolas Champion
 */
@@ -676,15 +705,9 @@ int tour_ordinateur(t_joueur *j) {
   t_joueur *tempo = creer_joueur("tempo");
 
 
+  /* Lancement de la main */
   for(i = 0; i < 5; i++)
     lancer(j, i);
-    /*
-    j->des[0] = 5;
-    j->des[1] = 5;
-    j->des[2] = 5;
-    j->des[3] = 5;
-    j->des[4] = 5;
-    */
 
 
   test_mains(j, tempo);

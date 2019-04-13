@@ -1,8 +1,6 @@
 #ifndef fonctions_regles_h
 #define fonctions_regles_h
 
-  #include <string.h>
-
   void meilleur_score(t_joueur *j, t_joueur *j_test);
 
   int strat_superieur(t_joueur *j, t_joueur *j_test, int *nb_lance_Restant);
