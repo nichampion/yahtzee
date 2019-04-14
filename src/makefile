@@ -8,18 +8,13 @@ SDL_INC_DIR=${SDL_DIR}/include
 LIBS=-L${SDL_LIB_DIR} -lSDL2 -lSDL2_ttf -lSDL2_image
 INCS=-I${SDL_INC_DIR}
 
-PROG1=jeu_1j
-PROG2=jeu_2j
+PROG=Yahtzee
 
-all: jeu_1j.o jeu_2j.o fonctions_jeu.o fonctions_joueur.o mains.o ordinateur.o
-	${CC} -o ${PROG1} jeu_1j.o fonctions_jeu.o fonctions_joueur.o mains.o ordinateur.o ${LIBS} ${INCS} ${FLAGS}
-	${CC} -o ${PROG2} jeu_2j.o fonctions_jeu.o fonctions_joueur.o mains.o ordinateur.o ${LIBS} ${INCS} ${FLAGS}
+all: affichage.o fonctions_jeu.o fonctions_joueur.o mains.o ordinateur.o main.o
+	${CC} -o ${PROG} affichage.o fonctions_jeu.o fonctions_joueur.o mains.o ordinateur.o main.o ${LIBS} ${INCS} ${FLAGS}
 
-jeu_1j.o : jeu_1j.c
-	${CC} -o jeu_1j.o -c jeu_1j.c ${LIBS} ${INCS} ${FLAGS}
-
-jeu_2j.o : jeu_2j.c
-	${CC} -o jeu_2j.o -c jeu_2j.c ${LIBS} ${INCS} ${FLAGS}
+affichage.o : affichage.c
+	${CC} -o affichage.o -c affichage.c ${LIBS} ${INCS} ${FLAGS}
 
 fonctions_jeu.o : fonctions_jeu.c fonctions_jeu.h
 	${CC} -o fonctions_jeu.o -c fonctions_jeu.c -W -Wall -ansi -pedantic
@@ -32,6 +27,9 @@ mains.o : mains.c mains.h
 
 ordinateur.o : ordinateur.c ordinateur.h
 	${CC} -o ordinateur.o -c ordinateur.c -W -Wall -ansi -pedantic -std=c99
+
+main.o : main.c affichage.h
+	${CC} -o main.o -c main.c -W -Wall -ansi -pedantic -std=c99
 
 clean:
 	rm -f ${PROG}
