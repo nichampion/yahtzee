@@ -1,15 +1,22 @@
-#include <stdio.h>
+*\author#include <stdio.h>
 #include <stdlib.h>
 
 #include "commun.h"
 #include "mains.h"
+
+/**
+	*\file mains.c
+	*\brief Fonctions permettant d'analyser les mains
+	*\version 2.0
+*/
 
 
 /**
 	*\fn int somme_des(t_joueur *j)
 	*\param Un pointeur vers un joueur
 	*\return La somme des des
-	*\brief Somm les 5 des du joueurs
+	*\brief Somme les 5 des du joueurs
+  *\brief Sous-fonctionde ce module
   *\author CHAMPION Nicolas
 */
 static
@@ -26,8 +33,9 @@ int somme_des(t_joueur *j) {
 /**
 	*\fn void tri_bulle(int tab[],int taille)
 	*\param Un tableau d entier et sa taille
-	*\brief Trie dans l ordre croissant le Tableau
-  *\Author : LEMARCHAND Thibault
+	*\brief Trie dans l'ordre croissant le Tableau
+  *\brief Sous-fonctionde ce module
+  *\author : LEMARCHAND Thibault
 */
 static
 void tri_bulle(int tab[],int taille){
@@ -48,9 +56,12 @@ void tri_bulle(int tab[],int taille){
 }
 
 
+/* ****************************** Section supérieure ****************************** */
+
+
 /**
 	*\fn section_superieur(t_joueur *joueur, int nb_test)
-	*\param Un pointeur vers un joueur et un le nombre que l'on souhaite tester
+	*\param Un pointeur vers un joueur et un le nombre que l'on souhaite tester (valeur)
 	*\return Le nombre de points
 	*\brief calcul le nombre de dé ayant le nombre voulu par le joueur
   *\author BROUARD Antoine
@@ -66,6 +77,9 @@ int section_superieure(t_joueur *joueur, int nb_test){
 	else
 		return -1;
 }
+
+
+/* ****************************** Section inférieure ****************************** */
 
 
 /**
@@ -133,13 +147,14 @@ int brelan(t_joueur *j) {
 	*\param Un pointeur vers un joueur
 	*\return Le nombre de points ou -1 si ce n'est pas un carre
 	*\brief Total des 5 des : 4 chiffres X + 1 resultats des dés obligatoirement différent des 4 autres
+  *\author Lemarchand Thibault
 */
 int carre(t_joueur *j) {
   int n1 = -1, n2 = -1;
 	int nb_n1 = 0, nb_n2 = 0; /* Occurence de n1, n2 */
 	int i;
 
-/*Depart de la boucle for si exemple des -> 1 3 4 5 6 donc petite suite -> 3 4 5 6*/
+/* Depart de la boucle for si exemple des -> 1 3 4 5 6 donc petite suite -> 3 4 5 6 */
 	n1 = j->des[0];
 	nb_n1++;
 
@@ -175,6 +190,8 @@ int carre(t_joueur *j) {
 	*\param Un pointeur vers un joueur
 	*\return Le nombre de points ou -1 si ce n'est pas un full
 	*\brief Total des 5 des : 3 chiffres X + 2 y
+  *\author Champion Nicolas
+  *\author Lemarchand Thibault
 */
 int full(t_joueur *j) {
 	int n1 = -1, n2 = -1;
@@ -216,8 +233,8 @@ int full(t_joueur *j) {
 	*\param Un pointeur vers un joueur
   *\return Le nombre de points ou -1 si pas de petite suite
 	*\brief Total des 5 des : 4 dés se suivent + 1 dé ne suivant pas le reste
-  *\Author : LEMARCHAND Thibault
-  *\Author : CHAMPION Nicolas
+  *\author : LEMARCHAND Thibault
+  *\author : CHAMPION Nicolas
 */
 int petite_suite(t_joueur *j) {
 	int i;
@@ -248,10 +265,10 @@ int petite_suite(t_joueur *j) {
 /**
 	*\fn int grande_suite(t_joueur *j)
 	*\param Un pointeur vers un joueur
-  *\return Le nombre de points ou -1 si pas de grandesuite
+  *\return Le nombre de points ou -1 si pas de grande suite
 	*\brief Total des 5 des : 5 dés se suivent
-  *\Author : LEMARCHAND Thibault
-  *\Author : CHAMPION Nicolas*\Author : CHAMPION Nicolas
+  *\author : LEMARCHAND Thibault
+  *\author : CHAMPION Nicolas
 */
 int grande_suite(t_joueur *j) {
   int i;
@@ -267,7 +284,7 @@ int grande_suite(t_joueur *j) {
       return -1;
   }
 
-    return 40; /*Retourne le resultat*/
+    return 40; /* Retourne le resultat */
 }
 
 
@@ -276,7 +293,7 @@ int grande_suite(t_joueur *j) {
 	*\param Un pointeur vers un joueur
   *\return Le nombre de points ou -1 si pas de yahtzee
 	*\brief Total des 5 des : 5 dés egaux
-  *\Author : BROUARD Antoine
+  *\author : BROUARD Antoine
 */
 int yahtzee(t_joueur *joueur){
   if(joueur->des[0] == joueur->des[1] && joueur->des[1] == joueur->des[2] && joueur->des[2] == joueur->des[3] && joueur->des[3] == joueur->des[4])
