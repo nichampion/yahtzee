@@ -1,4 +1,4 @@
-*\author#include <stdio.h>
+#include <stdio.h>
 #include <stdlib.h>
 
 #include "commun.h"
@@ -35,7 +35,7 @@ int somme_des(t_joueur *j) {
 	*\param Un tableau d entier et sa taille
 	*\brief Trie dans l'ordre croissant le Tableau
   *\brief Sous-fonctionde ce module
-  *\author : LEMARCHAND Thibault
+  *\author LEMARCHAND Thibault
 */
 static
 void tri_bulle(int tab[],int taille){
@@ -233,8 +233,8 @@ int full(t_joueur *j) {
 	*\param Un pointeur vers un joueur
   *\return Le nombre de points ou -1 si pas de petite suite
 	*\brief Total des 5 des : 4 dés se suivent + 1 dé ne suivant pas le reste
-  *\author : LEMARCHAND Thibault
-  *\author : CHAMPION Nicolas
+  *\author LEMARCHAND Thibault
+  *\author CHAMPION Nicolas
 */
 int petite_suite(t_joueur *j) {
 	int i;
@@ -267,8 +267,8 @@ int petite_suite(t_joueur *j) {
 	*\param Un pointeur vers un joueur
   *\return Le nombre de points ou -1 si pas de grande suite
 	*\brief Total des 5 des : 5 dés se suivent
-  *\author : LEMARCHAND Thibault
-  *\author : CHAMPION Nicolas
+  *\author LEMARCHAND Thibault
+  *\author CHAMPION Nicolas
 */
 int grande_suite(t_joueur *j) {
   int i;
@@ -293,7 +293,7 @@ int grande_suite(t_joueur *j) {
 	*\param Un pointeur vers un joueur
   *\return Le nombre de points ou -1 si pas de yahtzee
 	*\brief Total des 5 des : 5 dés egaux
-  *\author : BROUARD Antoine
+  *\author BROUARD Antoine
 */
 int yahtzee(t_joueur *joueur){
   if(joueur->des[0] == joueur->des[1] && joueur->des[1] == joueur->des[2] && joueur->des[2] == joueur->des[3] && joueur->des[3] == joueur->des[4])
