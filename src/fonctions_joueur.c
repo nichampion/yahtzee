@@ -19,7 +19,6 @@
   *\brief Permet d'initialiser les scores de la feuille de marque
   *\author Nicolas CHAMPION
 */
-static
 void init_bloc_note(t_joueur *j) {
   int i;
 

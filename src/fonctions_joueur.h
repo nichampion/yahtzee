@@ -2,6 +2,7 @@
 #define fonctions_joueur_h
 
   /* Fonctions gérant les t_joueurs */
+  void init_bloc_note(t_joueur *j);
   t_joueur* creer_joueur(char nom[T]);
   void detruire_joueur(t_joueur **j);
 
