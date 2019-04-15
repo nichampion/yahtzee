@@ -1,7 +1,7 @@
 #include <stdio.h>
 
 #include "../../src/commun.h"
-#include "affichage_V1_Test_IA.h"
+#include "affichage_V1.h"
 
 /**
 	*\file affichage.c

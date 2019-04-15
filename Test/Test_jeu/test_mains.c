@@ -3,6 +3,7 @@
 #include <unistd.h>
 #include <time.h>
 
+#include "aff_poss_test_mains.h"
 #include "../../src/commun.h"
 #include "../../src/fonctions_jeu.h"
 #include "../../src/fonctions_joueur.h"
@@ -21,5 +22,7 @@ int main(){
 
   test_mains(j1,jtest);
 
+  affichage_possibilites(j1,jtest);
+  
   printf("\nSi aucune possibilités, alors fonction test_mains incorrecte\n");
 }
