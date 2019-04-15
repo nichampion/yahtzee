@@ -1,1 +1,2 @@
 Il faut d'abord avoir compiler le programme principal => On utilise les mêmes fichiers objets
+Ce programme permet de tester les performances du module ordinateur.

@@ -4,7 +4,7 @@
 #include <time.h>
 
 #include "../../src/commun.h"
-#include "../../src/affichage.h"
+#include "affichage_V1_Test_IA.h"
 #include "../../src/ordinateur.h"
 #include "../../src/fonctions_joueur.h"
 #include "../../src/fonctions_jeu.h"
