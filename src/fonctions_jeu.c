@@ -86,7 +86,7 @@ t_joueur * test_mains(t_joueur *j, t_joueur *j_test) {
 
 /**
 	*\fn int fin_de_partie(t_joueur * j)
-	*\Param Un pointeur sur un joueur
+	*\param Un pointeur sur un joueur
 	*\brief Test si toutes les cases du joueur sont remplies, renvoie vrai si rempli
 	*\Author Sunny BIARD
 */
