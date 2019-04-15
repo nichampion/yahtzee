@@ -701,6 +701,12 @@ int aff1_joueur() {
   else {
     fprintf(stderr,"Erreur de création de la fenêtre: %s\n",SDL_GetError());
   }
+
+  /* Destruction des joueurs */
+  detruire_joueur(&j1);
+  detruire_joueur(&j2);
+  detruire_joueur(&j_choix);
+
   SDL_FreeSurface(caseJ);
 
   SDL_FreeSurface(de1); /* on a la texture, plus besoin de l'image */
@@ -717,6 +723,7 @@ int aff1_joueur() {
   TTF_CloseFont(police_jeu);
   TTF_Quit();
   SDL_Quit();
+
   return 0;
 }
 
@@ -1350,6 +1357,12 @@ int aff2_joueurs() {
 	else {
 		fprintf(stderr,"Erreur de création de la fenêtre: %s\n",SDL_GetError());
 	}
+
+  /* Destruction des joueurs */
+  detruire_joueur(&j1);
+  detruire_joueur(&j2);
+  detruire_joueur(&j_choix);
+
 	SDL_FreeSurface(caseJ);
 
 	SDL_FreeSurface(de1); /* on a la texture, plus besoin de l'image */
@@ -1366,5 +1379,6 @@ int aff2_joueurs() {
 	TTF_CloseFont(police_jeu);
 	TTF_Quit();
   SDL_Quit();
+
   return 0;
 }
