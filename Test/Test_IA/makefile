@@ -5,4 +5,8 @@ affichage_V1_Test_IA.o : affichage_V1_Test_IA.c
 	gcc -o affichage_V1_Test_IA.o -c affichage_V1_Test_IA.c -Wall -O
 
 main.o : main.c ../../src/commun.h ../../src/affichage.h ../../src/ordinateur.h ../../src/fonctions_joueur.h ../../src/fonctions_jeu.h ../../src/mains.h
-	gcc -o main.o -c main.c -Wall -O
+	gcc -o main.o -c main.c
+
+clean:
+	rm *.o
+	rm Test_IA
