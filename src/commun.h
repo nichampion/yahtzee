@@ -9,7 +9,7 @@
 
 
 	#define N 5 	/* Nombre de des */
-	#define T 30 	/* Taille nom joueur */
+	#define T 12	/* Taille nom joueur */
 
 
 	/* ****************************** Constantes pour le tableau ****************************** */
