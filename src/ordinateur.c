@@ -714,59 +714,72 @@ int tour_ordinateur(t_joueur *j) {
 
 	if((j->tab[YAHTZEE] == VAL_INIT) && (yahtzee(j) != -1)) {
 		utiliser_yahtzee(j, tempo);
+    detruire_joueur(&tempo);
 		return 1; /* L'ordi a joue (mais pas la strat sup) */
 	}
 
 	else if(strat_superieur(j, tempo, &nb_lance)) {
+    detruire_joueur(&tempo);
     return 0; /*  Strategie a pu etre applique, l'ordi a jouer */
   }
 
   else if((tempo->tab[GRANDE_SUITE] != VAL_INIT) && (j->tab[GRANDE_SUITE] == VAL_INIT)) {
 		j->tab[GRANDE_SUITE] = tempo->tab[GRANDE_SUITE];
+    detruire_joueur(&tempo);
 		return 0;
 	}
 
   else if((tempo->tab[PETITE_SUITE] != VAL_INIT) && (j->tab[PETITE_SUITE] == VAL_INIT)) {
 		j->tab[PETITE_SUITE] = tempo->tab[PETITE_SUITE];
+    detruire_joueur(&tempo);
 		return 0;
 	}
 
 	else if(strat_p_g_suite(j, tempo, &nb_lance)) {
+    detruire_joueur(&tempo);
     return 0; /* Strategie a pu etre applique, l'ordi a jouer */
   }
 
 	else if((tempo->tab[CARRE] != VAL_INIT) && (j->tab[CARRE] == VAL_INIT)) {
 		j->tab[CARRE] = tempo->tab[CARRE];
+    detruire_joueur(&tempo);
 		return 0;
 	}
 
 	else if(strat_carre(j, tempo, &nb_lance)) {
+    detruire_joueur(&tempo);
     return 0; /* Strategie a pu etre applique, l'ordi a jouer */
   }
 
 	else if((tempo->tab[BRELAN] != VAL_INIT) && (j->tab[BRELAN] == VAL_INIT)) {
 		j->tab[BRELAN] = tempo->tab[BRELAN];
+    detruire_joueur(&tempo);
 		return 0;
 	}
 
 	else if(strat_brelan(j, tempo, &nb_lance)) {
+    detruire_joueur(&tempo);
     return 0; /* Strategie a pu etre applique, l'ordi a jouer */
   }
 
 	else if((tempo->tab[FULL] != VAL_INIT) && (j->tab[FULL] == VAL_INIT)) {
 		j->tab[FULL] = tempo->tab[FULL];
+    detruire_joueur(&tempo);
 		return 0;
 	}
 
 	else if(strat_full(j, tempo, &nb_lance)) {
+    detruire_joueur(&tempo);
     return 0; /* Strategie a pu etre applique, l'ordi a jouer */
   }
 
   else if(strat_yahtzee(j, tempo, &nb_lance)){
+    detruire_joueur(&tempo);
     return 0; /* Strategie a pu etre applique, l'ordi a jouer */
   }
 
 	meilleur_score(j, tempo);
+  detruire_joueur(&tempo);
 	return 0;
 
 }
