@@ -73,9 +73,9 @@ void test_max(int *val_c, int *val_max, int *pos_max, int pos_courante) {
 
 /**
   *\fn void meilleur_score(t_joueur *j, t_joueur *j_test)
-  *\param Un pointeur vers le joueur courant et vers un joueur temporaire permettant d'effectuer les tests
   *\brief Choisi la main qui rapporte le plus de points pour une combinaison de des donnée.
   *\brief stratégie par défaut
+  *\param Un pointeur vers le joueur courant et vers un joueur temporaire permettant d'effectuer les tests
 	*\author Nicolas Champion
 */
 void meilleur_score(t_joueur *j, t_joueur *j_test) {
@@ -108,9 +108,9 @@ void meilleur_score(t_joueur *j, t_joueur *j_test) {
 
 /**
   *\fn void val_des_max(int val_c, int *val_max, int nb_des_c, int *nb_des_max)
-  *\param La valeur courante du des, un pointeur vers la valeur max, le nombre de des courant et un pointeur vers le nombre de des avec la valeur max.
   *\brief Strategie permettant d'obtenir le maximum de points dans la section superieur de la feuille de marque
   *\brief Il faut avoir compter les des de la main avant !!
+  *\param La valeur courante du des, un pointeur vers la valeur max, le nombre de des courant et un pointeur vers le nombre de des avec la valeur max.
 	*\author Nicolas Champion
 */
 static
@@ -394,10 +394,10 @@ int val_qte_max_tab(int tab[], int taille) {
 
 /**
   *\fn int utiliser_yahtzee(t_joueur *j, t_joueur *j_test)
-  *\param Un pointeur vers le joueur courant et vers un joueur temporaire permettant d'effectuer les tests
-  *\return Un booleen
   *\brief On suppose que l'on a une main de type yahtzee (Donc tous les des identiques)
   *\brief Joue de maniere strategique un yahtzee dans la feuille de marque
+  *\param Un pointeur vers le joueur courant et vers un joueur temporaire permettant d'effectuer les tests
+  *\return Un booleen
 	*\author Nicolas Champion
 */
 int utiliser_yahtzee(t_joueur *j, t_joueur *j_test) {
