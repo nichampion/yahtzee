@@ -8,8 +8,8 @@
 
 /**
 	*\file fonctions_joueur.c
-	*\brief
-	*\version 1.0
+	*\brief Gestion des joueurs en memoire et attribution des primes
+	*\version 2
 */
 
 
@@ -19,12 +19,12 @@
   *\brief Permet d'initialiser les scores de la feuille de marque
   *\author Nicolas CHAMPION
 */
+static
 void init_bloc_note(t_joueur *j) {
   int i;
 
-  for(i = AS; i < TAILLE_TAB; i++) {
+  for(i = AS; i < TAILLE_TAB; i++)
     j->tab[i] = VAL_INIT; /* Initialisation de la feuille de marque avec la variable globale VAL_INIT */
-  }
 
 }
 
@@ -40,11 +40,12 @@ t_joueur* creer_joueur(char nom[T]) {
   int i;
   t_joueur *j = malloc(sizeof(t_joueur));
 
-  strcpy(j->nom, nom); /*Le nom du joueur prend le nom passé en paramètre*/
+  strcpy(j->nom, nom); /* Le nom du joueur prend le nom passé en paramètre */
 
-  init_bloc_note(j); /*Initialisation de la feuille de marque*/
+  init_bloc_note(j); /* Initialisation de la feuille de marque */
 
-  for(i = 0; i < N; i++) /*Initialisation du tableau de dés*/
+  /* Initialisation du tableau de dés */
+  for(i = 0; i < N; i++)
     j->des[i] = 0;
 
   return j;
@@ -61,6 +62,7 @@ void detruire_joueur(t_joueur **j) {
   free(*j);
   (*j) = NULL;
 }
+
 
 /**
   *\fn void prime_tab(t_joueur *j)
@@ -89,10 +91,9 @@ void prime_tab(t_joueur *j){
 
 /**
   *\fn void calcul_totaux(t_joueur *j)
-  *\param Un pointeur vers un joueur
   *\brief Permet de calculer les totaux.
   *\brief Correspond aux rubriques total inferieur, superieur et general de la feulle de marque
-  *\return Un pointeur vers le joueur fraichement cree
+  *\param Un pointeur vers un joueur
   *\author Thibault LEMARCHAND
 */
 void calcul_totaux(t_joueur *j){

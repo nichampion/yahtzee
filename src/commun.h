@@ -4,6 +4,8 @@
 	#define N 5 /* Nombre de des */
 	#define T 3 /* Taille nom joueur */
 
+	#define VAL_INIT -1 /* Valeur par défaut pour la feuille de marque */
+
 	/* ***** Constantes pour le tableau ***** */
 
 	#define TAILLE_TAB 17
