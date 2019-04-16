@@ -1,3 +1,10 @@
+#include "affichage.h"
+
+/* Librairies SDL */
+#include "SDL2/SDL.h"
+#include "SDL2/SDL_ttf.h"
+#include "SDL2/SDL_image.h"
+
 /**
 	*\file affichage.c
 	*\brief Fonctions permettant l'affichage
@@ -5,10 +12,6 @@
   *\author Sunny Biard
 */
 
-#include "affichage.h"
-#include "SDL2/SDL.h"
-#include "SDL2/SDL_ttf.h"
-#include "SDL2/SDL_image.h"
 
 /**
 	*\fn int aff1_joueur()
@@ -84,12 +87,12 @@ int aff1_joueur() {
 	}
 
 
-	if( (police_score = TTF_OpenFont("src/coolvetica rg.ttf", 20)) == NULL){
+	if( (police_score = TTF_OpenFont("../src/coolvetica rg.ttf", 20)) == NULL){
 		fprintf(stderr, "Erreur au chargement de la police\n");
 		exit(EXIT_FAILURE);
 	}
 
-	if( (police_jeu = TTF_OpenFont("src/coolvetica rg.ttf", 35)) == NULL){
+	if( (police_jeu = TTF_OpenFont("../src/coolvetica rg.ttf", 35)) == NULL){
 		fprintf(stderr, "Erreur au chargement de la police\n");
 		exit(EXIT_FAILURE);
 	}
@@ -97,7 +100,7 @@ int aff1_joueur() {
 	SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
 
 	// load sample.png into image
-	SDL_RWops *rwopscore=SDL_RWFromFile("src/img/score.png", "rb");
+	SDL_RWops *rwopscore=SDL_RWFromFile("../src/img/score.png", "rb");
 	tab_score=IMG_LoadPNG_RW(rwopscore);
 	if(!tab_score) {
 		printf("IMG_LoadPNG_RW: %s\n", IMG_GetError());
@@ -111,43 +114,43 @@ int aff1_joueur() {
 
 	SDL_FreeSurface(tab_score); /* on a la texture, plus besoin de l'image */
 
-	SDL_RWops *rwopde1=SDL_RWFromFile("src/img/de1.png", "rb");
+	SDL_RWops *rwopde1=SDL_RWFromFile("../src/img/de1.png", "rb");
 	de1=IMG_LoadPNG_RW(rwopde1);
 	if(!de1) {
 		printf("IMG_LoadPNG_RW: %s\n", IMG_GetError());
 	}
 
-	SDL_RWops *rwopde2=SDL_RWFromFile("src/img/de2.png", "rb");
+	SDL_RWops *rwopde2=SDL_RWFromFile("../src/img/de2.png", "rb");
 	de2=IMG_LoadPNG_RW(rwopde2);
 	if(!de2) {
 		printf("IMG_LoadPNG_RW: %s\n", IMG_GetError());
 	}
 
-	SDL_RWops *rwopde3=SDL_RWFromFile("src/img/de3.png", "rb");
+	SDL_RWops *rwopde3=SDL_RWFromFile("../src/img/de3.png", "rb");
 	de3=IMG_LoadPNG_RW(rwopde3);
 	if(!de3) {
 		printf("IMG_LoadPNG_RW: %s\n", IMG_GetError());
 	}
 
-	SDL_RWops *rwopde4=SDL_RWFromFile("src/img/de4.png", "rb");
+	SDL_RWops *rwopde4=SDL_RWFromFile("../src/img/de4.png", "rb");
 	de4=IMG_LoadPNG_RW(rwopde4);
 	if(!de4) {
 		printf("IMG_LoadPNG_RW: %s\n", IMG_GetError());
 	}
 
-	SDL_RWops *rwopde5=SDL_RWFromFile("src/img/de5.png", "rb");
+	SDL_RWops *rwopde5=SDL_RWFromFile("../src/img/de5.png", "rb");
 	de5=IMG_LoadPNG_RW(rwopde5);
 	if(!de5) {
 		printf("IMG_LoadPNG_RW: %s\n", IMG_GetError());
 	}
 
-	SDL_RWops *rwopde6=SDL_RWFromFile("src/img/de6.png", "rb");
+	SDL_RWops *rwopde6=SDL_RWFromFile("../src/img/de6.png", "rb");
 	de6=IMG_LoadPNG_RW(rwopde6);
 	if(!de6) {
 		printf("IMG_LoadPNG_RW: %s\n", IMG_GetError());
 	}
 
-	SDL_RWops *rwop_btn_lancer=SDL_RWFromFile("src/img/btn_lancer.png", "rb");
+	SDL_RWops *rwop_btn_lancer=SDL_RWFromFile("../src/img/btn_lancer.png", "rb");
 	img_btn_lancer=IMG_LoadPNG_RW(rwop_btn_lancer);
 	if(!img_btn_lancer) {
 		printf("IMG_LoadPNG_RW: %s\n", IMG_GetError());
@@ -705,6 +708,12 @@ int aff1_joueur() {
 	else {
 		fprintf(stderr,"Erreur de création de la fenêtre: %s\n",SDL_GetError());
 	}
+
+	/* Destruction des joueurs */
+	detruire_joueur(&j1);
+	detruire_joueur(&j2);
+	detruire_joueur(&j_choix);
+
 	SDL_FreeSurface(caseJ);
 
 	SDL_FreeSurface(de1); /* on a la texture, plus besoin de l'image */
@@ -800,12 +809,12 @@ int aff2_joueurs() {
 	}
 
 
-	if( (police_score = TTF_OpenFont("src/coolvetica rg.ttf", 20)) == NULL){
+	if( (police_score = TTF_OpenFont("../src/coolvetica rg.ttf", 20)) == NULL){
 		fprintf(stderr, "Erreur au chargement de la police\n");
 		exit(EXIT_FAILURE);
 	}
 
-	if( (police_jeu = TTF_OpenFont("src/coolvetica rg.ttf", 35)) == NULL){
+	if( (police_jeu = TTF_OpenFont("../src/coolvetica rg.ttf", 35)) == NULL){
 		fprintf(stderr, "Erreur au chargement de la police\n");
 		exit(EXIT_FAILURE);
 	}
@@ -813,7 +822,7 @@ int aff2_joueurs() {
 	SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
 
 	// load sample.png into image
-	SDL_RWops *rwopscore=SDL_RWFromFile("src/img/score.png", "rb");
+	SDL_RWops *rwopscore=SDL_RWFromFile("../src/img/score.png", "rb");
 	tab_score=IMG_LoadPNG_RW(rwopscore);
 	if(!tab_score) {
 		printf("IMG_LoadPNG_RW: %s\n", IMG_GetError());
@@ -827,43 +836,43 @@ int aff2_joueurs() {
 
 	SDL_FreeSurface(tab_score); /* on a la texture, plus besoin de l'image */
 
-	SDL_RWops *rwopde1=SDL_RWFromFile("src/img/de1.png", "rb");
+	SDL_RWops *rwopde1=SDL_RWFromFile("../src/img/de1.png", "rb");
 	de1=IMG_LoadPNG_RW(rwopde1);
 	if(!de1) {
 		printf("IMG_LoadPNG_RW: %s\n", IMG_GetError());
 	}
 
-	SDL_RWops *rwopde2=SDL_RWFromFile("src/img/de2.png", "rb");
+	SDL_RWops *rwopde2=SDL_RWFromFile("../src/img/de2.png", "rb");
 	de2=IMG_LoadPNG_RW(rwopde2);
 	if(!de2) {
 		printf("IMG_LoadPNG_RW: %s\n", IMG_GetError());
 	}
 
-	SDL_RWops *rwopde3=SDL_RWFromFile("src/img/de3.png", "rb");
+	SDL_RWops *rwopde3=SDL_RWFromFile("../src/img/de3.png", "rb");
 	de3=IMG_LoadPNG_RW(rwopde3);
 	if(!de3) {
 		printf("IMG_LoadPNG_RW: %s\n", IMG_GetError());
 	}
 
-	SDL_RWops *rwopde4=SDL_RWFromFile("src/img/de4.png", "rb");
+	SDL_RWops *rwopde4=SDL_RWFromFile("../src/img/de4.png", "rb");
 	de4=IMG_LoadPNG_RW(rwopde4);
 	if(!de4) {
 		printf("IMG_LoadPNG_RW: %s\n", IMG_GetError());
 	}
 
-	SDL_RWops *rwopde5=SDL_RWFromFile("src/img/de5.png", "rb");
+	SDL_RWops *rwopde5=SDL_RWFromFile("../src/img/de5.png", "rb");
 	de5=IMG_LoadPNG_RW(rwopde5);
 	if(!de5) {
 		printf("IMG_LoadPNG_RW: %s\n", IMG_GetError());
 	}
 
-	SDL_RWops *rwopde6=SDL_RWFromFile("src/img/de6.png", "rb");
+	SDL_RWops *rwopde6=SDL_RWFromFile("../src/img/de6.png", "rb");
 	de6=IMG_LoadPNG_RW(rwopde6);
 	if(!de6) {
 		printf("IMG_LoadPNG_RW: %s\n", IMG_GetError());
 	}
 
-	SDL_RWops *rwop_btn_lancer=SDL_RWFromFile("src/img/btn_lancer.png", "rb");
+	SDL_RWops *rwop_btn_lancer=SDL_RWFromFile("../src/img/btn_lancer.png", "rb");
 	img_btn_lancer=IMG_LoadPNG_RW(rwop_btn_lancer);
 	if(!img_btn_lancer) {
 		printf("IMG_LoadPNG_RW: %s\n", IMG_GetError());
@@ -1355,6 +1364,12 @@ int aff2_joueurs() {
 	else {
 		fprintf(stderr,"Erreur de création de la fenêtre: %s\n",SDL_GetError());
 	}
+
+	/* Destruction des joueurs */
+	detruire_joueur(&j1);
+	detruire_joueur(&j2);
+	detruire_joueur(&j_choix);
+
 	SDL_FreeSurface(caseJ);
 
 	SDL_FreeSurface(de1); /* on a la texture, plus besoin de l'image */

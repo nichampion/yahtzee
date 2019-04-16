@@ -14,6 +14,7 @@
   #include "mains.h"
   #include "ordinateur.h"
 
+  /* Prototypes */
   int aff1_joueur();
   int aff2_joueurs();
 
