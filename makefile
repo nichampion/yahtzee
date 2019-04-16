@@ -8,6 +8,7 @@ FLAGS2 = -W -Wall -ansi -pedantic
 
 
 # SDL 2
+# Mémo pour installation SDL : sudo apt install libsdl2-dev libsdl2-image-dev libsdl2-ttf-dev
 SDL_DIR=${HOME}/SDL2
 SDL_LIB_DIR=${SDL_DIR}/lib
 SDL_INC_DIR=${SDL_DIR}/include
