@@ -15,10 +15,11 @@
 
 /**
 	*\fn int aff1_joueur()
+	*\param Un flag transmis a tour_ordinateur
 	*\brief Fonction permettant l'affichage du jeu avec 1 humain (vs PC)
   *\author Sunny Biard
 */
-int aff1_joueur() {
+int aff1_joueur(int dflag) {
 	t_joueur * j1 = creer_joueur("J1");
 	t_joueur * j2 = creer_joueur("Ordinateur");
 	t_joueur * j_choix = creer_joueur("Choix");
@@ -29,7 +30,7 @@ int aff1_joueur() {
 
 	SDL_Window *pWindow = NULL;
 
-  	SDL_Surface *j_courant=NULL, *msg=NULL, *tab_score=NULL, *de_courant=NULL, *de1=NULL, *de2=NULL, *de3=NULL, *de4=NULL, *de5=NULL, *de6=NULL, *img_btn_lancer=NULL, *caseJ=NULL;
+  SDL_Surface *j_courant=NULL, *msg=NULL, *tab_score=NULL, *de_courant=NULL, *de1=NULL, *de2=NULL, *de3=NULL, *de4=NULL, *de5=NULL, *de6=NULL, *img_btn_lancer=NULL, *caseJ=NULL;
 	SDL_Renderer *renderer=NULL;
 	SDL_Rect clearDestRect, j_courantDestRect, msgDestRect, imgDestRect, img2DestRect, scoreDestRect, caseDestRect;
 
@@ -206,7 +207,7 @@ int aff1_joueur() {
 					case SDL_MOUSEBUTTONUP:
 
 						if(ptj == &j2){
-							if(tour_ordinateur(*ptj) >= 0){
+							if(tour_ordinateur(*ptj, dflag) >= 0){
 
 								SDL_SetRenderDrawColor(renderer, 55, 99, 78, 255);
 								SDL_RenderFillRect(renderer,&clearDestRect);

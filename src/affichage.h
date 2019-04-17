@@ -15,7 +15,7 @@
   #include "ordinateur.h"
 
   /* Prototypes */
-  int aff1_joueur();
+  int aff1_joueur(int dflag);
   int aff2_joueurs();
 
 #endif

@@ -42,7 +42,7 @@ int main(int argc, char **argv) {
 
 		while(game_over == 0){
 
-			tour_ordinateur(jo);
+			tour_ordinateur(jo, 1);
 			affichage(jo,jo,jo);
 
 			if(fin_de_partie(jo))
@@ -53,6 +53,8 @@ int main(int argc, char **argv) {
 		fprintf(fichier, "%d;%d;\n", jo->tab[TOTAL_GEN], i);
 		fclose(fichier);
 	}
+
+	detruire_joueur(&jo);
 
 	return 0;
 }

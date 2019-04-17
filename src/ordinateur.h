@@ -16,6 +16,6 @@
 
   int strat_full(t_joueur *j, t_joueur *j_test, int *nb_lance_Restant);
 
-	int tour_ordinateur(t_joueur *j);
+	int tour_ordinateur(t_joueur *j, int dflag);
 
 #endif

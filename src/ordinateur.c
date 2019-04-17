@@ -692,6 +692,26 @@ int strat_full(t_joueur *j, t_joueur *j_test, int *nb_lance_Restant) {
 /* ***************************************************************************** */
 
 
+static
+void aff_msg_detaille(int flag, char msg[50]) {
+  if(flag)
+    fprintf(stderr, "%s\n", msg);
+}
+
+
+/**
+  *\fn int mains_acquise_ET_jouable(int ligne)
+  *\param Une ligne de la feuille de marque
+  *\return Renvoie un booleen
+  *\brief Verifie si une main est jouable dans la feuille de marque (score != 0)
+	*\author Nicolas Champion
+*/
+static
+int mains_jouable(t_joueur *j, t_joueur *tempo, int ligne) {
+  return ((tempo->tab[ligne] != VAL_INIT) && (j->tab[ligne] == VAL_INIT));
+}
+
+
 /**
   *\fn int tour_ordinateur(t_joueur *j)
   *\param Un pointeur vers une structure de type t_joueur : Il s'agit de l'ordinateur
@@ -700,7 +720,7 @@ int strat_full(t_joueur *j, t_joueur *j_test, int *nb_lance_Restant) {
 	*\author Thibault Lemarchand
 	*\author Nicolas Champion
 */
-int tour_ordinateur(t_joueur *j) {
+int tour_ordinateur(t_joueur *j, int dflag) {
   int i, nb_lance = 2;
   t_joueur *tempo = creer_joueur("tempo");
 
@@ -712,38 +732,46 @@ int tour_ordinateur(t_joueur *j) {
 
   test_mains(j, tempo);
 
-	if((j->tab[YAHTZEE] == VAL_INIT) && (yahtzee(j) != -1))
+	if(mains_jouable(j, tempo, YAHTZEE))
 		utiliser_yahtzee(j, tempo);
 
-	else if(strat_superieur(j, tempo, &nb_lance)) {}
+	else if(strat_superieur(j, tempo, &nb_lance))
+    aff_msg_detaille(dflag, "Stratégie superieur");
 
-  else if((tempo->tab[GRANDE_SUITE] != VAL_INIT) && (j->tab[GRANDE_SUITE] == VAL_INIT))
+  else if(mains_jouable(j, tempo, GRANDE_SUITE))
 		j->tab[GRANDE_SUITE] = tempo->tab[GRANDE_SUITE];
 
-  else if((tempo->tab[PETITE_SUITE] != VAL_INIT) && (j->tab[PETITE_SUITE] == VAL_INIT))
+  else if(mains_jouable(j, tempo, PETITE_SUITE))
 		j->tab[PETITE_SUITE] = tempo->tab[PETITE_SUITE];
 
-	else if(strat_p_g_suite(j, tempo, &nb_lance)) {}
+	else if(strat_p_g_suite(j, tempo, &nb_lance))
+    aff_msg_detaille(dflag, "Stratégie des suites");
 
-	else if((tempo->tab[CARRE] != VAL_INIT) && (j->tab[CARRE] == VAL_INIT))
+	else if(mains_jouable(j, tempo, CARRE))
 		j->tab[CARRE] = tempo->tab[CARRE];
 
-	else if(strat_carre(j, tempo, &nb_lance)) {}
+	else if(strat_carre(j, tempo, &nb_lance))
+    aff_msg_detaille(dflag, "Stratégie pour le carre");
 
-	else if((tempo->tab[BRELAN] != VAL_INIT) && (j->tab[BRELAN] == VAL_INIT))
+	else if(mains_jouable(j, tempo, BRELAN))
 		j->tab[BRELAN] = tempo->tab[BRELAN];
 
-	else if(strat_brelan(j, tempo, &nb_lance)) {}
+	else if(strat_brelan(j, tempo, &nb_lance))
+    aff_msg_detaille(dflag, "Stratégie pour le brelan");
 
-	else if((tempo->tab[FULL] != VAL_INIT) && (j->tab[FULL] == VAL_INIT))
+	else if(mains_jouable(j, tempo, FULL))
 		j->tab[FULL] = tempo->tab[FULL];
 
-	else if(strat_full(j, tempo, &nb_lance)) {}
+	else if(strat_full(j, tempo, &nb_lance))
+    aff_msg_detaille(dflag, "Stratégie pour le full");
 
-  else if(strat_yahtzee(j, tempo, &nb_lance)) {}
+  else if(strat_yahtzee(j, tempo, &nb_lance))
+    aff_msg_detaille(dflag, "Stratégie pour le yahtzee");
 
-  else
-	 meilleur_score(j, tempo);
+  else {
+    meilleur_score(j, tempo);
+    aff_msg_detaille(dflag, "Pas de stratégie : Choix du meilleur score");
+  }
 
   detruire_joueur(&tempo);
 	return 0;

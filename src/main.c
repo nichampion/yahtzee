@@ -1,12 +1,24 @@
 #include "affichage.h"
-#include <stdio.h>
+
+#include <getopt.h>
 
 /**
 	*\fn int main()
 	*\brief Programme principal
   *\author Nicolas Champion
 */
-int main() {
+int main(int argc, char **argv) {
+  int dflag = 0; /* Mode détaillé (d) : Permet d'afficher les stratégies de l'ordinateur (s'il y en a une) */
+
+  /* Lecture de l'option */
+  int opt;
+  while((opt = getopt (argc, argv, "d")) != -1) {
+    if(opt == 'd')
+      dflag = 1;
+    else
+      printf("Option inconnue\n");
+  }
+
   printf("* * * * * * * * * * * * * *\n");
   printf("* * * * * Yahtzee * * * * *\n");
   printf("* * * * * * * * * * * * * *\n\n\n");
@@ -27,7 +39,7 @@ int main() {
   /* Choix menu */
   srand(time(NULL));
   switch (choix[0]) {
-    case '1': aff1_joueur(); break;
+    case '1': aff1_joueur(dflag); break;
     case '2': aff2_joueurs(); break;
     case '3':
               printf("-> Biard Sunny\n");
