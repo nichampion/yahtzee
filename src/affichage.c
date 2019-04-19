@@ -14,7 +14,7 @@
 
 
 /**
-	*\fn int aff1_joueur()
+	*\fn int aff1_joueur(int dflag)
 	*\param Un flag transmis a tour_ordinateur
 	*\brief Fonction permettant l'affichage du jeu avec 1 humain (vs PC)
   *\author Sunny Biard
