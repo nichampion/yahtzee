@@ -7,7 +7,7 @@
 
 /**
 	*\file affichage.c
-	*\brief Fonctions permettant l'affichage
+	*\brief Fonctions de jeu en SDL
 	*\version 2
   *\author Sunny Biard
 */
@@ -22,7 +22,7 @@
 int aff1_joueur(int dflag) {
 	t_joueur * j1 = creer_joueur("J1");
 	t_joueur * j2 = creer_joueur("Ordinateur");
-	t_joueur * j_choix = creer_joueur("Choix");
+	t_joueur * j_choix = creer_joueur("Choix"); /* Joueur temporaire permettant de stocker les combinaisons possibles du joueur pour chaque tour */
 	t_joueur ** ptj = &j1;
 
 	int cpt_lancer = 0, de_pos[5] = {0,0,0,0,0}, clic_borneG_x, clic_borneD_x, clic_borneS_y, clic_borneI_y, coup, i, p;
@@ -30,7 +30,7 @@ int aff1_joueur(int dflag) {
 
 	SDL_Window *pWindow = NULL;
 
-  SDL_Surface *j_courant=NULL, *msg=NULL, *tab_score=NULL, *de_courant=NULL, *de1=NULL, *de2=NULL, *de3=NULL, *de4=NULL, *de5=NULL, *de6=NULL, *img_btn_lancer=NULL, *caseJ=NULL;
+  	SDL_Surface *j_courant=NULL, *msg=NULL, *tab_score=NULL, *de_courant=NULL, *de1=NULL, *de2=NULL, *de3=NULL, *de4=NULL, *de5=NULL, *de6=NULL, *img_btn_lancer=NULL, *caseJ=NULL;
 	SDL_Renderer *renderer=NULL;
 	SDL_Rect clearDestRect, j_courantDestRect, msgDestRect, imgDestRect, img2DestRect, scoreDestRect, caseDestRect;
 
@@ -87,7 +87,7 @@ int aff1_joueur(int dflag) {
 		exit(EXIT_FAILURE);
 	}
 
-
+	/* Initialisation des polices */
 	if( (police_score = TTF_OpenFont("../src/coolvetica rg.ttf", 20)) == NULL){
 		fprintf(stderr, "Erreur au chargement de la police\n");
 		exit(EXIT_FAILURE);
@@ -167,14 +167,17 @@ int aff1_joueur(int dflag) {
 
 	if(pWindow){
 		int running = 1;
+		/* Boucle de jeu */
 		while(running){
 			SDL_Event e;
 			while(SDL_PollEvent(&e)){
 				switch(e.type) {
+					/* Fermeture de la fenêtre */
 					case SDL_QUIT:
 						running = 0;
 					break;
 
+					/* Ouverture de la fenêtre */
 					case SDL_WINDOWEVENT:
 						switch(e.window.event){
 							case SDL_WINDOWEVENT_SHOWN:
@@ -197,23 +200,27 @@ int aff1_joueur(int dflag) {
 								SDL_QueryTexture(btn_lancer_tex, NULL, NULL, &(imgDestRect.w), &(imgDestRect.h));
 								SDL_RenderCopy(renderer, btn_lancer_tex, NULL, &imgDestRect);
 
-								/* On fait le rendu ! */
+								/* Rendu */
 								SDL_RenderPresent(renderer);
 
 							break;
 						}
 					break;
 
+					/* Relachement de souris */
 					case SDL_MOUSEBUTTONUP:
 
+						/* Tour de jeu de l'ordinateur */
 						if(ptj == &j2){
 							if(tour_ordinateur(*ptj, dflag) >= 0){
 
+								/* Nettoyage de la partie droite de la fenêtre */
 								SDL_SetRenderDrawColor(renderer, 55, 99, 78, 255);
 								SDL_RenderFillRect(renderer,&clearDestRect);
 
 								j_courantDestRect.x = 520;
 
+								/* Affichage nom du joueur courant */
 								sprintf(score,"%s",(*ptj)->nom);
 								j_courant = TTF_RenderUTF8_Blended(police_jeu, score, blanc);
 								if(!j_courant){
@@ -238,6 +245,7 @@ int aff1_joueur(int dflag) {
 								caseDestRect.x = 234;
 								caseDestRect.y = scoreDestRect.y = 80;
 
+								/* Affichage du score joué par l'ordinateur ainsi que ses scores précédents dans la grille */
 								for(i = 0; i < 14; i++){
 
 									if(i == 6){
@@ -279,11 +287,13 @@ int aff1_joueur(int dflag) {
 
 								SDL_RenderPresent(renderer);
 
+								/* Changement de joueur courant */
 								ptj = &j1;
 
 							}
 						}
 
+						/* Fin de partie */
 						if(fin_de_partie(j1) && fin_de_partie(j2)){
 
 							scoreDestRect.x = 202;
@@ -291,6 +301,7 @@ int aff1_joueur(int dflag) {
 							caseDestRect.y = scoreDestRect.y = 254;
 							i = 6;
 
+							/* Affichage des totaux dans la grille du joueur 1 */
 							while(i < 17){
 
 								SDL_SetRenderDrawColor(renderer, 255, 255, 255, 255);
@@ -328,6 +339,7 @@ int aff1_joueur(int dflag) {
 							caseDestRect.y = scoreDestRect.y = 254;
 							i = 6;
 
+							/* Affichage des totaux dans la grille de l'ordinateur */
 							while(i < 17){
 
 								SDL_SetRenderDrawColor(renderer, 255, 255, 255, 255);
@@ -366,6 +378,7 @@ int aff1_joueur(int dflag) {
 							msgDestRect.x = 310;
 							msgDestRect.y = 300;
 
+							/* Affichage message de fin de partie */
 							if(j1->tab[16] > j2->tab[16])
 								sprintf(msg_fin,"Le joueur %s a gagné avec %d points !",j1->nom,j1->tab[16]);
 							else if(j1->tab[16] < j2->tab[16])
@@ -392,14 +405,17 @@ int aff1_joueur(int dflag) {
 						}
 					break;
 
+					/* Clic de souris */
 					case SDL_MOUSEBUTTONDOWN:
 
 						if(!fin_de_partie(j1) || !fin_de_partie(j2)){
 
 							if(ptj == &j1){
 
+								/* Clic sur le bouton lancer en ayant fait au maximum 2 lancers auparavant */
 								if(e.motion.x > 575 && e.motion.x < 675 && e.motion.y > 500 && e.motion.y < 550 && cpt_lancer < 3){
 
+									/* Affichage joueur courant */
 									SDL_SetRenderDrawColor(renderer, 55, 99, 78, 255);
 									SDL_RenderFillRect(renderer,&j_courantDestRect);
 
@@ -425,9 +441,11 @@ int aff1_joueur(int dflag) {
 					 				imgDestRect.y = 300;
 									img2DestRect.y = 600;
 
+									/* Boucle de lancer des dés */
 									for(i = 0; i < 5; i++){
 										if(de_pos[i] == 0 || cpt_lancer == 0){
 											lancer(*ptj,i);
+											/* Récupération de la valeur du dé courant (entre 1 et 6) */
 											switch((*ptj)->des[i]){
 												case 1:
 													de_courant = de1;
@@ -448,6 +466,7 @@ int aff1_joueur(int dflag) {
 													de_courant = de6;
 												break;
 											}
+											/* Affichage de l'image du dé courant */
 											switch(i){
 												case 0:
 													SDL_SetRenderDrawColor(renderer, 55, 99, 78, 255);
@@ -517,6 +536,7 @@ int aff1_joueur(int dflag) {
 									msgDestRect.x = 375;
 									msgDestRect.y = 200;
 
+									/* Affichage message de relancer */
 									msg = TTF_RenderUTF8_Blended(police_score, "Veuillez choisir une case a remplir ou selectionner les des a garder", blanc);
 									if(!msg){
 										fprintf(stderr, "Erreur à la création du texte : %s\n", SDL_GetError());
@@ -532,12 +552,14 @@ int aff1_joueur(int dflag) {
 									SDL_QueryTexture(msg_tex, NULL, NULL, &(msgDestRect.w), &(msgDestRect.h));
 									SDL_RenderCopy(renderer, msg_tex, NULL, &msgDestRect);
 
+									/* Test des combinaisons possibles avec la main courante */
 									j_choix = test_mains(*ptj,j_choix);
 
 									scoreDestRect.x = 202;
 									caseDestRect.x = 184;
 									caseDestRect.y = scoreDestRect.y = 80;
 
+									/* Affichage des scores possibles en rouge dans la grille */
 									for(i = 0; i < 14; i++){
 
 										if(i == 6){
@@ -581,8 +603,10 @@ int aff1_joueur(int dflag) {
 								clic_borneG_x = 400;
 								clic_borneD_x = 450;
 
+								/* Boucle permettant de mettre des dés de côté et inversement pour le relancement (si de_pos[i] = 0 : le dé n'est pas mis de côté, si de_pos[i] = 1 : le dé est mis de côté) */
 								for(i = 0; i < 5; i++){
 
+									/* Clic sur un dé qui n'est pas mis de côté */
 									if(e.motion.x > clic_borneG_x && e.motion.x < clic_borneD_x && e.motion.y > 300 && e.motion.y < 350 && de_pos[i] == 0){
 
 										imgDestRect.x = clic_borneG_x;
@@ -597,9 +621,11 @@ int aff1_joueur(int dflag) {
 										SDL_RenderCopy(renderer, *pt_image_texde[i], NULL, &imgDestRect);
 										SDL_RenderPresent(renderer);
 
+										/* Le dé est mis de côté */
 										de_pos[i] = 1;
 									}
 
+									/* Clic sur un dé qui est mis de côté */
 									else if(e.motion.x > clic_borneG_x && e.motion.x < clic_borneD_x && e.motion.y > 600 && e.motion.y < 650 && de_pos[i] == 1){
 
 										imgDestRect.x = clic_borneG_x;
@@ -614,6 +640,7 @@ int aff1_joueur(int dflag) {
 										SDL_RenderCopy(renderer, *pt_image_texde[i], NULL, &imgDestRect);
 										SDL_RenderPresent(renderer);
 
+										/* Le dé n'est plus mis de côté */
 										de_pos[i] = 0;
 									}
 
@@ -633,6 +660,7 @@ int aff1_joueur(int dflag) {
 								coup = 0;
 								p = 0;
 
+								/* Boucle permettant de jouer le tour actuel (remplir une case de la grille) */
 								while(p < 14 && coup == 0){
 
 									if(p == 6){
@@ -642,14 +670,17 @@ int aff1_joueur(int dflag) {
 									}
 									else{
 
+										/* Clic sur une des cases de la grille */
 										if(e.motion.x > clic_borneG_x && e.motion.x < clic_borneD_x && e.motion.y > clic_borneS_y && e.motion.y < clic_borneI_y && cpt_lancer != 0 && j1->des[0] != 0 && (*ptj)->tab[p] == VAL_INIT){
 
+											/* La case vaudra 0 s'il n'y a pas de combinaison possible */
 											if(j_choix->tab[p] == VAL_INIT)
 												(*ptj)->tab[p] = 0;
 											else
 												(*ptj)->tab[p] = j_choix->tab[p];
 
-											for(int i = 0; i < 14; i++){
+											/* Nettoyage des cases qui n'ont pas été remplies */
+											for(i = 0; i < 14; i++){
 												if(i == 7)
 													caseDestRect.y += 48;
 
@@ -661,6 +692,7 @@ int aff1_joueur(int dflag) {
 												caseDestRect.y += 29;
 											}
 
+											/* Remplissage de la case sur laquelle le joueur a cliqué avec le score correspondant */
 											sprintf(score,"%d",(*ptj)->tab[p]);
 											caseJ = TTF_RenderUTF8_Blended(police_score, score, noir);
 											if(!caseJ){
@@ -685,6 +717,7 @@ int aff1_joueur(int dflag) {
 											cpt_lancer = 0;
 											coup = 1;
 
+											/* Changement de joueur courant */
 											if(ptj == &j1)
 												ptj = &j2;
 
@@ -715,14 +748,14 @@ int aff1_joueur(int dflag) {
 	detruire_joueur(&j2);
 	detruire_joueur(&j_choix);
 
+	/* Libération des surfaces */
 	SDL_FreeSurface(caseJ);
-
-	SDL_FreeSurface(de1); /* on a la texture, plus besoin de l'image */
-	SDL_FreeSurface(de2); /* on a la texture, plus besoin de l'image */
-	SDL_FreeSurface(de3); /* on a la texture, plus besoin de l'image */
-	SDL_FreeSurface(de4); /* on a la texture, plus besoin de l'image */
-	SDL_FreeSurface(de5); /* on a la texture, plus besoin de l'image */
-	SDL_FreeSurface(de6); /* on a la texture, plus besoin de l'image */
+	SDL_FreeSurface(de1);
+	SDL_FreeSurface(de2);
+	SDL_FreeSurface(de3);
+	SDL_FreeSurface(de4);
+	SDL_FreeSurface(de5);
+	SDL_FreeSurface(de6);
 
 	/* Destruction de la fenetre */
 	SDL_DestroyWindow(pWindow);
@@ -744,7 +777,7 @@ int aff1_joueur(int dflag) {
 int aff2_joueurs() {
  	t_joueur * j1 = creer_joueur("J1");
 	t_joueur * j2 = creer_joueur("J2");
-	t_joueur * j_choix = creer_joueur("Choix");
+	t_joueur * j_choix = creer_joueur("Choix"); /* Joueur temporaire permettant de stocker les combinaisons possibles du joueur pour chaque tour */
 	t_joueur ** ptj = &j1;
 
 	int cpt_lancer = 0, de_pos[5] = {0,0,0,0,0}, clic_borneG_x, clic_borneD_x, clic_borneS_y, clic_borneI_y, coup, i, p;
@@ -809,7 +842,7 @@ int aff2_joueurs() {
 		exit(EXIT_FAILURE);
 	}
 
-
+	/* Initialisation des polices */
 	if( (police_score = TTF_OpenFont("../src/coolvetica rg.ttf", 20)) == NULL){
 		fprintf(stderr, "Erreur au chargement de la police\n");
 		exit(EXIT_FAILURE);
@@ -889,14 +922,17 @@ int aff2_joueurs() {
 
 	if(pWindow){
 		int running = 1;
+		/* Boucle de jeu */
 		while(running){
 			SDL_Event e;
 			while(SDL_PollEvent(&e)){
 				switch(e.type) {
+					/* Fermeture de la fenêtre */
 					case SDL_QUIT:
 						running = 0;
 					break;
 
+					/* Ouverture de la fenêtre */
 					case SDL_WINDOWEVENT:
 						switch(e.window.event){
 							case SDL_WINDOWEVENT_SHOWN:
@@ -919,14 +955,17 @@ int aff2_joueurs() {
 								SDL_QueryTexture(btn_lancer_tex, NULL, NULL, &(imgDestRect.w), &(imgDestRect.h));
 								SDL_RenderCopy(renderer, btn_lancer_tex, NULL, &imgDestRect);
 
-								/* On fait le rendu ! */
+								/* Rendu */
 								SDL_RenderPresent(renderer);
 
 							break;
 						}
 					break;
 
+					/* Relachement de souris */
 					case SDL_MOUSEBUTTONUP:
+
+						/* Fin de partie */
 						if(fin_de_partie(j1) && fin_de_partie(j2)){
 
 							scoreDestRect.x = 202;
@@ -934,6 +973,7 @@ int aff2_joueurs() {
 							caseDestRect.y = scoreDestRect.y = 254;
 							i = 6;
 
+							/* Affichage des totaux dans la grille du joueur 1 */
 							while(i < 17){
 
 								SDL_SetRenderDrawColor(renderer, 255, 255, 255, 255);
@@ -971,6 +1011,7 @@ int aff2_joueurs() {
 							caseDestRect.y = scoreDestRect.y = 254;
 							i = 6;
 
+							/* Affichage des totaux dans la grille du joueur 2 */
 							while(i < 17){
 
 								SDL_SetRenderDrawColor(renderer, 255, 255, 255, 255);
@@ -1009,6 +1050,7 @@ int aff2_joueurs() {
 							msgDestRect.x = 310;
 							msgDestRect.y = 300;
 
+							/* Affichage message de fin de partie */
 							if(j1->tab[16] > j2->tab[16])
 								sprintf(msg_fin,"Le joueur %s a gagné avec %d points !",j1->nom,j1->tab[16]);
 							else if(j1->tab[16] < j2->tab[16])
@@ -1035,11 +1077,15 @@ int aff2_joueurs() {
 						}
 					break;
 
+					/* Clic de souris */
 					case SDL_MOUSEBUTTONDOWN:
 
 						if(!fin_de_partie(j1) || !fin_de_partie(j2)){
+
+							/* Clic sur le bouton lancer en ayant fait au maximum 2 lancers auparavant */
 							if(e.motion.x > 575 && e.motion.x < 675 && e.motion.y > 500 && e.motion.y < 550 && cpt_lancer < 3){
 
+								/* Affichage joueur courant */
 								SDL_SetRenderDrawColor(renderer, 55, 99, 78, 255);
 								SDL_RenderFillRect(renderer,&j_courantDestRect);
 
@@ -1063,9 +1109,11 @@ int aff2_joueurs() {
 				 				imgDestRect.y = 300;
 								img2DestRect.y = 600;
 
+								/* Boucle de lancer des dés */
 								for(int i = 0; i < 5; i++){
 									if(de_pos[i] == 0 || cpt_lancer == 0){
 										lancer(*ptj,i);
+										/* Récupération de la valeur du dé courant (entre 1 et 6) */
 										switch((*ptj)->des[i]){
 											case 1:
 												de_courant = de1;
@@ -1086,6 +1134,7 @@ int aff2_joueurs() {
 												de_courant = de6;
 											break;
 										}
+										/* Affichage de l'image du dé courant */
 										switch(i){
 											case 0:
 												SDL_SetRenderDrawColor(renderer, 55, 99, 78, 255);
@@ -1155,6 +1204,7 @@ int aff2_joueurs() {
 								msgDestRect.x = 375;
 								msgDestRect.y = 200;
 
+								/* Affichage message de relancer */
 								msg = TTF_RenderUTF8_Blended(police_score, "Veuillez choisir une case a remplir ou selectionner les des a garder", blanc);
 								if(!msg){
 									fprintf(stderr, "Erreur à la création du texte : %s\n", SDL_GetError());
@@ -1170,6 +1220,7 @@ int aff2_joueurs() {
 								SDL_QueryTexture(msg_tex, NULL, NULL, &(msgDestRect.w), &(msgDestRect.h));
 								SDL_RenderCopy(renderer, msg_tex, NULL, &msgDestRect);
 
+								/* Test des combinaisons possibles avec la main courante */
 								j_choix = test_mains(*ptj,j_choix);
 
 								if(ptj == &j1){
@@ -1182,6 +1233,7 @@ int aff2_joueurs() {
 								}
 								caseDestRect.y = scoreDestRect.y = 80;
 
+								/* Affichage des scores possibles en rouge dans la grille */
 								for(i = 0; i < 14; i++){
 
 									if(i == 6){
@@ -1225,8 +1277,10 @@ int aff2_joueurs() {
 							clic_borneG_x = 400;
 							clic_borneD_x = 450;
 
+							/* Boucle permettant de mettre des dés de côté et inversement pour le relancement (si de_pos[i] = 0 : le dé n'est pas mis de côté, si de_pos[i] = 1 : le dé est mis de côté) */
 							for(i = 0; i < 5; i++){
 
+								/* Clic sur un dé qui n'est pas mis de côté */
 								if(e.motion.x > clic_borneG_x && e.motion.x < clic_borneD_x && e.motion.y > 300 && e.motion.y < 350 && de_pos[i] == 0){
 
 									imgDestRect.x = clic_borneG_x;
@@ -1241,9 +1295,11 @@ int aff2_joueurs() {
 									SDL_RenderCopy(renderer, *pt_image_texde[i], NULL, &imgDestRect);
 									SDL_RenderPresent(renderer);
 
+									/* Le dé est mis de côté */
 									de_pos[i] = 1;
 								}
 
+								/* Clic sur un dé qui est mis de côté */
 								else if(e.motion.x > clic_borneG_x && e.motion.x < clic_borneD_x && e.motion.y > 600 && e.motion.y < 650 && de_pos[i] == 1){
 
 									imgDestRect.x = clic_borneG_x;
@@ -1258,6 +1314,7 @@ int aff2_joueurs() {
 									SDL_RenderCopy(renderer, *pt_image_texde[i], NULL, &imgDestRect);
 									SDL_RenderPresent(renderer);
 
+									/* Le dé n'est plus mis de côté */
 									de_pos[i] = 0;
 								}
 
@@ -1284,6 +1341,7 @@ int aff2_joueurs() {
 							coup = 0;
 							p = 0;
 
+							/* Boucle permettant de jouer le tour actuel (remplir une case de la grille) */
 							while(p < 14 && coup == 0){
 
 								if(p == 6){
@@ -1293,14 +1351,17 @@ int aff2_joueurs() {
 								}
 								else{
 
+									/* Clic sur une des cases de la grille */
 									if(e.motion.x > clic_borneG_x && e.motion.x < clic_borneD_x && e.motion.y > clic_borneS_y && e.motion.y < clic_borneI_y && cpt_lancer != 0 && j1->des[0] != 0 && (*ptj)->tab[p] == VAL_INIT){
 
+										/* La case vaudra 0 s'il n'y a pas de combinaison possible */
 										if(j_choix->tab[p] == VAL_INIT)
 											(*ptj)->tab[p] = 0;
 										else
 											(*ptj)->tab[p] = j_choix->tab[p];
 
-										for(int i = 0; i < 14; i++){
+										/* Nettoyage des cases qui n'ont pas été remplies */
+										for(i = 0; i < 14; i++){
 											if(i == 7)
 												caseDestRect.y += 48;
 
@@ -1311,6 +1372,7 @@ int aff2_joueurs() {
 											caseDestRect.y += 29;
 										}
 
+										/* Remplissage de la case sur laquelle le joueur a cliqué avec le score correspondant */
 										sprintf(score,"%d",(*ptj)->tab[p]);
 										caseJ = TTF_RenderUTF8_Blended(police_score, score, noir);
 										if(!caseJ){
@@ -1341,6 +1403,7 @@ int aff2_joueurs() {
 										cpt_lancer = 0;
 										coup = 1;
 
+										/* Changement de joueur courant */
 										if(ptj == &j1)
 											ptj = &j2;
 										else
@@ -1371,14 +1434,14 @@ int aff2_joueurs() {
 	detruire_joueur(&j2);
 	detruire_joueur(&j_choix);
 
+	/* Libération des surfaces */
 	SDL_FreeSurface(caseJ);
-
-	SDL_FreeSurface(de1); /* on a la texture, plus besoin de l'image */
-	SDL_FreeSurface(de2); /* on a la texture, plus besoin de l'image */
-	SDL_FreeSurface(de3); /* on a la texture, plus besoin de l'image */
-	SDL_FreeSurface(de4); /* on a la texture, plus besoin de l'image */
-	SDL_FreeSurface(de5); /* on a la texture, plus besoin de l'image */
-	SDL_FreeSurface(de6); /* on a la texture, plus besoin de l'image */
+	SDL_FreeSurface(de1);
+	SDL_FreeSurface(de2);
+	SDL_FreeSurface(de3);
+	SDL_FreeSurface(de4);
+	SDL_FreeSurface(de5);
+	SDL_FreeSurface(de6);
 
 	/* Destruction de la fenetre */
 	SDL_DestroyWindow(pWindow);
